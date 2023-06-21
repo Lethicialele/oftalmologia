@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendamento de Procedimentos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+    <div class="container">
+      <a class="navbar-brand" href="#">Sistema de Clínica</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="pacientes.html">Pacientes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="procedimentos.html">Procedimentos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="agendamentos.html">Agendamentos</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2 class="text-center my-4 text-info">Agendamento de Procedimentos</h2>
+    <form action="{% url 'cadastrarAgendamentos' %}" method="POST"> {% csrf_token %}
+      <div class="mb-3">
+        <label for="paciente" class="form-label">Paciente:</label>
+        <select class="form-select" id="paciente" name="paciente" required>
+          <option value="" selected disabled>Selecione um paciente</option>
+          <option value="procedimento1">Lethícia</option>
+          <option value="procedimento2">Paciente 1</option>
+          <option value="procedimento3">Paciente 2</option>
+          <!-- Adicione mais opções de procedimentos conforme necessário -->
+        </select>
+      </div>
+      <div class="row align-items-end">
+        <div class="mb-3 col">
+          <label for="procedimento" class="form-label">Procedimento:</label>
+          <select class="form-select" id="procedimento" name="procedimento" required>
+            <option value="" selected disabled>Selecione um procedimento</option>
+            <option value="procedimento1">Procedimento 1</option>
+            <option value="procedimento2">Procedimento 2</option>
+            <option value="procedimento3">Procedimento 3</option>
+            <!-- Adicione mais opções de procedimentos conforme necessário -->
+          </select>
+        </div>
+        <div class="mb-3 col-auto">
+          <label for="adicionar-procedimento" class="form-label">&nbsp;</label>
+          <button type="submit" class="btn btn-info text-white">Adicionar Procedimento</button>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="numero_de_olhos" class="form-label">Número de Olhos:</label>
+        <select class="form-select" id="numero-olhos" name="numero_de_olhos" required>
+          <option value="" selected disabled>Selecione o número de olhos</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+      </div>
+      <div class="mb-3" id="olho-agendado-container" style="display: none;">
+        <label for="olho_agendado" class="form-label">Olho Agendado:</label>
+        <select class="form-select" id="olho-agendado" name="olho_agendado">
+          <option value="" selected disabled>Selecione o olho agendado</option>
+          <option value="direito">Direito</option>
+          <option value="esquerdo">Esquerdo</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="data_agendada" class="form-label">Data Agendada:</label>
+        <input type="date" class="form-control" id="data-agendada" name="data_agendada" required>
+      </div>
+      <div class="mb-3">
+        <label for="diagnostico" class="form-label">Diagnóstico:</label>
+        <textarea class="form-control" id="diagnostico" name="diagnostico" rows="3" required></textarea>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-info text-white">Agendar</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const numeroOlhosSelect = document.getElementById('numero-olhos');
+    const olhoAgendadoContainer = document.getElementById('olho-agendado-container');
+
+    numeroOlhosSelect.addEventListener('change', function () {
+      if (this.value === '1') {
+        olhoAgendadoContainer.style.display = 'block';
+      } else {
+        olhoAgendadoContainer.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+
+</html>
