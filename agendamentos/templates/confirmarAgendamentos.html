@@ -14,7 +14,6 @@
       <!-- Resto do código do menu de navegação -->
     </div>
   </nav>
-  </style>
 
   <div class="container">
     <h2 class="text-center my-4 text-info">Planilha de Agendamentos</h2>
@@ -27,14 +26,10 @@
           <th class="text-info align-middle text-center">Nº de Olhos</th>
           <th class="text-info align-middle text-center">Olho(s)</th>
           <th class="text-info align-middle text-center">Aplicação</th>
-          <th class="text-info align-middle text-center">Diagnóstico</th>
+          <th class="text-info align-middle text-center">Médico(a)</th>
           <th class="text-info align-middle text-center">Telefone</th>
-          <th class="text-info align-middle text-center">Status</th>
           <th class="text-info align-middle text-center">Observação</th>
-          <th class="text-info align-middle text-center">
-            <div class="col">Gerar Relatório</div>
-            <div class="col"><input type="checkbox" name="status" id="checkbox-gerar-relatorio" class="form-check-input border-info" {% if agendamento.status == 'confirmado' %}checked{% endif %}></div>
-          </th>
+          <th class="text-info align-middle text-center">Status</th>
         </tr>
       </thead>
       <tbody>
@@ -47,31 +42,32 @@
           <td class="align-middle text-center">{{ agendamento.numero_de_olhos }}</td>
           <td class="align-middle text-center">{{ agendamento.olho_agendado }}</td>
           <td class="align-middle text-center">Aplicação</td>
-          <td class="align-middle text-center">{{ agendamento.diagnostico }}</td>
+          <td class="align-middle text-center"></td>
           <td class="align-middle text-center">{{ agendamento.id_paciente.telefone }}</td>
-          <td class="align-middle text-center"></td>
-          <td class="align-middle text-center"></td>
+          <td>
+            <div class="text-center">
+              <input type="text" name="observacao" class="form-control border-info">
+            </div>
+          </td>
           <td class="align-middle">
-            <div class="align-middle text-center form-check-lg">
-              <input type="checkbox" name="status" class="form-check-input border-info" {% if agendamento.status == 'confirmado' %}checked{% endif %}>
+            <div class="align-middle text-center">
+              <select name="status" class="form-select border-info" {% if agendamento.status == 'confirmado' %}selected{% endif %}>
+                <option value="confirmado">Confirmado</option>
+                <option value="remarcar">Remarcar</option>
+                <option value="cancelado">Cancelado</option>
+              </select>
             </div>
           </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
+    <div class="text-center">
+      <button type="submit" class="btn btn-info text-white">Atualizar</button>
+    </div>
   </div>
     
-  <script>
-    const checkboxGerarRelatorio = document.getElementById('checkbox-gerar-relatorio');
-    const checkboxesStatus = document.querySelectorAll('tbody input[name="status"]');
-  
-    checkboxGerarRelatorio.addEventListener('change', function () {
-      checkboxesStatus.forEach(function (checkbox) {
-        checkbox.checked = checkboxGerarRelatorio.checked;
-      });
-    });
-  </script
+  <!-- Restante do código HTML -->
   
 </body>
 </html>
