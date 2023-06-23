@@ -1,0 +1,40 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Título da Página{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+    <div class="container">
+      <a class="navbar-brand" href="#">Sistema de Clínica</a>
+      <!-- Resto do código do menu de navegação -->
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2 class="text-center my-4 text-info">Planilha de Agendamentos</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Prontuário</th>
+          <th>Nome do Paciente</th>
+          <th>Olho(s)</th>
+          <th>Número de Olhos</th>
+          <th>Telefone</th>
+          <th>Aplicação</th>
+          <th>Diagnóstico</th>
+          <th>Observação</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Coloque aqui o código para exibir os dados da planilha -->
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

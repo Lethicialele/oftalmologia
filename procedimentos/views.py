@@ -1,22 +1,20 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import CadastroProcedimentos
-
+from .models import Procedimentos
+from django.contrib import messages
 # Create your views here.
 
-def cadastrarProcedimentos(request):
-    if request.method == "GET":
-       return render(request, 'cadastrarProcedimentos.html', {})
-    elif request.method == "POST":
-        print(request.POST)
-        form = CadastroProcedimentos(request.POST)
-        
-        if form.is_valid():
-            return render(request, 'cadastrarProcedimentos.html', {})
-            #return render(request, 'cadastrarProcedimentos.html', {})
 
-        #dados = request.POST
-        #nome = request.POST.get('nome')
-        #print(dados)
-        print('PROCEDIMENTO CADASTRADO')
-        #return render(request, 'cadastrarProcedimentos.html', {'form':form})
+def cadastrarProcedimentos(request):
+   if request.method == "POST":
+        form = CadastroProcedimentos(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Agendamento realizado com sucesso!')
+        else:
+            messages.error(request, 'Dados inválidos!')
+   return render(request, 'cadastrarProcedimentos.html', {})
+         
+def mostrarProcedimentos(request):
+    return Procedimentos.objects.all()

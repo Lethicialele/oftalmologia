@@ -5,4 +5,4 @@ class CadastroPacientes(forms.ModelForm):
 
     class Meta:
         model =  Pacientes
-        fields = ('nome', 'cpf', 'telefone', 'prontuario', 'data_nascimento')
+        fields = ('nome', 'cpf', 'telefone', 'prontuario', 'email', 'data_nascimento')
