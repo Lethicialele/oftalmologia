@@ -61,6 +61,15 @@
         </div>
       </div>
       <div class="mb-3">
+        <label for="id_medico" class="form-label">Médico:</label>
+        <select class="form-select" id="id_medico" name="id_medico" required>
+          <option value="1" selected disabled>Selecione um médico</option>
+          {% for medico in medicos %}
+          <option value="{{ medico.id }}">{{ medico.nome }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
         <label for="numero_de_olhos" class="form-label">Número de Olhos:</label>
         <select class="form-select" id="numero_de_olhos" name="numero_de_olhos" required>
           <option value="" selected disabled>Selecione o número de olhos</option>

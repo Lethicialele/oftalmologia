@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Título da Página{% endblock %}</title>
+  <title>{% block title %}Confirmar Agendamentos{% endblock %}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -16,56 +16,52 @@
   </nav>
 
   <div class="container">
-    <h2 class="text-center my-4 text-info">Planilha de Agendamentos</h2>
-    <table class="table table-striped table-borderless table-hover">
-      <thead>
-        <tr>
-          <th class="text-info align-middle text-center">Prontuário</th>
-          <th class="text-info align-middle text-center">Paciente</th>
-          <th class="text-info align-middle text-center">Procedimento</th>
-          <th class="text-info align-middle text-center">Nº de Olhos</th>
-          <th class="text-info align-middle text-center">Olho(s)</th>
-          <th class="text-info align-middle text-center">Aplicação</th>
-          <th class="text-info align-middle text-center">Médico(a)</th>
-          <th class="text-info align-middle text-center">Telefone</th>
-          <th class="text-info align-middle text-center">Observação</th>
-          <th class="text-info align-middle text-center">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for agendamento in agendamentos %}
-        <tr>
-          <!-- Dados das colunas -->
-          <td class="align-middle text-center">{{ agendamento.id_paciente.prontuario }}</td>
-          <td class="align-middle text-center">{{ agendamento.id_paciente.nome }}</td>
-          <td class="align-middle text-center">{{ agendamento.id_procedimento.nome }}</td>
-          <td class="align-middle text-center">{{ agendamento.numero_de_olhos }}</td>
-          <td class="align-middle text-center">{{ agendamento.olho_agendado }}</td>
-          <td class="align-middle text-center">Aplicação</td>
-          <td class="align-middle text-center"></td>
-          <td class="align-middle text-center">{{ agendamento.id_paciente.telefone }}</td>
-          <td>
-            <div class="text-center">
-              <input type="text" name="observacao" class="form-control border-info">
-            </div>
-          </td>
-          <td class="align-middle">
-            <div class="align-middle text-center">
-              <select name="status" class="form-select border-info" {% if agendamento.status == 'confirmado' %}selected{% endif %}>
-                <option value="confirmado">Confirmado</option>
-                <option value="remarcar">Remarcar</option>
-                <option value="cancelado">Cancelado</option>
-              </select>
-            </div>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <div class="text-center">
-      <button type="submit" class="btn btn-info text-white">Atualizar</button>
-    </div>
+  <h2 class="text-center my-4 text-info">Confirmar Agendamentos</h2>
+  <table class="table table-striped table-borderless table-hover">
+    <thead>
+      <tr>
+        <th class="text-info align-middle text-center">Prontuário</th>
+        <th class="text-info align-middle text-center">Paciente</th>
+        <th class="text-info align-middle text-center">Procedimento</th>
+        <th class="text-info align-middle text-center">Nº de Olhos</th>
+        <th class="text-info align-middle text-center">Olho(s)</th>
+        <th class="text-info align-middle text-center">Aplicação</th>
+        <th class="text-info align-middle text-center">Médico</th>
+        <th class="text-info align-middle text-center">Telefone</th>
+        <th class="text-info align-middle text-center">Status</th>
+        <th class="text-info align-middle text-center">Observação</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for agendamento in agendamentos %}
+      <tr>
+        <!-- Dados das colunas -->
+        <td class="align-middle text-center">{{ agendamento.id_paciente.prontuario }}</td>
+        <td class="align-middle text-center">{{ agendamento.id_paciente.nome }}</td>
+        <td class="align-middle text-center">{{ agendamento.id_procedimento.nome }}</td>
+        <td class="align-middle text-center">{{ agendamento.numero_de_olhos }}</td>
+        <td class="align-middle text-center">{{ agendamento.olho_agendado }}</td>
+        <td class="align-middle text-center">Aplicação</td>
+        <td class="align-middle text-center">{{ agendamento.id_medico.nome }}</td>
+        <td class="align-middle text-center">{{ agendamento.id_paciente.telefone }}</td>
+        <td class="align-middle text-center">
+          <select name="status" class="form-select border-info" {% if agendamento.status == 'confirmado' %}selected{% endif %}>
+            <option value="confirmado">Confirmado</option>
+            <option value="remarcar">Remarcar</option>
+            <option value="cancelado">Cancelado</option>
+          </select>
+        </td>
+        <td class="align-middle text-center">
+          <input type="text" name="observacao" class="form-control border-info" value="{{ agendamento.observacao }}">
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="text-center">
+    <button type="submit" class="btn btn-info text-white">Atualizar</button>
   </div>
+</div>
     
   <!-- Restante do código HTML -->
   
