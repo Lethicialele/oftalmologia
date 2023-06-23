@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'agendamentos',
     'procedimentos',
     'pacientes',
+    'medicos',
     'menu'
 ]
 

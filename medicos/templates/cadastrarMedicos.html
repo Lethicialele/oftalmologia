@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Pacientes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+    <div class="container">
+      <a class="navbar-brand" href="#">Sistema de Clínica</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="pacientes.html">Pacientes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="procedimentos.html">Procedimentos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="agendamentos.html">Agendamentos</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2 class="text-center my-4 text-info">Cadastro de Médico</h2>
+    <form action="{% url 'cadastrarMedicos' %}" method="POST">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome:</label>
+        <input type="text" class="form-control" id="nome" name="nome" required>
+      </div>
+      <div class="mb-3">
+        <label for="especialidade" class="form-label">Especialidade:</label>
+        <input type="text" class="form-control" id="especialidade" name="especialidade" required>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label" value="NÃO INFORMADO">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+      <div class="mb-3">
+        <label for="telefone" class="form-label">Telefone:</label>
+        <input type="tel" class="form-control phone-mask" id="telefone" name="telefone" required>
+      </div>
+      <div class="mb-3">
+        <label for="data_nascimento" class="form-label">Data de Nascimento:</label>
+        <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-info text-white">Cadastrar</button>
+      </div>
+    </form>
+    <div class="mb-3">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert {% if message.tags == 'success' %}text-success{% elif message.tags == 'error' %}text-danger{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var phoneInput = document.getElementById('telefone');
+      var dataNascimentoInput = document.getElementById('data_nascimento');
+
+      // Máscara de telefone
+      phoneInput.addEventListener('input', function(e) {
+        var value = e.target.value;
+        value = value.replace(/\D/g, '');
+        value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+        value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+        e.target.value = value;
+      });
+
+      // Definir a data máxima como o dia atual
+      var today = new Date().toISOString().split('T')[0];
+      dataNascimentoInput.setAttribute('max', today);
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
