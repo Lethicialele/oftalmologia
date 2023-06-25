@@ -1,7 +1,8 @@
-from datetime import date
+from datetime import date, datetime, timedelta
 from django.shortcuts import render
+from medicos.views import mostrarMedicos
 from pacientes.views import mostrarPacientes
-from .forms import CadastroAgendamentos
+from .forms import CadastrarAgendamentos, AtualizarAgendamentos
 from procedimentos.views import mostrarProcedimentos
 from django.contrib import messages
 from .models import Agendamentos
@@ -10,7 +11,7 @@ from .models import Agendamentos
 
 def cadastrarAgendamentos(request):
     if request.method == "POST":
-        form = CadastroAgendamentos(request.POST)
+        form = CadastrarAgendamentos(request.POST)
         if form.is_valid():
             agendamento = form.save(commit=False)
             agendamento.save()
@@ -18,28 +19,54 @@ def cadastrarAgendamentos(request):
         else:
             messages.error(request, 'Dados inválidos!')
     else:
-        form = CadastroAgendamentos()
+        form = CadastrarAgendamentos()
 
-    return render(request, 'cadastrarAgendamentos.html', {'form': form, 'pacientes': mostrarPacientes(request), 'procedimentos': mostrarProcedimentos(request)})
+    return render(request, 'cadastrarAgendamentos.html', {'form': form, 'pacientes': mostrarPacientes(request), 'procedimentos': mostrarProcedimentos(request), 'medicos': mostrarMedicos(request)})
 
-
-def confirmarAgendamentos(request):
+def filtrarAgendamentos(request):
     if request.method == "POST":
-        agendamento_id = request.POST.get('agendamento_id')
-        observacao = request.POST.get('observacao')
-        status = request.POST.get('status')
+        filtro_data = request.POST.get('filtro_data')
+        if filtro_data:
+            data = datetime.strptime(filtro_data, '%Y-%m-%d').date()
+        else:
+            data = date.today()
+    else:
+        data = date.today()
+    return confirmarAgendamentos(request, data)
 
-        try:
-            agendamento = Agendamentos.objects.get(id=agendamento_id)
-            agendamento.observacao = observacao
-            agendamento.status = status
-            agendamento.save()
-            messages.success(request, 'Agendamento atualizado com sucesso!')
-        except Agendamentos.DoesNotExist:
-            messages.error(request, 'Agendamento não encontrado.')
+def confirmarAgendamentos(request, data=None):
+    
+    if request.method == "POST":
+        agendamentos = Agendamentos.objects.filter(data_agendada=data, status__isnull=True)
+        form = AtualizarAgendamentos(request.POST)
+        if form.is_valid():
+            post_data = request.POST.copy()  # Copiar os dados do POST para manipulação
+            total_items = len(post_data.getlist('id_agendamento'))
 
-    agendamentos = Agendamentos.objects.filter(data_agendada=date.today())
-    return render(request, 'confirmarAgendamentos.html', {'agendamentos': agendamentos})
+            for contador in range(1, total_items + 1):
+                agendamento_id = post_data.getlist('id_agendamento')[contador - 1]
+                status = post_data.getlist('status')[contador - 1]
+                observacao = post_data.getlist('observacao')[contador - 1]
+
+                try:
+                    agendamento = Agendamentos.objects.get(id=agendamento_id)
+                    agendamento.status = status
+                    agendamento.observacao = observacao
+                    agendamento.save()
+                except Agendamentos.DoesNotExist:
+                    # Lidar com o caso em que o agendamento correspondente não existe
+                    pass
+
+            messages.success(request, 'Agendamentos atualizados com sucesso!')
+
+        else:
+            messages.error(request, '')
+    else:
+        agendamentos = Agendamentos.objects.filter(data_agendada=(date.today() + timedelta(days=1)), status__isnull=True)
+        form = AtualizarAgendamentos(request.POST)
+
+    return render(request, 'confirmarAgendamentos.html', {'agendamentos': agendamentos, 'form': form, "data":data})
+
 
 
 def consultarAgendaDia(request):

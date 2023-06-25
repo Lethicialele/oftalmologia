@@ -11,7 +11,7 @@ def cadastrarProcedimentos(request):
         form = CadastroProcedimentos(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Agendamento realizado com sucesso!')
+            messages.success(request, 'Procedimento cadastrado com sucesso!')
         else:
             messages.error(request, 'Dados inválidos!')
    return render(request, 'cadastrarProcedimentos.html', {})

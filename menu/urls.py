@@ -4,9 +4,9 @@ from menu import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('cadastrarPaciente/', lambda request: redirect('cadastrarPaciente', permanent=True)),
-    path('cadastrarMedico/', lambda request: redirect('cadastrarMedico', permanent=True)),
-    path('cadastrarAgendamento/', lambda request: redirect('cadastrarAgendamento', permanent=True)),
-    path('cadastrarProcedimento/', lambda request: redirect('cadastrarProcedimento', permanent=True)),
+    path('cadastrarPacientes/', lambda request: redirect('cadastrarPacientes', permanent=True)),
+    path('cadastrarMedicos/', lambda request: redirect('cadastrarMedicos', permanent=True)),
+    path('cadastrarAgendamentos/', lambda request: redirect('cadastrarAgendamentos', permanent=True)),
+    path('cadastrarProcedimentos/', lambda request: redirect('cadastrarProcedimentos', permanent=True)),
     path('consultarAgendaDia/', lambda request: redirect('consultarAgendaDia', permanent=True)),
 ]

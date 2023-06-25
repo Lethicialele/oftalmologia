@@ -10,7 +10,7 @@ def cadastrarMedicos(request):
         form = CadastroMedicos(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Paciente cadastrado com sucesso!')
+            messages.success(request, 'Médico cadastrado com sucesso!')
         else:
             messages.error(request, 'Dados inválidos!')
             

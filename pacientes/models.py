@@ -6,5 +6,5 @@ class Pacientes(models.Model):
     cpf = models.CharField(max_length=14)
     telefone = models.CharField(max_length=15)
     prontuario = models.IntegerField(null=True)
-    email = models.CharField(max_length=100, default="NÃO INFORMADO")
+    email = models.EmailField(null=True)
     data_nascimento = models.DateField(null=True)
