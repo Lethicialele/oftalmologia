@@ -21,7 +21,11 @@ def cadastrarAgendamentos(request):
     else:
         form = CadastrarAgendamentos()
 
-    return render(request, 'cadastrarAgendamentos.html', {'form': form, 'pacientes': mostrarPacientes(request), 'procedimentos': mostrarProcedimentos(request), 'medicos': mostrarMedicos(request)})
+    pacientes = mostrarPacientes(request).order_by('nome')  # Ordena os pacientes pelo campo 'nome'
+    procedimentos = mostrarProcedimentos(request).order_by('nome')  # Ordena os procedimentos pelo campo 'nome'
+    medicos = mostrarMedicos(request).order_by('nome')  # Ordena os médicos pelo campo 'nome'
+
+    return render(request, 'cadastrarAgendamentos.html', {'form': form, 'pacientes': pacientes, 'procedimentos': procedimentos, 'medicos': medicos})
 
 def filtrarAgendamentos(request):
     if request.method == "POST":

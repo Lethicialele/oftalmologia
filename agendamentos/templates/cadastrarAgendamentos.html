@@ -49,7 +49,7 @@
         <select class="form-select" id="id_paciente" name="id_paciente" required>
           <option value="" selected disabled>Selecione um paciente</option>
           {% for paciente in pacientes %}
-          <option value="{{ paciente.id }}">{{ paciente.nome }}</option>
+          <option value="{{ paciente.id }}">{{paciente.cpf}}   -   {{ paciente.nome }} </option>
           {% endfor %}
         </select>
       </div>
@@ -65,7 +65,7 @@
         </div>
         <div class="mb-3 col-auto">
           <label for="adicionar-procedimento" class="form-label">&nbsp;</label>
-          <button type="submit" class="btn btn-info text-white">Adicionar Procedimento</button>
+          <button type="submit" class="btn btn-info text-white"><a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarProcedimentos' %}">Adicionar Procedimento</a></button>
         </div>
       </div>
       <div class="mb-3">
@@ -139,6 +139,7 @@
         olhoAgendadoContainer.style.display = 'none';
       }
     });
+
   </script>
   
   
