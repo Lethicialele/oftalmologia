@@ -67,9 +67,18 @@ def confirmarAgendamentos(request, data=None):
 
     return render(request, 'confirmarAgendamentos.html', {'agendamentos': agendamentos, 'form': form, "data":data})
 
+def filtrarAgendamentosAgendaDia(request):
+    if request.method == "POST":
+        filtro_data = request.POST.get('filtro_data')
+        if filtro_data:
+            data = datetime.strptime(filtro_data, '%Y-%m-%d').date()
+        else:
+            data = date.today()
+    else:
+        data = date.today()
+    return consultarAgendaDia(request, data)
 
-
-def consultarAgendaDia(request):
-    agendamentos = Agendamentos.objects.filter(data_agendada=date.today())
+def consultarAgendaDia(request, data=date.today()+timedelta(days=1)):
+    agendamentos = Agendamentos.objects.filter(data_agendada=data)
     return render(request, 'consultarAgendaDia.html', {'agendamentos':agendamentos})
 
