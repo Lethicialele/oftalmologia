@@ -9,8 +9,33 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-info">
     <div class="container">
-      <a class="navbar-brand" href="#">Sistema de Clínica</a>
-      <!-- Resto do código do menu de navegação -->
+      <a class="navbar-brand" href="{% url 'home' %}">Sistema de Clínica</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">        
+          <li class="nav-item">
+            <a class="nav-link btn btn-info btn-sm" href="{% url 'consultarAgendaDia' %}">Agenda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-info btn-sm" href="{% url 'consultarAgendaDia' %}">Confirmar Agendamentos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarAgendamentos' %}">Agendar Paciente</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarPacientes' %}">Cadastrar Paciente</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarMedicos' %}">Cadastrar Médico</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarProcedimentos' %}">Incluir Procedimento</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 
