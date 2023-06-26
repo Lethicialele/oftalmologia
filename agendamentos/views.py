@@ -39,12 +39,11 @@ def filtrarAgendamentos(request):
     return confirmarAgendamentos(request, data)
 
 def confirmarAgendamentos(request, data=None):
-    
     if request.method == "POST":
         agendamentos = Agendamentos.objects.filter(data_agendada=data, status__isnull=True)
         form = AtualizarAgendamentos(request.POST)
         if form.is_valid():
-            post_data = request.POST.copy()  # Copiar os dados do POST para manipulação
+            post_data = request.POST.copy()
             total_items = len(post_data.getlist('id_agendamento'))
 
             for contador in range(1, total_items + 1):
@@ -67,9 +66,14 @@ def confirmarAgendamentos(request, data=None):
             messages.error(request, '')
     else:
         agendamentos = Agendamentos.objects.filter(data_agendada=(date.today() + timedelta(days=1)), status__isnull=True)
-        form = AtualizarAgendamentos(request.POST)
 
-    return render(request, 'confirmarAgendamentos.html', {'agendamentos': agendamentos, 'form': form, "data":data})
+    # Ordenar agendamentos pelo nome do paciente em ordem alfabética
+    agendamentos = agendamentos.order_by('id_paciente_id__nome')
+
+    form = AtualizarAgendamentos(request.POST)
+
+    return render(request, 'confirmarAgendamentos.html', {'agendamentos': agendamentos, 'form': form, 'data': data})
+
 
 def filtrarAgendamentosAgendaDia(request):
     if request.method == "POST":
@@ -82,7 +86,6 @@ def filtrarAgendamentosAgendaDia(request):
         data = date.today()
     return consultarAgendaDia(request, data)
 
-def consultarAgendaDia(request, data=date.today()+timedelta(days=1)):
-    agendamentos = Agendamentos.objects.filter(data_agendada=data)
-    return render(request, 'consultarAgendaDia.html', {'agendamentos':agendamentos})
-
+def consultarAgendaDia(request, data=date.today() + timedelta(days=1)):
+    agendamentos = Agendamentos.objects.filter(data_agendada=data).order_by('id_paciente_id__nome')
+    return render(request, 'consultarAgendaDia.html', {'agendamentos': agendamentos})
