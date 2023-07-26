@@ -13,7 +13,7 @@ def cadastrarAgendamentos(request):
     if request.method == "POST":
         form = CadastrarAgendamentos(request.POST)
         if form.is_valid():
-            agendamento = form.save(commit=False)
+            agendamento = form.save(commit=False)            
             agendamento.save()
             messages.success(request, 'Agendamento realizado com sucesso!')
         else:
@@ -41,6 +41,7 @@ def filtrarAgendamentos(request):
 def confirmarAgendamentos(request, data=None):
     if request.method == "POST":
         agendamentos = Agendamentos.objects.filter(data_agendada=data, status__isnull=True)
+        print(request.POST)
         form = AtualizarAgendamentos(request.POST)
         if form.is_valid():
             post_data = request.POST.copy()

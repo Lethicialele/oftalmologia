@@ -18,3 +18,12 @@ class Agendamentos(models.Model):
     observacao = models.CharField(max_length=500, blank=True, null=True)
     status = models.CharField(max_length=20, blank=True, null=True)
     atendido = models.BooleanField(default=False)
+    aplicacao_atual = models.IntegerField(null= True, default=0)
+    quantidade_aplicacoes_necessarias = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            procedimento = self.id_procedimento
+            self.quantidade_aplicacoes_necessarias = procedimento.quantidade_aplicacoes
+
+        super().save(*args, **kwargs)
