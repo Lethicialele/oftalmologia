@@ -16,7 +16,7 @@ class Agendamentos(models.Model):
     data_agendada = models.DateField()
     diagnostico = models.CharField(max_length=500, null=True)
     observacao = models.CharField(max_length=500, blank=True, null=True)
-    status = models.CharField(max_length=20, blank=True, null=True)
+    status = models.CharField(max_length=20, default='não confirmado')
     atendido = models.BooleanField(default=False)
     aplicacao_atual = models.IntegerField(null= True, default=0)
     quantidade_aplicacoes_necessarias = models.IntegerField(default=0)

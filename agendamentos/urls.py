@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('cadastrarAgendamentos/', views.cadastrarAgendamentos, name="cadastrarAgendamentos"),
     path('consultarAgendaDia/', views.consultarAgendaDia, name="consultarAgendaDia"),
+    path('gerarRelatorio/', views.gerarRelatorio, name="gerarRelatorio"),
     path('confirmarAgendamentos/', views.confirmarAgendamentos, name="confirmarAgendamentos"),
     path('filtrarAgendamentos/', views.filtrarAgendamentos, name="filtrarAgendamentos"),
     path('filtrarAgendamentosAgendaDia/', views.filtrarAgendamentosAgendaDia, name="filtrarAgendamentosAgendaDia"),

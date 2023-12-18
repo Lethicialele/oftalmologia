@@ -1,4 +1,7 @@
 from datetime import date, datetime, timedelta
+import os
+from django.conf import settings
+from django.http import HttpResponse
 from django.shortcuts import render
 from medicos.views import mostrarMedicos
 from pacientes.views import mostrarPacientes
@@ -6,8 +9,8 @@ from .forms import CadastrarAgendamentos, AtualizarAgendamentos
 from procedimentos.views import mostrarProcedimentos
 from django.contrib import messages
 from .models import Agendamentos
-
-# Create your views here.
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 def cadastrarAgendamentos(request):
     if request.method == "POST":
@@ -40,34 +43,37 @@ def filtrarAgendamentos(request):
 
 def confirmarAgendamentos(request, data=None):
     if request.method == "POST":
-        agendamentos = Agendamentos.objects.filter(data_agendada=data, status__isnull=True)
-        print(request.POST)
-        form = AtualizarAgendamentos(request.POST)
-        if form.is_valid():
-            post_data = request.POST.copy()
-            total_items = len(post_data.getlist('id_agendamento'))
+        post_data = request.POST.copy()
+        total_items = len(post_data.getlist('id_agendamento'))
 
-            for contador in range(1, total_items + 1):
-                agendamento_id = post_data.getlist('id_agendamento')[contador - 1]
-                status = post_data.getlist('status')[contador - 1]
-                observacao = post_data.getlist('observacao')[contador - 1]
-
-                try:
-                    agendamento = Agendamentos.objects.get(id=agendamento_id)
-                    agendamento.status = status
-                    agendamento.observacao = observacao
-                    agendamento.save()
-                except Agendamentos.DoesNotExist:
-                    # Lidar com o caso em que o agendamento correspondente não existe
-                    pass
-
-            messages.success(request, 'Agendamentos atualizados com sucesso!')
-
-        else:
-            messages.error(request, '')
+        for contador in range(0, total_items):
+            agendamento_id = post_data.getlist('id_agendamento')[contador]
+            status = post_data.getlist('status')[contador]
+            observacao = post_data.getlist('observacao')[contador]
+            if(status == 'não confirmado') :continue
+            try:
+                agendamento = Agendamentos.objects.get(id=agendamento_id)               
+                form = AtualizarAgendamentos({'id': agendamento_id, 'status': status, 
+                                              'observacao': observacao}, instance=agendamento)
+                
+                if form.is_valid():
+                    form.save()
+                else:
+                    messages.error(request, '')
+            except Agendamentos.DoesNotExist:
+                # Lidar com o caso em que o agendamento correspondente não existe
+                pass
+        print(data)
+        agendamentos = Agendamentos.objects.filter(data_agendada=data, status="não confirmado")
+        messages.success(request, 'Agendamentos atualizados com sucesso!')
     else:
-        agendamentos = Agendamentos.objects.filter(data_agendada=(date.today() + timedelta(days=1)), status__isnull=True)
-
+        data = request.GET.get('data')
+        if(data == None) :
+            data = date.today() + timedelta(days=1)
+        else :
+            data = date.fromisoformat(data)
+        agendamentos = Agendamentos.objects.filter(data_agendada=data, status="não confirmado")       
+    
     # Ordenar agendamentos pelo nome do paciente em ordem alfabética
     agendamentos = agendamentos.order_by('id_paciente_id__nome')
 
@@ -90,3 +96,36 @@ def filtrarAgendamentosAgendaDia(request):
 def consultarAgendaDia(request, data=date.today() + timedelta(days=1)):
     agendamentos = Agendamentos.objects.filter(data_agendada=data).order_by('id_paciente_id__nome')
     return render(request, 'consultarAgendaDia.html', {'agendamentos': agendamentos})
+
+def gerarRelatorio(request):
+   # Recupere os dados necessários para o relatório
+    agendamentos = Agendamentos.objects.all()  # Substitua isso pela lógica de obtenção de dados desejada
+
+    # Carregue o template HTML
+    template_path = 'relatorioTemplate.html'  # Substitua pelo caminho do seu template HTML
+    template = get_template(template_path)
+    context = {'agendamentos': agendamentos}
+
+    # Renderize o template HTML
+    html = template.render(context)
+
+    # Crie um objeto de resposta HttpResponse com o cabeçalho de PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="relatorio.pdf"'
+
+    # Crie o PDF real usando o HTML renderizado
+    pisa_status = pisa.CreatePDF(
+        html, dest=response, encoding='utf-8',
+        link_callback=lambda uri, _: default_link_callback(uri, request)
+    )
+
+    # Se o PDF foi criado com sucesso, retorne-o na resposta
+    if pisa_status.err:
+        return HttpResponse('Erro ao gerar o relatório em PDF', status=500)
+    return response
+
+def default_link_callback(uri, req):
+    # Converte links de HTML para caminhos de sistema de arquivos
+    if uri.startswith('http://') or uri.startswith('https://'):
+        return uri
+    return os.path.join(settings.MEDIA_ROOT, uri)
