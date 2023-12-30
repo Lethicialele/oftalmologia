@@ -5,10 +5,8 @@ from . import views
 urlpatterns = [
     path('cadastrarAgendamentos/', views.cadastrarAgendamentos, name="cadastrarAgendamentos"),
     path('consultarAgendaDia/', views.consultarAgendaDia, name="consultarAgendaDia"),
-    path('gerarRelatorio/', views.gerarRelatorio, name="gerarRelatorio"),
-    path('confirmarAgendamentos/', views.confirmarAgendamentos, name="confirmarAgendamentos"),
-    path('filtrarAgendamentos/', views.filtrarAgendamentos, name="filtrarAgendamentos"),
-    path('filtrarAgendamentosAgendaDia/', views.filtrarAgendamentosAgendaDia, name="filtrarAgendamentosAgendaDia"),
+    path('imprimirAgenda/<str:data_selecionada>/', views.imprimirAgenda, name='imprimirAgenda'),
+    path('confirmarAgendamentos/', views.confirmarAgendamentos, name='confirmarAgendamentos'),
     path('cadastrarPacientes/', lambda request: redirect('cadastrarPacientes', permanent=True)),
     path('cadastrarMedicos/', lambda request: redirect('cadastrarMedicos', permanent=True)),
     path('cadastrarAgendamentos/', lambda request: redirect('cadastrarAgendamentos', permanent=True)),
