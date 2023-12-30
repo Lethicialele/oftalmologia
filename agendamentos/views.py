@@ -32,17 +32,18 @@ def cadastrarAgendamentos(request):
 
 def confirmarAgendamentos(request):
     if request.method == "POST":
+        print(request.POST)
         post_data = request.POST.copy()
         total_items = len(post_data.getlist('id_agendamento'))
-        status_filtrar = request.POST.get('status_filtrar')  # Adicione esta linha
 
         for contador in range(0, total_items):
             agendamento_id = post_data.getlist('id_agendamento')[contador]
             status = post_data.getlist('status')[contador]
+            print(status)
             observacao = post_data.getlist('observacao')[contador]
-            if status == 'não confirmado':
+            if status in ['não confirmado', 'cancelado']:
+                print("Status é não confirmado ou cancelado") 
                 continue
-
             try:
                 agendamento = Agendamentos.objects.get(id=agendamento_id)
                 form = AtualizarAgendamentos({'id': agendamento_id, 'status': status, 'observacao': observacao}, instance=agendamento)
@@ -50,18 +51,29 @@ def confirmarAgendamentos(request):
                 if form.is_valid():
                     form.save()
 
-                    # Atualize o oct e calcule a próxima data útil
-                    agendamento.oct += 1
-                    agendamento.data_agendada = calcular_proximo_dia_util(agendamento.data_agendada)
+                    # Adicione a lógica para agendar automaticamente 30 dias úteis após a data_agendada
+                    if status in ['confirmado', 'remarcar']:
+                        proxima_data = calcular_proxima_data(agendamento.data_agendada)
+                        agendamento.data_agendada = proxima_data
+                        if status == 'confirmado':
+                            agendamento.atendido += 1 
+                            print('Entrou if confirmado')
+                            if agendamento.atendido==3:
+                                agendamento.oct = True
+                                agendamento.status = 'concluido'
+                                print('Entrou if oct')
+                        agendamento.status = 'não confirmado' 
+                        messages.success(request, 'Agendamentos atualizados com sucesso!')   
+                    elif status == 'cancelado':
+                        print('Entrou elif cancelado')
+                        agendamento.status = 'cancelado'
                     agendamento.save()
-
+                    print('Status após alterações: {agendamento.status}')
                 else:
                     messages.error(request, '')
             except Agendamentos.DoesNotExist:
                 # Lidar com o caso em que o agendamento correspondente não existe
                 pass
-
-        messages.success(request, 'Agendamentos atualizados com sucesso!')
 
     data_selecionada = request.POST.get('data_selecionada')
     if data_selecionada is None:
@@ -69,19 +81,13 @@ def confirmarAgendamentos(request):
     else:
         data_selecionada = datetime.strptime(data_selecionada, '%Y-%m-%d').date()
 
-    print(data_selecionada)
-
     data_selecionada_formatada = data_selecionada.strftime('%Y-%m-%d')
 
-    print(data_selecionada_formatada)
-
-    # Aplique a condição do status ao filtro
-    agendamentos = Agendamentos.objects.filter(data_agendada=data_selecionada, status=status_filtrar).order_by(
-        'id_paciente_id__nome')
+    agendamentos = Agendamentos.objects.filter(data_agendada=data_selecionada, status__in=['não confirmado', 'cancelado']).order_by('id_paciente_id__nome')
 
     form = AtualizarAgendamentos(request.POST)
 
-    return render(request, 'confirmarAgendamentos.html', {'agendamentos': agendamentos, 'form': form, 'data_selecionada': data_selecionada_formatada, 'status_filtrar': status_filtrar})
+    return render(request, 'confirmarAgendamentos.html', {'agendamentos': agendamentos, 'form': form, 'data_selecionada': data_selecionada_formatada})
 
 def consultarAgendaDia(request):
     if request.method == "POST":
