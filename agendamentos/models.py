@@ -17,9 +17,11 @@ class Agendamentos(models.Model):
     diagnostico = models.CharField(max_length=500, null=True)
     observacao = models.CharField(max_length=500, blank=True, null=True)
     status = models.CharField(max_length=20, default='não confirmado')
-    atendido = models.BooleanField(default=False)
+    atendido = models.PositiveIntegerField(default=0)
     aplicacao_atual = models.IntegerField(null= True, default=0)
     quantidade_aplicacoes_necessarias = models.IntegerField(default=0)
+    historico = models.TextField(default='')
+    numero_atualizacoes = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if not self.pk:

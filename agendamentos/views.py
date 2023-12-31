@@ -39,21 +39,52 @@ def confirmarAgendamentos(request):
             agendamento_id = post_data.getlist('id_agendamento')[contador]
             status = post_data.getlist('status')[contador]
             observacao = post_data.getlist('observacao')[contador]
-            if status == 'não confirmado':
-                continue
-
             try:
+                print('entrou no try')
                 agendamento = Agendamentos.objects.get(id=agendamento_id)
                 form = AtualizarAgendamentos({'id': agendamento_id, 'status': status, 'observacao': observacao}, instance=agendamento)
+                if form.is_valid():                    
+                    if status == 'não confirmado':
+                        agendamento.observacao= observacao
+                        historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
+                        agendamento.historico += historico_entry
+                        agendamento.numero_atualizacoes += 1                        
+                        print('if não confirmado')
+                        form.save()
+                    elif status == 'confirmado':
+                        agendamento.numero_atualizacoes += 1
+                        agendamento.atendido += 1
+                        if agendamento.atendido == 3:
+                            agendamento.oct = True
+                            agendamento.status = 'concluido'
+                            historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
+                            agendamento.historico += historico_entry
+                            print('entrou if concluido')
+                        else:
+                            historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
+                            agendamento.historico += historico_entry
+                            agendamento.status = 'não confirmado'
+                            proxima_data = calcular_proxima_data(agendamento.data_agendada)
+                            agendamento.data_agendada = proxima_data
+                            agendamento.observacao = ''
+                        print('confirmado')
+                    elif status == 'remarcar':
+                        agendamento.numero_atualizacoes += 1                        
+                        historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
+                        agendamento.historico += historico_entry
+                        agendamento.status = 'não confirmado'
+                        proxima_data = calcular_proxima_data(agendamento.data_agendada)
+                        agendamento.data_agendada = proxima_data
+                        agendamento.observacao = ''
+                        print('remarcar')
+                    elif status == 'cancelado':
+                        historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
+                        agendamento.historico += historico_entry
+                        agendamento.status = 'cancelado'
+                        agendamento.observacao = ''
+                        agendamento.numero_atualizacoes += 1
 
-                if form.is_valid():
-                    form.save()
-
-                    # Atualize o oct e calcule a próxima data útil
-                    agendamento.oct += 1
-                    agendamento.data_agendada = calcular_proxima_data(agendamento.data_agendada)
                     agendamento.save()
-
                 else:
                     messages.error(request, '')
             except Agendamentos.DoesNotExist:
@@ -94,7 +125,7 @@ def consultarAgendaDia(request):
     else:
         data = proximo_dia_util_apos(date.today())
 
-    agendamentos = Agendamentos.objects.filter(data_agendada=data).order_by('id_paciente_id__nome')
+    agendamentos = Agendamentos.objects.filter(data_agendada=data, status__in=['não confirmado', 'cancelado', 'confirmado', 'remarcar']).order_by('id_paciente_id__nome')
     return render(request, 'consultarAgendaDia.html', {'agendamentos': agendamentos, 'data': data})
 
 def gerarRelatorio(request):
