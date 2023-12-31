@@ -34,8 +34,7 @@ def confirmarAgendamentos(request):
     if request.method == "POST":
         post_data = request.POST.copy()
         total_items = len(post_data.getlist('id_agendamento'))
-        status_filtrar = request.POST.get('status_filtrar')  # Adicione esta linha
-
+        
         for contador in range(0, total_items):
             agendamento_id = post_data.getlist('id_agendamento')[contador]
             status = post_data.getlist('status')[contador]
@@ -52,7 +51,7 @@ def confirmarAgendamentos(request):
 
                     # Atualize o oct e calcule a próxima data útil
                     agendamento.oct += 1
-                    agendamento.data_agendada = calcular_proximo_dia_util(agendamento.data_agendada)
+                    agendamento.data_agendada = calcular_proxima_data(agendamento.data_agendada)
                     agendamento.save()
 
                 else:
@@ -76,12 +75,14 @@ def confirmarAgendamentos(request):
     print(data_selecionada_formatada)
 
     # Aplique a condição do status ao filtro
-    agendamentos = Agendamentos.objects.filter(data_agendada=data_selecionada, status=status_filtrar).order_by(
+    agendamentos = Agendamentos.objects.filter(data_agendada=data_selecionada, status__in=['não confirmado', 'cancelado']).order_by(
         'id_paciente_id__nome')
 
     form = AtualizarAgendamentos(request.POST)
+    status = ''
+    print(status)
 
-    return render(request, 'confirmarAgendamentos.html', {'agendamentos': agendamentos, 'form': form, 'data_selecionada': data_selecionada_formatada, 'status_filtrar': status_filtrar})
+    return render(request, 'confirmarAgendamentos.html', {'agendamentos': agendamentos, 'form': form, 'data_selecionada': data_selecionada_formatada, 'status': status })
 
 def consultarAgendaDia(request):
     if request.method == "POST":
