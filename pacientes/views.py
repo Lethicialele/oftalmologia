@@ -5,6 +5,8 @@ from .forms import CadastroPacientes
 from django.contrib import messages
 
 # Create your views here.
+
+
 def cadastrarPacientes(request):
 
     if request.method == "POST":
@@ -13,9 +15,10 @@ def cadastrarPacientes(request):
             form.save()
             messages.success(request, 'Paciente cadastrado com sucesso!')
         else:
-            messages.error(request, 'Dados inválidos!')
-            
+            messages.error(request, 'Dados inválidos! Verifique os dados ou se o paciente já é cadastrado')
+
     return render(request, 'cadastrarPacientes.html', {})
+
 
 def mostrarPacientes(request):
     return Pacientes.objects.all()

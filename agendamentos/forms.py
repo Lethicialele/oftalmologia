@@ -4,7 +4,7 @@ from .models import Agendamentos
 class CadastrarAgendamentos(forms.ModelForm):
     class Meta:
         model = Agendamentos
-        fields = ('id_paciente', 'id_procedimento', 'id_medico', 'numero_de_olhos', 'olho_agendado', 'data_agendada', 'diagnostico')
+        fields = ('id_paciente', 'id_procedimento', 'numero_de_olhos', 'olho_agendado', 'data_agendada', 'diagnostico')
 
 class AtualizarAgendamentos(forms.ModelForm):
     id = forms.IntegerField()
