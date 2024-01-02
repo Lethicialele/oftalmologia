@@ -16,8 +16,7 @@ def cadastrarAgendamentos(request):
     if request.method == "POST":
         form = CadastrarAgendamentos(request.POST)
         if form.is_valid():
-            agendamento = form.save(commit=False)            
-            agendamento.save()
+            form.save()
             messages.success(request, 'Agendamento realizado com sucesso!')
         else:
             messages.error(request, 'Dados inválidos!')
@@ -35,59 +34,80 @@ def confirmarAgendamentos(request):
         print(request.POST)
         post_data = request.POST.copy()
         total_items = len(post_data.getlist('id_agendamento'))
-
+        
         for contador in range(0, total_items):
             agendamento_id = post_data.getlist('id_agendamento')[contador]
             status = post_data.getlist('status')[contador]
             print(status)
             observacao = post_data.getlist('observacao')[contador]
-            if status in ['não confirmado', 'cancelado']:
-                print("Status é não confirmado ou cancelado") 
-                continue
             try:
+                print('entrou no try')
                 agendamento = Agendamentos.objects.get(id=agendamento_id)
                 form = AtualizarAgendamentos({'id': agendamento_id, 'status': status, 'observacao': observacao}, instance=agendamento)
-
-                if form.is_valid():
-                    form.save()
-
-                    # Adicione a lógica para agendar automaticamente 30 dias úteis após a data_agendada
-                    if status in ['confirmado', 'remarcar']:
+                if form.is_valid():                    
+                    if status == 'não confirmado':
+                        agendamento.observacao = observacao or ""
+                        historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
+                        agendamento.historico += historico_entry
+                        agendamento.numero_atualizacoes += 1                        
+                        print('if não confirmado')
+                        form.save()
+                    elif status == 'confirmado':
+                        agendamento.numero_atualizacoes += 1
+                        agendamento.atendido += 1
+                        if agendamento.atendido == 3:
+                            agendamento.oct = True
+                            agendamento.status = 'concluido'
+                            historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
+                            agendamento.historico += historico_entry
+                            agendamento.observacao = observacao or ""
+                            print('entrou if concluido')
+                        else:
+                            historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
+                            agendamento.historico += historico_entry
+                            agendamento.status = 'não confirmado'
+                            agendamento.observacao = observacao or ""
+                        print('confirmado')
+                    elif status == 'remarcar':
+                        agendamento.numero_atualizacoes += 1                        
+                        historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
+                        agendamento.historico += historico_entry
+                        agendamento.status = 'não confirmado'
                         proxima_data = calcular_proxima_data(agendamento.data_agendada)
                         agendamento.data_agendada = proxima_data
-                        if status == 'confirmado':
-                            agendamento.atendido += 1 
-                            print('Entrou if confirmado')
-                            if agendamento.atendido==3:
-                                agendamento.oct = True
-                                agendamento.status = 'concluido'
-                                print('Entrou if oct')
-                        agendamento.status = 'não confirmado' 
-                        messages.success(request, 'Agendamentos atualizados com sucesso!')   
+                        agendamento.observacao = observacao or ""
+                        print('remarcar')
                     elif status == 'cancelado':
-                        print('Entrou elif cancelado')
+                        historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
+                        agendamento.historico += historico_entry
                         agendamento.status = 'cancelado'
+                        agendamento.observacao = observacao or ""
+                        agendamento.numero_atualizacoes += 1
+
                     agendamento.save()
-                    print('Status após alterações: {agendamento.status}')
                 else:
                     messages.error(request, '')
             except Agendamentos.DoesNotExist:
                 # Lidar com o caso em que o agendamento correspondente não existe
                 pass
 
-    data_selecionada = request.POST.get('data_selecionada')
+        messages.success(request, 'Agendamentos atualizados com sucesso!')
+    data_selecionada = request.GET.get('data_selecionada')
     if data_selecionada is None:
-        data_selecionada = date.today() + timedelta(days=1)
-    else:
-        data_selecionada = datetime.strptime(data_selecionada, '%Y-%m-%d').date()
+        data_selecionada = f'{(date.today() + timedelta(days=1))}'
+    data_selecionada = datetime.strptime(data_selecionada, '%Y-%m-%d').date()
 
-    data_selecionada_formatada = data_selecionada.strftime('%Y-%m-%d')
+    print(data_selecionada)
 
-    agendamentos = Agendamentos.objects.filter(data_agendada=data_selecionada, status__in=['não confirmado', 'cancelado']).order_by('id_paciente_id__nome')
+    # Aplique a condição do status ao filtro
+    agendamentos = Agendamentos.objects.filter(data_agendada=data_selecionada, status__in=['não confirmado', 'cancelado']).order_by(
+        'id_paciente_id__nome')
 
     form = AtualizarAgendamentos(request.POST)
+    status = ''
+    print(status)
 
-    return render(request, 'confirmarAgendamentos.html', {'agendamentos': agendamentos, 'form': form, 'data_selecionada': data_selecionada_formatada})
+    return render(request, 'confirmarAgendamentos.html', {'agendamentos': agendamentos, 'form': form, 'data_selecionada': data_selecionada, 'status': status })
 
 def consultarAgendaDia(request):
     if request.method == "POST":
@@ -95,11 +115,10 @@ def consultarAgendaDia(request):
         if filtro_data:
             data = datetime.strptime(filtro_data, '%Y-%m-%d').date()
         else:
-            data = proximo_dia_util_apos(date.today())
+            data = date.today() + timedelta(days=1)
     else:
-        data = proximo_dia_util_apos(date.today())
-
-    agendamentos = Agendamentos.objects.filter(data_agendada=data).order_by('id_paciente_id__nome')
+        data = date.today() + timedelta(days=1)
+    agendamentos = Agendamentos.objects.filter(data_agendada=data, status__in=['não confirmado', 'cancelado', 'confirmado', 'remarcar']).order_by('id_paciente_id__nome')
     return render(request, 'consultarAgendaDia.html', {'agendamentos': agendamentos, 'data': data})
 
 def gerarRelatorio(request):
@@ -132,8 +151,7 @@ def gerarRelatorio(request):
 def imprimirAgenda(request, data_selecionada):
     if data_selecionada is None:
         # Se a data não foi fornecida, definir como o próximo dia útil
-        data_atual = datetime.now()
-        data_selecionada = proximo_dia_util_apos(data_atual.date())
+        data_selecionada = date.today() + timedelta(days=1)
 
     if request.method == 'POST':
         # Obtenha a lista de IDs dos agendamentos selecionados
@@ -178,9 +196,3 @@ def calcular_proxima_data(data_inicial):
             dias_uteis += 1
 
     return data_inicial
-
-def proximo_dia_util_apos(data):
-    um_dia = timedelta(days=1)
-    while data.weekday() in [5, 6]:  # 5 é sábado, 6 é domingo
-        data += um_dia
-    return data

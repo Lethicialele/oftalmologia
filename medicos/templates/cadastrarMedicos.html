@@ -41,41 +41,49 @@
 
   <div class="container">
     <h2 class="text-center my-4 text-info">Cadastro de Médico</h2>
-    <form action="{% url 'cadastrarMedicos' %}" method="POST">
+    <form action="{% url 'cadastrarMedicos' %}" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="mb-3">
-        <label for="nome" class="form-label">Nome:</label>
-        <input type="text" class="form-control" id="nome" name="nome" required>
+          <label for="crm" class="form-label">CRM:</label>
+          <input type="text" class="form-control" id="crm" name="crm" required>
       </div>
       <div class="mb-3">
-        <label for="especialidade" class="form-label">Especialidade:</label>
-        <input type="text" class="form-control" id="especialidade" name="especialidade" required>
+          <label for="nome" class="form-label">Nome:</label>
+          <input type="text" class="form-control" id="nome" name="nome" required>
       </div>
       <div class="mb-3">
-        <label for="email" class="form-label" value="NÃO INFORMADO">Email:</label>
-        <input type="email" class="form-control" id="email" name="email" required>
+          <label for="especialidade" class="form-label">Especialidade:</label>
+          <input type="text" class="form-control" id="especialidade" name="especialidade" required>
       </div>
       <div class="mb-3">
-        <label for="telefone" class="form-label">Telefone:</label>
-        <input type="tel" class="form-control phone-mask" id="telefone" name="telefone" required>
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" class="form-control" id="email" name="email" required>
       </div>
       <div class="mb-3">
-        <label for="data_nascimento" class="form-label">Data de Nascimento:</label>
-        <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+          <label for="telefone" class="form-label">Telefone:</label>
+          <input type="tel" class="form-control phone-mask" id="telefone" name="telefone" required>
+      </div>
+      <div class="mb-3">
+        <label for="senha" class="form-label">Senha:</label>
+        <input type="password" class="form-control" id="senha" name="senha" required>
+      </div>
+      <div class="mb-3">
+          <label for="assinatura" class="form-label">Assinatura:</label>
+          <input type="file" class="form-control-file" id="assinatura" name="assinatura">
       </div>
       <div class="text-center">
-        <button type="submit" class="btn btn-info text-white">Cadastrar</button>
+          <button type="submit" class="btn btn-info text-white">Cadastrar</button>
       </div>
-    </form>
-    <div class="mb-3">
+  </form>
+  <div class="mb-3">
       {% if messages %}
-        {% for message in messages %}
-          <div class="alert {% if message.tags == 'success' %}text-success{% elif message.tags == 'error' %}text-danger{% endif %}">
-            {{ message }}
-          </div>
-        {% endfor %}
+          {% for message in messages %}
+              <div class="alert {% if message.tags == 'success' %}text-success{% elif message.tags == 'error' %}text-danger{% endif %}">
+                  {{ message }}
+              </div>
+          {% endfor %}
       {% endif %}
-    </div>
+  </div>
   </div>
 
   <script>

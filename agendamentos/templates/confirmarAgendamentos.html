@@ -29,9 +29,6 @@
             <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarPacientes' %}">Cadastrar Paciente</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarMedicos' %}">Cadastrar Médico</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarProcedimentos' %}">Incluir Procedimento</a>
           </li>
         </ul>
@@ -48,7 +45,7 @@
       <div class="col-sm"></div>
       <div class="col-sm">
         <div class="row">
-          <form action="{% url 'confirmarAgendamentos' %}" method="POST">
+          <form action="{% url 'confirmarAgendamentos' %}" method="GET">
             {% csrf_token %}
             <div class="mb-3">
               <label for="filtro_data" class="form-label">Filtrar por data:</label>
@@ -75,8 +72,7 @@
               <th class="text-info align-middle text-center">Procedimento</th>
               <th class="text-info align-middle text-center">Nº de Olhos</th>
               <th class="text-info align-middle text-center">Olho(s)</th>
-              <th class="text-info align-middle text-center">Aplicação</th>
-              <th class="text-info align-middle text-center">Médico</th>
+              <th class="text-info align-middle text-center">Aplicação</th>              
               <th class="text-info align-middle text-center">Telefone</th>
               <th class="text-info align-middle text-center">Status</th>
               <th class="text-info align-middle text-center">Observação</th>
@@ -94,7 +90,6 @@
               <td class="align-middle text-center">{{ agendamento.numero_de_olhos }}</td>
               <td class="align-middle text-center">{{ agendamento.olho_agendado }}</td>
               <td class="align-middle text-center">Aplicação</td>
-              <td class="align-middle text-center">{{ agendamento.id_medico.nome }}</td>
               <td class="align-middle text-center">{{ agendamento.id_paciente.telefone }}</td>
               <td class="align-middle text-center">
                 <select name="status" class="form-select border-info" style="width: auto;">
@@ -105,7 +100,7 @@
                 </select>
               </td>
               <td class="align-middle text-center">
-                <input type="text" name="observacao" class="form-control border-info">
+                <input type="text" name="observacao" value="{{ agendamento.observacao }}" class="form-control border-info">
               </td>
             </tr>
             {% endfor %}
