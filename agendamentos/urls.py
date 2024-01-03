@@ -13,4 +13,5 @@ urlpatterns = [
     path('cadastrarProcedimentos/', lambda request: redirect('cadastrarProcedimentos', permanent=True)),
     path('consultarAgendaDia/', lambda request: redirect('consultarAgendaDia', permanent=True)),
     path('home', lambda request: redirect('', permanent=True)),
+
 ]

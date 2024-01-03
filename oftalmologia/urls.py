@@ -18,6 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
+from medicos import views as medicosView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +27,7 @@ urlpatterns = [
     path('pacientes/', include('pacientes.urls')),
     path('medicos/', include('medicos.urls')),
     path('procedimentos/', include('procedimentos.urls')),
-    path('agendamentos/', include('agendamentos.urls'))
+    path('agendamentos/', include('agendamentos.urls')),
+    path('sair', medicosView.sair, name="sair"),
+
 ]

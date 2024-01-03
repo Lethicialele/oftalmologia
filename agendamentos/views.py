@@ -27,11 +27,10 @@ def cadastrarAgendamentos(request):
     procedimentos = mostrarProcedimentos(request).order_by('nome')  # Ordena os procedimentos pelo campo 'nome'
     medicos = mostrarMedicos(request).order_by('nome')  # Ordena os médicos pelo campo 'nome'
 
-    return render(request, 'cadastrarAgendamentos.html', {'form': form, 'pacientes': pacientes, 'procedimentos': procedimentos, 'medicos': medicos})
+    return render(request, 'cadastrarAgendamentos.html', {'usuario': request.user, 'form': form, 'pacientes': pacientes, 'procedimentos': procedimentos, 'medicos': medicos})
 
 def confirmarAgendamentos(request):
     if request.method == "POST":
-        print(request.POST)
         post_data = request.POST.copy()
         total_items = len(post_data.getlist('id_agendamento'))
         
@@ -46,7 +45,7 @@ def confirmarAgendamentos(request):
                 form = AtualizarAgendamentos({'id': agendamento_id, 'status': status, 'observacao': observacao}, instance=agendamento)
                 if form.is_valid():                    
                     if status == 'não confirmado':
-                        agendamento.observacao = observacao or ""
+                        agendamento.observacao = observacao
                         historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
                         agendamento.historico += historico_entry
                         agendamento.numero_atualizacoes += 1                        
@@ -60,13 +59,13 @@ def confirmarAgendamentos(request):
                             agendamento.status = 'concluido'
                             historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
                             agendamento.historico += historico_entry
-                            agendamento.observacao = observacao or ""
+                            agendamento.observacao = observacao
                             print('entrou if concluido')
                         else:
                             historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
                             agendamento.historico += historico_entry
                             agendamento.status = 'não confirmado'
-                            agendamento.observacao = observacao or ""
+                            agendamento.observacao = observacao
                         print('confirmado')
                     elif status == 'remarcar':
                         agendamento.numero_atualizacoes += 1                        
@@ -75,13 +74,13 @@ def confirmarAgendamentos(request):
                         agendamento.status = 'não confirmado'
                         proxima_data = calcular_proxima_data(agendamento.data_agendada)
                         agendamento.data_agendada = proxima_data
-                        agendamento.observacao = observacao or ""
+                        agendamento.observacao = observacao
                         print('remarcar')
                     elif status == 'cancelado':
                         historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
                         agendamento.historico += historico_entry
                         agendamento.status = 'cancelado'
-                        agendamento.observacao = observacao or ""
+                        agendamento.observacao = observacao
                         agendamento.numero_atualizacoes += 1
 
                     agendamento.save()
@@ -105,9 +104,8 @@ def confirmarAgendamentos(request):
 
     form = AtualizarAgendamentos(request.POST)
     status = ''
-    print(status)
-
-    return render(request, 'confirmarAgendamentos.html', {'agendamentos': agendamentos, 'form': form, 'data_selecionada': data_selecionada, 'status': status })
+       
+    return render(request, 'confirmarAgendamentos.html', {'usuario': request.user, 'agendamentos': agendamentos, 'form': form, 'data_selecionada': data_selecionada, 'status': status })
 
 def consultarAgendaDia(request):
     if request.method == "POST":
@@ -118,8 +116,8 @@ def consultarAgendaDia(request):
             data = date.today() + timedelta(days=1)
     else:
         data = date.today() + timedelta(days=1)
-    agendamentos = Agendamentos.objects.filter(data_agendada=data, status__in=['não confirmado', 'cancelado', 'confirmado', 'remarcar']).order_by('id_paciente_id__nome')
-    return render(request, 'consultarAgendaDia.html', {'agendamentos': agendamentos, 'data': data})
+    agendamentos = Agendamentos.objects.filter(data_agendada=data, status__in=['não confirmado', 'confirmado']).order_by('id_paciente_id__nome')
+    return render(request, 'consultarAgendaDia.html', {'usuario': request.user, 'agendamentos': agendamentos, 'data': data})
 
 def gerarRelatorio(request):
    # Recupere os dados necessários para o relatório
@@ -151,7 +149,7 @@ def gerarRelatorio(request):
 def imprimirAgenda(request, data_selecionada):
     if data_selecionada is None:
         # Se a data não foi fornecida, definir como o próximo dia útil
-        data_selecionada = date.today() + timedelta(days=1)
+        data_selecionada = f'{(date.today() + timedelta(days=1))}'
 
     if request.method == 'POST':
         # Obtenha a lista de IDs dos agendamentos selecionados
@@ -161,6 +159,7 @@ def imprimirAgenda(request, data_selecionada):
         agendamentos = Agendamentos.objects.filter(id__in=agendamento_ids, data_agendada=data_selecionada)
 
     # Crie o contexto com os dados a serem passados para o modelo
+    data_selecionada = datetime.strptime(data_selecionada, '%Y-%m-%d').date()
     context = {'agendamentos': agendamentos, 'data_selecionada': data_selecionada}
 
     # Renderize o modelo
@@ -196,3 +195,4 @@ def calcular_proxima_data(data_inicial):
             dias_uteis += 1
 
     return data_inicial
+

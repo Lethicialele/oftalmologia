@@ -1,4 +1,4 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
 from medicos.models import Medicos
 from django.contrib.auth.forms import AuthenticationForm
@@ -39,3 +39,7 @@ def loginMedicos(request):
     else:
         form = AuthenticationForm()
     return render(request, 'loginMedicos.html', {'form': form})
+
+def sair(request): 
+    logout(request)
+    return redirect('/medicos/loginMedicos/')
