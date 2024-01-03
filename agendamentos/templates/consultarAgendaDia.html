@@ -128,7 +128,7 @@
       function marcarCheckboxesConfirmados() {
         checkboxesStatus.forEach(checkbox => {
           const status = checkbox.closest('tr').querySelector('[data-status]').dataset.status;
-          if (status === 'confirmado') {
+          if (status === 'confirmado'|| status === 'não confirmado') {
             checkbox.checked = true;
           }
         });
