@@ -49,8 +49,8 @@
       </div>
       <div class="mb-3">
         <label for="cpf" class="form-label">CPF:</label>
-        <input type="text" class="form-control cpf-mask" id="cpf" name="cpf" required>
-      </div>
+        <input type="text" class="form-control cpf-mask" id="cpf" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Informe um CPF válido" required>
+      </div>      
       <div class="mb-3">
         <label for="prontuario" class="form-label">Número do Prontuário:</label>
         <input type="text" class="form-control" id="prontuario" name="prontuario" required>
