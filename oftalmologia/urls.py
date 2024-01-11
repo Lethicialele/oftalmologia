@@ -29,5 +29,5 @@ urlpatterns = [
     path('procedimentos/', include('procedimentos.urls')),
     path('agendamentos/', include('agendamentos.urls')),
     path('sair', medicosView.sair, name="sair"),
-
+    path('loginMedicos/', medicosView.loginMedicos, name='loginMedicos'),
 ]

@@ -122,7 +122,6 @@
                 <select name="status" class="form-select border-info" style="width: auto;">
                   <option value="não confirmado" {% if agendamento.status == 'não confirmado' %}selected{% endif %}>Não confirmado</option>
                   <option value="confirmado" {% if agendamento.status == 'confirmado' %}selected{% endif %}>Confirmado</option>
-                  <option value="remarcar" {% if agendamento.status == 'remarcar' %}selected{% endif %}>Remarcar</option>
                   <option value="cancelado" {% if agendamento.status == 'cancelado' %}selected{% endif %}>Cancelado</option>
                 </select>
               </td>

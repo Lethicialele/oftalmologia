@@ -67,15 +67,6 @@ def confirmarAgendamentos(request):
                             agendamento.historico += historico_entry
                             agendamento.status = 'confirmado'
                             agendamento.observacao = observacao
-                    elif status == 'remarcar':
-                        agendamento.numero_atualizacoes += 1                        
-                        historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
-                        agendamento.historico += historico_entry
-                        agendamento.status = 'não confirmado'
-                        proxima_data = calcular_proxima_data(agendamento.data_agendada)
-                        agendamento.data_agendada = proxima_data
-                        agendamento.observacao = observacao
-                        print('remarcar')
                     elif status == 'cancelado':
                         historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
                         agendamento.historico += historico_entry
@@ -270,18 +261,6 @@ def default_link_callback(uri, req):
     if uri.startswith('http://') or uri.startswith('https://'):
         return uri
     return os.path.join(settings.MEDIA_ROOT, uri)
-
-def calcular_proxima_data(data_inicial):
-    # Lógica para calcular a próxima data útil
-    um_dia = timedelta(days=1)
-    dias_uteis = 0
-
-    while dias_uteis < 30:
-        data_inicial += um_dia
-        if data_inicial.weekday() < 5:  # Verifica se é um dia útil (segunda a sexta)
-            dias_uteis += 1
-
-    return data_inicial
 
 def consultarFilaEsperaPacientes(request):
     # Remova a parte do LIMIT para obter todos os pacientes

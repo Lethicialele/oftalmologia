@@ -136,3 +136,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = "home"
 LOGIN_URL = "login"
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587  # ou use o número de porta correto
+EMAIL_USE_TLS = True  # ou False se você não usar TLS
+EMAIL_HOST_USER = 'hupaaoftalmologia@gmail.com'
+EMAIL_HOST_PASSWORD = 'odly atzu fobi ilhl'

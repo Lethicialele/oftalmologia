@@ -29,7 +29,7 @@ class CadastrarAgendamentos(forms.ModelForm):
 
 class AtualizarAgendamentos(forms.ModelForm):
     id = forms.IntegerField()
-    status = forms.ChoiceField(choices=[('não confirmado', 'Não confirmado'), ('confirmado', 'Confirmado'), ('remarcar', 'Remarcar'), ('cancelado', 'Cancelado')], initial= 'não confirmado')
+    status = forms.ChoiceField(choices=[('não confirmado', 'Não confirmado'), ('confirmado', 'Confirmado'), ('cancelado', 'Cancelado')], initial= 'não confirmado')
     observacao = forms.CharField(widget=forms.Textarea, required=False)
 
     class Meta:
