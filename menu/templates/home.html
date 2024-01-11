@@ -18,32 +18,53 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-info">
     <div class="container">
-      <a class="navbar-brand" href="{% url 'home' %}">Oftalmologia
-        <!--img src="img/Logo.png" alt="Logo da Clínica"-->
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="col">
+        <a class="navbar-brand" href="{% url 'home' %}">Oftalmologia</a>
+      </div>
+      <button class="navbar-toggler float-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarUsuario" aria-controls="navbarUsuario" aria-expanded="false" aria-label="Toggle navigation" id="usuarioButton">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+        </svg>
+      </button>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" id="navbarNavButton">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">        
+        <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm" href="{% url 'consultarAgendaDia' %}">Agenda</a>
+            <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'consultarAgendaDia' %}">Agenda</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm" href="{% url 'confirmarAgendamentos' %}">Confirmar Agendamentos</a>
+            <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'gerarAgenda' %}">Gerar Agenda</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarAgendamentos' %}">Agendar Paciente</a>
+            <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'confirmarAgendamentos' %}">Confirmar Agendamentos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarPacientes' %}">Cadastrar Paciente</a>
+            <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'cadastrarAgendamentos' %}">Cadastrar Paciente</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarMedicos' %}">Cadastrar Médico</a>
+            <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'consultarFilaEsperaPacientes' %}">Fila de Espera</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarProcedimentos' %}">Incluir Procedimento</a>
+        </ul>
+      </div>
+      <div class="col collapse navbar-collapse justify-content-center position-static" id="navbarUsuario">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown bg-info " id="userDropdown">
+            <a class="nav-link dropdown-toggle btn btn-info btn-sm text-white text-center" href="#" role="button" data-bs-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                <path fill-rule="evenodd"
+                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+              </svg> {{ usuario|default:"Usuário" }}
+            </a>
+            <div class="dropdown-menu bg-info border-info w-100 collapse" aria-labelledby="userDropdown">
+              <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'atualizarCadastrorMedicos' %}">Meu Perfil</a>
+              <a class="nav-link btn btn-info btn-sm text-white " href="{% url 'sair' %}">Sair</a>
+            </div>
           </li>
         </ul>
       </div>
@@ -59,24 +80,22 @@
             <a href="{% url 'consultarAgendaDia' %}" class="btn btn-info btn-lg btn-block text-white">Agenda</a>
           </div>
           <div class="text-center mb-3">
+            <a href="{% url 'gerarAgenda' %}" class="btn btn-info btn-lg btn-block text-white">Gerar Agenda</a>
+          </div>
+          <div class="text-center mb-3">
             <a href="{% url 'confirmarAgendamentos' %}" class="btn btn-info btn-lg btn-block text-white">Confirmar Agendamentos</a>
           </div>
         </div>
-        <div class="col-md-6">
-          <ul class="list-group">
-            <li class="list-group-item border-0 text-center">
-              <a href="{% url 'cadastrarAgendamentos' %}" class="btn btn-info btn-lg btn-block text-white">Agendar Paciente</a>
-            </li>
-            <li class="list-group-item border-0 text-center">
-              <a href="{% url 'cadastrarPacientes' %}" class="btn btn-info btn-lg btn-block text-white">Cadastrar Paciente</a>
-            </li>
-            <li class="list-group-item border-0 text-center">
-              <a href="{% url 'cadastrarMedicos' %}" class="btn btn-info btn-lg btn-block text-white">Cadastrar Médico</a>
-            </li>
-            <li class="list-group-item border-0 text-center">
-              <a href="{% url 'cadastrarProcedimentos' %}" class="btn btn-info btn-lg btn-block text-white">Incluir Procedimento</a>
-            </li>
-          </ul>
+        <div class="col-md-6"> 
+          <div class="text-center mb-3">
+            <br>
+          </div>
+          <div class="text-center mb-3">
+            <a href="{% url 'cadastrarAgendamentos' %}" class="btn btn-info btn-lg btn-block text-white">Cadastrar Paciente</a>
+          </div>
+          <div class="text-center mb-3">
+            <a href="{% url 'consultarFilaEsperaPacientes' %}" class="btn btn-info btn-lg btn-block text-white">Fila de Espera</a>
+          </div>         
         </div>
       </div>
     </div>

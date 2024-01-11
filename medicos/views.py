@@ -1,8 +1,9 @@
 from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
 from medicos.models import Medicos
-from django.contrib.auth.forms import AuthenticationForm
-from .forms import CadastroMedicos
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from .forms import AtualizarCadastroMedico, CadastroMedicos
 from django.contrib import messages
 from django.contrib.auth.models import User 
 
@@ -26,6 +27,7 @@ def cadastrarMedicos(request):
         form_medico = CadastroMedicos()
 
     return render(request, 'cadastrarMedicos.html', {'form_medico': form_medico})
+
 def mostrarMedicos(request):
     return Medicos.objects.all()
 
@@ -39,6 +41,41 @@ def loginMedicos(request):
     else:
         form = AuthenticationForm()
     return render(request, 'loginMedicos.html', {'form': form})
+
+def atualizarCadastrorMedicos(request):
+    medico = request.user
+    medico_id = medico.id
+    medico = Medicos.objects.filter(id=medico_id).first()
+
+    if request.method == "POST":
+        form = AtualizarCadastroMedico(request.POST, instance=medico)
+        password_form = PasswordChangeForm(medico, request.POST)
+        print(request.POST)
+
+        if 'nova_senha' in request.POST:
+            # Se a solicitação for para alterar a senha
+            if password_form.is_valid():
+                medico = password_form.save(commit=False)
+                medico.save()
+                update_session_auth_hash(request, medico)  # Atualiza a sessão para evitar logout
+                messages.success(request, 'Senha atualizada com sucesso!')
+                return render(request, 'perfil.html', {'usuario': request.user, 'medico': medico, 'form': form, 'password_form': password_form})
+            else:
+                messages.error(request, 'Algo errado com a senha.')
+
+        elif form.is_valid():
+            form.save()
+            messages.success(request, 'Dados do paciente atualizados com sucesso!')
+            return render(request, 'perfil.html', {'usuario': request.user, 'medico': medico, 'form': form, 'password_form': password_form})
+        else:
+            _, error = next(iter(form.errors.items()))
+            messages.error(request, error)
+
+    else:
+        form = AtualizarCadastroMedico(instance=medico)
+        password_form = PasswordChangeForm(medico)
+
+    return render(request, 'perfil.html', {'usuario': request.user, 'medico': medico, 'form': form, 'password_form': password_form})
 
 def sair(request): 
     logout(request)

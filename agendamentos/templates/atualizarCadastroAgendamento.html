@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro de Pacientes</title>
+  <title>Atualizar Cadastro de Paciente</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -63,75 +63,76 @@
     </div>
   </nav>
   <div class="container">
-    <h2 class="text-center my-4 text-info">Cadastrar Paciente</h2>
-    <form action="{% url 'cadastrarAgendamentos' %}" method="POST">
+    <h2 class="text-center my-4 text-info">Agendamento de Procedimentos</h2>
+    <form action="{% url 'atualizarCadastroAgendamento' %}" method="POST">
       {% csrf_token %}
       <div class="mb-3">
         <label for="nome" class="form-label">Nome:</label>
-        <input type="text" class="form-control" id="nome" name="nome" required>
+        <input type="text" readonly class="form-control" id="nome" name="nome" value="{{ agendamento.nome }}">
       </div>
       <div class="mb-3">
         <label for="nome_mae" class="form-label">Nome da mãe:</label>
-        <input type="text" class="form-control" id="nome_mae" name="nome_mae" value=" ">
+        <input type="text" class="form-control" id="nome_mae" name="nome_mae" value="{{agendamento.nome_mae}}">
       </div>
       <div class="mb-3">
         <label for="cartao_sus" class="form-label">Cartão do SUS:</label>
-        <input type="text" class="form-control" id="cartao_sus" name="cartao_sus" required>
+        <input type="text" readonly class="form-control" id="cartao_sus" name="cartao_sus" value="{{ agendamento.cartao_sus }}">
       </div>
       <div class="mb-3">
         <label for="clinica" class="form-label">Clinica:</label>
-        <input type="text" class="form-control" id="clinica" name="clinica" value="Oftalmologia">
+        <input type="text" class="form-control" id="clinica" name="clinica" value="{{agendamento.clinica}}">
       </div>
       <div class="mb-3">
         <label for="enfermaria" class="form-label">Enfermaria:</label>
-        <input type="text" class="form-control" id="enfermaria" name="enfermaria" value=" ">
+        <input type="text" class="form-control" id="enfermaria" name="enfermaria" value="{{agendamento.enfermaria}}">
       </div>
       <div class="mb-3">
         <label for="leito" class="form-label">Leito:</label>
-        <input type="text" class="form-control" id="leito" name="leito" value=" ">
+        <input type="text" class="form-control" id="leito" name="leito" value="{{agendamento.leito}}">
       </div>
       <div class="mb-3">
         <label for="cpf" class="form-label">CPF:</label>
-        <input type="text" class="form-control cpf-mask" id="cpf" name="cpf" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Informe um CPF válido" required>
+        <input type="text" readonly class="form-control" id="cpf" name="cpf" value="{{ agendamento.cpf }}">
       </div>          
       <div class="mb-3">
         <label for="prontuario" class="form-label">Número do Prontuário:</label>
-        <input type="text" class="form-control" id="prontuario" name="prontuario" required>
+        <input type="text" readonly class="form-control" id="prontuario" name="prontuario" value="{{ agendamento.prontuario }}">
       </div>
       <div class="mb-3">
         <label for="email" class="form-label" value="NÃO INFORMADO">Email:</label>
-        <input type="email" class="form-control" id="email" name="email">
+        <input type="email" class="form-control" id="email" name="email" value="{{agendamento.email}}">
       </div>
       <div class="mb-3">
         <label for="telefone" class="form-label">Telefone:</label>
-        <input type="tel" class="form-control phone-mask" id="telefone" name="telefone" required>
+        <input type="tel" class="form-control phone-mask" id="telefone" name="telefone" value="{{agendamento.telefone}}" required>
       </div>
       <div class="mb-3">
         <label for="data_nascimento" class="form-label">Data de Nascimento:</label>
-        <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+        <input type="text" readonly class="form-control" id="data_nascimento" name="data_nascimento" value="{{ agendamento.data_nascimento }}">
       </div>
       <div class="mb-3">
         <label for="numero_de_olhos" class="form-label">Número de Olhos:</label>
         <select class="form-select" id="numero_de_olhos" name="numero_de_olhos" required>
-          <option value="" selected disabled>Selecione o número de olhos</option>
+          <option value="{{agendamento.numero_de_olhos}}" selected>{{agendamento.numero_de_olhos}}</option>
           <option value="1">1</option>
           <option value="2">2</option>
         </select>
       </div>
-      <div class="mb-3" id="olho-agendado-container" style="display: none;">
+      <div class="mb-3">
         <label for="olho_agendado" class="form-label">Olho Agendado:</label>
         <select class="form-select" id="olho_agendado" name="olho_agendado" required>
-          <option value="ambos" selected>Selecione o olho agendado</option>
+          <option value="{{agendamento.olho_agendado}}" selected>{{agendamento.olho_agendado}}</option>
           <option value="esquerdo">Esquerdo</option>
           <option value="direito">Direito</option>
         </select>
       </div>
       <div class="mb-3">
         <label for="diagnostico" class="form-label">Diagnóstico:</label>
-        <textarea class="form-control" id="diagnostico" value="" name="diagnostico" rows="3" required></textarea>
+        <textarea class="form-control" id="diagnostico" value="{{agendamento.diagnostico}}" name="diagnostico" rows="3" required>{{agendamento.diagnostico}}</textarea>
       </div>
       <div class="text-center">
-        <button type="submit" class="btn btn-info text-white">Agendar</button>
+        <input type="hidden" name="id" id="agendamento_id" value="{{ agendamento.id }}">
+        <button type="submit" class="btn btn-info text-white">Atualizar Dados</button>
       </div>
     </form>
     <div class="mb-3">
@@ -146,98 +147,20 @@
   </div>
 
   <script>
-    function validarCPF(cpf) {
-    cpf = cpf.replace(/[^\d]+/g, ''); // Remove caracteres não numéricos
-
-    if (cpf.length !== 11 || /^(\d)\1+$/g.test(cpf)) {
-      return false; // CPF deve ter 11 dígitos e não pode ser composto apenas por dígitos iguais
-    }
-
-    // Validação do primeiro dígito verificador
-    let soma = 0;
-    for (let i = 0; i < 9; i++) {
-      soma += parseInt(cpf.charAt(i)) * (10 - i);
-    }
-    let resto = 11 - (soma % 11);
-    let digitoVerificador1 = (resto === 10 || resto === 11) ? 0 : resto;
-
-    if (digitoVerificador1 !== parseInt(cpf.charAt(9))) {
-      return false; // CPF inválido se o primeiro dígito verificador não coincide
-    }
-
-    // Validação do segundo dígito verificador
-    soma = 0;
-    for (let i = 0; i < 10; i++) {
-      soma += parseInt(cpf.charAt(i)) * (11 - i);
-    }
-    resto = 11 - (soma % 11);
-    let digitoVerificador2 = (resto === 10 || resto === 11) ? 0 : resto;
-
-    return digitoVerificador2 === parseInt(cpf.charAt(10)); // CPF válido se ambos os dígitos verificadores coincidem
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var cpfInput = document.getElementById('cpf');
-
-    cpfInput.addEventListener('input', function (e) {
-      var value = e.target.value;
-      var isValid = validarCPF(value);
-
-      if (isValid) {
-        cpfInput.setCustomValidity('');
-      } else {
-        cpfInput.setCustomValidity('CPF inválido');
-      }
-    });
-  });
-
     document.addEventListener('DOMContentLoaded', function () {
-      var cpfInput = document.getElementById('cpf');
-      var phoneInput = document.getElementById('telefone');
-      var dataNascimentoInput = document.getElementById('data_nascimento');
-  
-      // Máscara de CPF
-      cpfInput.addEventListener('input', function (e) {
-        var value = e.target.value;
-        value = value.replace(/\D/g, '');
-        value = value.replace(/(\d{3})(\d)/, '$1.$2');
-        value = value.replace(/(\d{3})(\d)/, '$1.$2');
-        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-        e.target.value = value;
-      });
-  
-      // Máscara de telefone
-      phoneInput.addEventListener('input', function (e) {
-        var value = e.target.value;
-        value = value.replace(/\D/g, '');
-        value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
-        value = value.replace(/(\d)(\d{4})$/, '$1-$2');
-        e.target.value = value;
-      });
-  
-      // Definir a data máxima como o dia atual
-      var today = new Date().toISOString().split('T')[0];
-      dataNascimentoInput.setAttribute('max', today);
+        var phoneInput = document.getElementById('telefone');
+        // Máscara de telefone
+        phoneInput.addEventListener('input', function (e) {
+            var value = e.target.value;
+            value = value.replace(/\D/g, '');
+            value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+            value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+            e.target.value = value;
+        });
     });
   </script>
   
-  <!-- Correção no script para mostrar/esconder o campo "Olho Agendado" -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const numeroOlhosSelect = document.getElementById('numero_de_olhos');
-      const olhoAgendadoContainer = document.getElementById('olho-agendado-container');
-  
-      numeroOlhosSelect.addEventListener('change', function () {
-        if (this.value === '1') {
-          olhoAgendadoContainer.style.display = 'block';
-        } else if (this.value === '2') {
-          olhoAgendadoContainer.style.display = 'none';
-        } else {
-          olhoAgendadoContainer.style.display = 'none';
-        }
-      });
-    });
-  </script>  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

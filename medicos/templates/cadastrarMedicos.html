@@ -3,38 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro de Pacientes</title>
+  <title>Cadastre-se Agora!</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-info">
     <div class="container">
-      <a class="navbar-brand" href="{% url 'home' %}">Oftalmologia</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">        
-          <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm" href="{% url 'consultarAgendaDia' %}">Agenda</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm" href="{% url 'confirmarAgendamentos' %}">Confirmar Agendamentos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarAgendamentos' %}">Agendar Paciente</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarPacientes' %}">Cadastrar Paciente</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarMedicos' %}">Cadastrar Médico</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm" href="{% url 'cadastrarProcedimentos' %}">Incluir Procedimento</a>
-          </li>
-        </ul>
+      <div class="col">
+        <a class="navbar-brand" href="{% url 'loginMedicos' %}">Oftalmologia</a>
       </div>
     </div>
   </nav>

@@ -32,14 +32,14 @@
         {% for agendamento in agendamentos %}
         <tr>
           <!-- Dados das colunas -->
-          <td class="align-middle text-center">{{ agendamento.id_paciente.prontuario }}</td>
-          <td class="align-middle text-center">{{ agendamento.id_paciente.nome }}</td>
+          <td class="align-middle text-center">{{ agendamento.prontuario }}</td>
+          <td class="align-middle text-center">{{ agendamento.nome }}</td>
           <td class="align-middle text-center">{{ agendamento.id_procedimento.nome }}</td>
           <td class="align-middle text-center">{{ agendamento.numero_de_olhos }}</td>
           <td class="align-middle text-center">{{ agendamento.olho_agendado }}</td>
           <td class="align-middle text-center">Aplicação</td>
           <td class="align-middle text-center">{{ agendamento.diagnostico }}</td>
-          <td class="align-middle text-center">{{ agendamento.id_paciente.telefone }}</td>
+          <td class="align-middle text-center">{{ agendamento.telefone }}</td>
           <td class="align-middle text-center">{{ agendamento.status }}</td>
           <td class="align-middle text-center">{{ agendamento.observacao }}</td>
         </tr>

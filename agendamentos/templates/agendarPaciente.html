@@ -1,10 +1,10 @@
-<!-- base.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Título da Página{% endblock %}</title>
+  <title>Agendamento de Procedimentos</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -54,7 +54,7 @@
               </svg> {{ usuario|default:"Usuário" }}
             </a>
             <div class="dropdown-menu bg-info border-info w-100 collapse" aria-labelledby="userDropdown">
-              <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'sair' %}">Meu Perfil</a>
+              <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'atualizarCadastrorMedicos' %}">Meu Perfil</a>
               <a class="nav-link btn btn-info btn-sm text-white " href="{% url 'sair' %}">Sair</a>
             </div>
           </li>
@@ -62,10 +62,46 @@
       </div>
     </div>
   </nav>
+  <div class="container">
+    <h2 class="text-center my-4 text-info">Agendar Paciente</h2>
+    <form action="{% url 'agendarPaciente' %}" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="paciente_id" id="paciente_id" value="{{ agendamento.id }}">
+      <div class="mb-3">
+        <table class="table table-striped table-borderless">
+            <tbody>
+                <tr>
+                  <td class="align-middle text-center">{{ agendamento.prontuario }}</td>
+                  <td class="align-middle text-center">{{ agendamento.nome }}</td>
+                  <td class="align-middle text-center">{{ agendamento.numero_de_olhos }}</td>
+                  <td class="align-middle text-center">{{ agendamento.olho_agendado }}</td>
+                  <td class="align-middle text-center">{{ agendamento.aplicacao_atual }}/{{ agendamento.quantidade_aplicacoes_necessarias }}</td>
+                  <td class="align-middle text-center">{{ agendamento.diagnostico }}</td>
+                  <td class="align-middle text-center">{{ agendamento.telefone }}</td>
+                  <td class="align-middle text-center" data-status="{{ agendamento.status }}">{{ agendamento.status }}</td>
+                  <td class="align-middle text-center">{{ agendamento.observacao }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <label for="data_agendada" class="form-label">Data do Agendamento:</label>
+        <input type="date" class="form-control" id="data_agendada" name="data_agendada" required>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-info text-white">Agendar</button>
+      </div>
+    </form>
+    <div class="mb-3">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert {% if message.tags == 'success' %}text-success{% elif message.tags == 'error' %}text-danger{% endif %}">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+  </div>
 
-
-  {% block content %}
-    <!-- Conteúdo específico de cada página será adicionado aqui -->
-  {% endblock %}
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

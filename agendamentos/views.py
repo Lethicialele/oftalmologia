@@ -1,33 +1,38 @@
 from datetime import date, datetime, timedelta
+from locale import setlocale, LC_TIME
 import os
 from django.conf import settings
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from medicos.views import mostrarMedicos
-from pacientes.views import mostrarPacientes
-from .forms import CadastrarAgendamentos, AtualizarAgendamentos
-from procedimentos.views import mostrarProcedimentos
+from .forms import AtualizarCadastroAgendamentos, CadastrarAgendamentos, AtualizarAgendamentos
 from django.contrib import messages
 from .models import Agendamentos
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from django.db.models import F, ExpressionWrapper, fields, Value
+from django.db.models.functions import Now
+
 
 def cadastrarAgendamentos(request):
     if request.method == "POST":
         form = CadastrarAgendamentos(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Agendamento realizado com sucesso!')
+            # Salvando os dados mesmo que alguns campos estejam vazios
+            agendamento = form.save(commit=False)
+            agendamento.nome_mae = form.cleaned_data['nome_mae']
+            agendamento.enfermaria = form.cleaned_data['enfermaria']
+            agendamento.clinica = form.cleaned_data['clinica']
+            agendamento.leito = form.cleaned_data['leito']
+            agendamento.save()
+            messages.success(request, 'Paciente cadastrado com sucesso!')
         else:
-            messages.error(request, 'Dados inválidos!')
+            _, error = next(iter(form.errors.items()))
+            messages.error(request, error)
     else:
         form = CadastrarAgendamentos()
 
-    pacientes = mostrarPacientes(request).order_by('nome')  # Ordena os pacientes pelo campo 'nome'
-    procedimentos = mostrarProcedimentos(request).order_by('nome')  # Ordena os procedimentos pelo campo 'nome'
-    medicos = mostrarMedicos(request).order_by('nome')  # Ordena os médicos pelo campo 'nome'
-
-    return render(request, 'cadastrarAgendamentos.html', {'usuario': request.user, 'form': form, 'pacientes': pacientes, 'procedimentos': procedimentos, 'medicos': medicos})
+    return render(request, 'cadastrarAgendamentos.html', {'usuario': request.user, 'form': form})
 
 def confirmarAgendamentos(request):
     if request.method == "POST":
@@ -40,7 +45,6 @@ def confirmarAgendamentos(request):
             print(status)
             observacao = post_data.getlist('observacao')[contador]
             try:
-                print('entrou no try')
                 agendamento = Agendamentos.objects.get(id=agendamento_id)
                 form = AtualizarAgendamentos({'id': agendamento_id, 'status': status, 'observacao': observacao}, instance=agendamento)
                 if form.is_valid():                    
@@ -49,24 +53,20 @@ def confirmarAgendamentos(request):
                         historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
                         agendamento.historico += historico_entry
                         agendamento.numero_atualizacoes += 1                        
-                        print('if não confirmado')
                         form.save()
                     elif status == 'confirmado':
                         agendamento.numero_atualizacoes += 1
-                        agendamento.atendido += 1
                         if agendamento.atendido == 3:
                             agendamento.oct = True
                             agendamento.status = 'concluido'
                             historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
                             agendamento.historico += historico_entry
                             agendamento.observacao = observacao
-                            print('entrou if concluido')
                         else:
                             historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
                             agendamento.historico += historico_entry
-                            agendamento.status = 'não confirmado'
+                            agendamento.status = 'confirmado'
                             agendamento.observacao = observacao
-                        print('confirmado')
                     elif status == 'remarcar':
                         agendamento.numero_atualizacoes += 1                        
                         historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
@@ -99,15 +99,70 @@ def confirmarAgendamentos(request):
     print(data_selecionada)
 
     # Aplique a condição do status ao filtro
-    agendamentos = Agendamentos.objects.filter(data_agendada=data_selecionada, status__in=['não confirmado', 'cancelado']).order_by(
-        'id_paciente_id__nome')
+    agendamentos = Agendamentos.objects.filter(data_agendada=data_selecionada, status__in=['não confirmado', 'cancelado'])
 
     form = AtualizarAgendamentos(request.POST)
     status = ''
        
     return render(request, 'confirmarAgendamentos.html', {'usuario': request.user, 'agendamentos': agendamentos, 'form': form, 'data_selecionada': data_selecionada, 'status': status })
 
-def consultarAgendaDia(request):
+def confirmarAtendimentos(request):
+    setlocale(LC_TIME, 'pt_BR.utf-8')
+
+    agendamentos = None  # Declare a variável aqui para garantir visibilidade
+
+    if request.method == "POST":
+        data_selecionada = request.POST.get('data_selecionada')
+        data_parseada = datetime.strptime(data_selecionada, '%d de %B de %Y')
+        data_selecionada = data_parseada.strftime('%Y-%m-%d')
+        post_data = request.POST.copy()
+        print("Dados Template")
+        print(post_data)
+        atendidos_ids = post_data.get('atendidos_id').split(',')
+        print(atendidos_ids)
+        agendamentos = Agendamentos.objects.filter(id__in=atendidos_ids)
+
+        for contador, agendamento in enumerate(agendamentos):
+            agendamento.numero_atualizacoes += 1
+            agendamento.atendido += 1
+            agendamento.aplicacao_atual +=1
+            print(agendamento.atendido)
+
+            if agendamento.atendido == 3:
+                agendamento.oct = True
+                agendamento.status = 'concluido'
+            else:
+                agendamento.status = ''
+                agendamento.observacao = ''
+                agendamento.faltas = 0
+
+            historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
+            agendamento.historico += historico_entry
+            agendamento.ultimo_atendimento = data_selecionada
+            agendamento.data_agendada = None
+            agendamento.save()
+
+        agendamentos = Agendamentos.objects.filter(data_agendada=data_selecionada)
+        
+        for contador, agendamento in enumerate(agendamentos):
+            historico_entry = f"{agendamento.data_agendada} - Status: {agendamento.status}, Observação: FALTOU\n"
+            agendamento.historico += historico_entry
+            agendamento.status = ''
+            agendamento.observacao = ''
+            agendamento.data_agendada = None
+            agendamento.faltas += 1
+            if(agendamento.faltas >=3):
+                agendamento.status = 'cancelado'
+            
+            agendamento.save()
+            
+        agendamentos = Agendamentos.objects.filter(data_agendada=data_selecionada)
+        messages.success(request, 'Agendamentos atualizados com sucesso!')
+        return render(request, 'consultarAgendaDia.html', {'usuario': request.user, 'agendamentos': agendamentos, 'data': data_parseada})  
+
+    return render(request, 'consultarAgendaDia.html', {'usuario': request.user, 'agendamentos': agendamentos, 'data': data_selecionada})
+
+def consultarAgendaDia(request, filtro_agenda = None):
     if request.method == "POST":
         filtro_data = request.POST.get('filtro_data')
         if filtro_data:
@@ -115,9 +170,41 @@ def consultarAgendaDia(request):
         else:
             data = date.today() + timedelta(days=1)
     else:
-        data = date.today() + timedelta(days=1)
-    agendamentos = Agendamentos.objects.filter(data_agendada=data, status__in=['não confirmado', 'confirmado']).order_by('id_paciente_id__nome')
+        data = datetime.strptime(filtro_agenda, '%Y-%m-%d').date() if filtro_agenda else date.today() + timedelta(days=1)
+    agendamentos = Agendamentos.objects.filter(data_agendada=data, status__in=['não confirmado', 'confirmado'])
+    print(data)
+    print(agendamentos)
     return render(request, 'consultarAgendaDia.html', {'usuario': request.user, 'agendamentos': agendamentos, 'data': data})
+
+def gerarAgenda(request):
+    if request.method == 'POST':
+        # Processar o formulário de geração de agenda
+        data_agendada = request.POST.get('data_agendada')
+        quantidade_pacientes = int(request.POST.get('quantidade_pacientes', 0))
+
+        if not data_agendada or quantidade_pacientes <= 0:
+            # Lógica de validação, redirecione ou retorne uma resposta de erro conforme necessário
+            return HttpResponse('Dados inválidos para geração de agenda', status=400)
+       
+        agendamentos = Agendamentos.objects.raw('''
+            SELECT *
+            FROM agendamentos_agendamentos
+            WHERE status not in ('concluido', 'cancelado') and data_agendada is null
+            HAVING (datediff(now(), ultimo_atendimento) >= 30 and data_agendada < now()) or (datediff(now(), ultimo_atendimento) IS NULL)
+                ORDER BY data_nascimento desc, aplicacao_atual desc
+            LIMIT %s
+        ''', [quantidade_pacientes])
+
+        for agendamento in agendamentos:
+            agendamento.data_agendada = data_agendada
+            agendamento.status = 'não confirmado'
+            agendamento.save()
+
+        data_agendada = datetime.strptime(data_agendada, '%Y-%m-%d').date()
+        return render(request, 'consultarAgendaDia.html', {'usuario': request.user, 'agendamentos': agendamentos, 'data': data_agendada})
+
+    # Renderize a página de geração de agenda (substitua com o caminho real do seu template)
+    return render(request, 'gerarAgenda.html', {'usuario': request.user})
 
 def gerarRelatorio(request):
    # Recupere os dados necessários para o relatório
@@ -196,3 +283,76 @@ def calcular_proxima_data(data_inicial):
 
     return data_inicial
 
+def consultarFilaEsperaPacientes(request):
+    # Remova a parte do LIMIT para obter todos os pacientes
+    consulta_sql = '''
+        SELECT *
+        FROM agendamentos_agendamentos
+        WHERE status NOT IN ('concluido', 'cancelado') and data_agendada IS NULL
+
+        ORDER BY data_nascimento DESC, aplicacao_atual DESC
+    '''
+
+    # Execute a consulta SQL
+    agendamentos = Agendamentos.objects.raw(consulta_sql)
+
+    # Renderize a página html com os resultados
+    return render(request, 'consultarFilaEsperaPacientes.html', {'agendamentos': agendamentos, 'usuario': request.user})
+
+def deletarPaciente(request):
+    paciente_id = request.POST.get('paciente_id')
+    agendamento = Agendamentos.objects.filter(id=paciente_id).first()
+    agendamento.delete()
+
+    messages.success(request, 'Paciente deletado com sucesso!')
+    
+    return redirect('consultarFilaEsperaPacientes')
+
+def agendarPaciente(request):
+
+    if request.method == 'POST':
+        paciente_id = request.POST.get('paciente_id')
+        data_agendada = request.POST.get("data_agendada")
+        agendamento = Agendamentos.objects.filter(id=paciente_id).first()
+    
+        # Atualize o objeto agendamento com a nova data_agendada
+        agendamento.data_agendada = data_agendada
+        agendamento.status = 'não confirmado'
+        agendamento.save()
+
+        # Adicione mensagens de sucesso, se necessário
+        messages.success(request, 'Paciente agendado com sucesso!')
+
+        # Redirecionar para a página consultarAgendaDia com a data_agendada escolhida
+        return redirect('consultarAgendaDiaFiltro', filtro_agenda=data_agendada)
+
+    paciente_id = request.GET.get('paciente_id')
+
+    agendamento = Agendamentos.objects.filter(id=paciente_id)
+
+    return render(request, 'agendarPaciente.html', {'agendamento': agendamento.first(), 'usuario': request.user })
+
+def atualizarCadastroAgendamento(request):
+    agendamento_id = None
+    # r = request.POST
+    # print(r)
+    # agendamento_id = request.POST.get('agendamento_id')
+    # print(agendamento_id)
+    # agendamento = Agendamentos.objects.filter(id=agendamento_id).first()
+    # print(agendamento)
+    if request.method == "POST":
+        agendamento_id = request.POST.get('id')
+        agendamento = Agendamentos.objects.filter(id=agendamento_id).first()
+        form = AtualizarCadastroAgendamentos(request.POST, instance=agendamento)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Dados do paciente atualizados com sucesso!')
+        else:            
+            _, error = next(iter(form.errors.items()))
+            messages.error(request, error)
+    else:
+        agendamento_id = request.GET.get('agendamento_id')
+
+    agendamento = Agendamentos.objects.filter(id=agendamento_id).first()
+
+    return render(request, 'atualizarCadastroAgendamento.html', {'usuario': request.user, 'agendamento':agendamento})

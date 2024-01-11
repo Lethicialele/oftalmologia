@@ -29,16 +29,16 @@
             <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'consultarAgendaDia' %}">Agenda</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'gerarAgenda' %}">Gerar Agenda</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'confirmarAgendamentos' %}">Confirmar Agendamentos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'cadastrarAgendamentos' %}">Agendar Paciente</a>
+            <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'cadastrarAgendamentos' %}">Cadastrar Paciente</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'cadastrarPacientes' %}">Cadastrar Paciente</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'cadastrarProcedimentos' %}">Incluir Procedimento</a>
+            <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'consultarFilaEsperaPacientes' %}">Fila de Espera</a>
           </li>
         </ul>
       </div>
@@ -55,7 +55,7 @@
               </svg> {{ usuario|default:"Usuário" }}
             </a>
             <div class="dropdown-menu bg-info border-info w-100 collapse" aria-labelledby="userDropdown">
-              <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'sair' %}">Meu Perfil</a>
+              <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'atualizarCadastrorMedicos' %}">Meu Perfil</a>
               <a class="nav-link btn btn-info btn-sm text-white " href="{% url 'sair' %}">Sair</a>
             </div>
           </li>
@@ -111,13 +111,13 @@
               <td>
                 <input type="hidden" name="id_agendamento" value="{{ agendamento.id }}">
               </td>
-              <td class="align-middle text-center">{{ agendamento.id_paciente.prontuario }}</td>
-              <td class="align-middle text-center">{{ agendamento.id_paciente.nome }}</td>
+              <td class="align-middle text-center">{{ agendamento.prontuario }}</td>
+              <td class="align-middle text-center">{{ agendamento.nome }}</td>
               <td class="align-middle text-center">{{ agendamento.id_procedimento.nome }}</td>
               <td class="align-middle text-center">{{ agendamento.numero_de_olhos }}</td>
               <td class="align-middle text-center">{{ agendamento.olho_agendado }}</td>
-              <td class="align-middle text-center">Aplicação</td>
-              <td class="align-middle text-center">{{ agendamento.id_paciente.telefone }}</td>
+              <td class="align-middle text-center">{{ agendamento.aplicacao_atual }}/{{ agendamento.quantidade_aplicacoes_necessarias }}</td>
+              <td class="align-middle text-center">{{ agendamento.telefone }}</td>
               <td class="align-middle text-center">
                 <select name="status" class="form-select border-info" style="width: auto;">
                   <option value="não confirmado" {% if agendamento.status == 'não confirmado' %}selected{% endif %}>Não confirmado</option>
