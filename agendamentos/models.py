@@ -1,7 +1,6 @@
+from datetime import date
 from django.db import models
 from django.db import models
-from pacientes.models import Pacientes
-from procedimentos.models import Procedimentos
 from django.contrib.auth.models import User 
 
 
@@ -32,4 +31,5 @@ class Agendamentos(models.Model):
     quantidade_aplicacoes_necessarias = models.IntegerField(default=3)
     historico = models.TextField(default='')
     numero_atualizacoes = models.PositiveIntegerField(default=0)
-
+    data_cadastro = models.DateField(null=True, default=date.today)
+    nivel_prioridade = models.PositiveIntegerField(default=1)

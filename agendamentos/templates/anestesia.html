@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt" lang="pt">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>file_1706402254625</title>
+    <meta name="author" content="Nayara Araujo Correia da Silva"/>
+    <style type="text/css">
+        @page {
+            size: A4;
+        }
+        body {
+            font-family: Calibri, sans-serif;
+            margin: 0;
+            padding: 0;
+            margin-left: 1.5cm; /* Margem esquerda de 1,5cm */
+            margin-right: 1cm; /* Margem direita de 1cm */
+            text-align: justify; /* Justificar o texto */
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            text-indent: 0;
+        }
+        .container {
+            max-width: 595px; /* Largura de uma folha A4 em pixels */
+            margin: 0 auto; /* Centralizar o conteúdo na página */
+        }
+        .s1 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 11pt;
+        }
+        h1 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 16pt;
+            margin-top: 1pt;
+            padding-left: 41pt;
+        }
+        .p,
+        p {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 11pt;
+            margin: 0pt;
+        }
+        .s3 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: underline;
+            font-size: 11pt;
+        }
+        .s4 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 11pt;
+        }
+        .s5 {
+            color: black;
+            font-family: Calibri, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 14pt;
+        }
+        table,
+        tbody {
+            vertical-align: top;
+            overflow: visible;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table style="border-collapse:collapse;margin-left:53.994pt" cellspacing="0">
+            <tr style="height:18pt">
+                <td style="width:425pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome completo: {{agendamento.nome}}</p>
+                    <p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 12pt;text-align: left;">Prontuário n°: {{agendamento.prontuario}}</p>
+                </td>
+            </tr>
+            <tr style="height:18pt">
+                <td style="width:425pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">RG ou CPF: {{agendamento.cpf}}</p>
+                </td>
+            </tr>
+            <tr style="height:18pt">
+                <td style="width:425pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome da Mãe: {{agendamento.nome_mae}}</p>
+                </td>
+            </tr>
+            <tr style="height:18pt">
+                <td style="width:425pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s1" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Data Nasc: {{agendamento.data_nascimento}} <u>&nbsp;&nbsp; </u>/<u> &nbsp; </u>/<u> </u>     | SUS: {{agendamento.cartao_sus}}</p>
+                </td>
+            </tr>
+            <tr style="height:18pt">
+                <td style="width:425pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Clínica: {{agendamento.clinica}}                            |ENF:  {{agendamento.enfermaria}}   | Leito: {{agendamento}}    |Fone:</p>
+                </td>
+            </tr>
+        </table>
+        <p style="text-indent: 0pt;text-align: left;"><br/></p><p style="text-indent: 0pt;text-align: left;"><br/></p><h1 style="padding-top: 1pt;padding-left: 0pt;text-indent: 0pt;text-align: left;">TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA ANESTESIA</h1>
+        
+        <p style="text-indent: 0pt;text-align: left;"><br/></p>
+        <p style="padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">Declaro que fui informado(a) quanto aos principais aspectos relacionados aos procedimentos anestésicos dos quais poderei ser submetido nesta instituição.</p>
+        <p style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">Autorizo um médico(a) anestesiologista desta instituição bem como integrantes de sua equipe composta por médicos(as) residentes em anestesiologista sob sua supervisão, todos devidamente cadastrados por esta instituição, a realizar o seguinte</p>
+        <p style="padding-left: 5pt;text-indent: 0pt;text-align: left;">procedimento anestésico: <u>&nbsp;</u>
+        <p style="padding-left: 5pt;text-indent: 0pt;text-align: left;">ou a seguinte alternativa anestésica: <u>&nbsp;</u> para  a  cirurgia  proposta</p>
+        <p style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;text-align: justify;">(escrever   nome   científico   e   nome   popular   entre   parênteses   quando   houver):</p><p class="s3" style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: justify;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="p"> a ser realizada pela equipe do médico cirurgião: </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="p">.</span></p>
+        <p style="text-indent: 0pt;text-align: left;"><br/></p>
+        <p style="padding-left: 5pt;text-indent: 0pt;text-align: justify;">Declaro ainda que:</p>
+        <p style="text-indent: 0pt;text-align: left;"><br/></p>
+        <p style="padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: justify;">
+            a. Estou ciente de que para realizar o(s) procedimento(s) proposto(s) será necessário o emprego de anestesia,
+            cujos métodos, as técnicas e os fármacos serão indicados pela equipe médica de anestesiologia antes do seu ato
+            no centro cirúrgico. A(s) alternativa(s) de procedimento anestésico indicadas para possibilitar o procedimento.a
+            ser realizado, seus benefícios, riscos e complicações me foram explicadas satisfatoriamente.
+        </p>
+        <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">
+            b. Fui esclarecido de que a anestesia envolve procedimentos invasivos e que podem ocorrer lesões que na maioria
+            das vezes são temporárias. Raramente ocorrem lgsões permanentes, mas podem ocorrer, mesmo que'o
+            procedimento tenha sido realizado sob o mais rigoróso padrão técnico. Assim como fui esclarecido, também, de
+            que a resposta à administração de medicamentos é individual e que a ocorrência de efeitos colaterais ou
+            indesejados é imprevisível.
+        </p>
+        <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">
+            c. Fui informado que as ações médicas necessárias para promover o estado de anestesia podem desencadear
+            complicações, algumas das quais: dificuldades respiratórias, transtornos cardíacos e vasculares, reações alérgicas
+            ou tóxicas, lesões bucais, na pele, alterações neurológicas.
+        </p>
+        <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">
+            d. Entendo que não existe garantia absoluta sobre os resultados a serem obtidos, mas que serão utilizados todos os
+            “recursos, medicamentos e equipamentos disponíveis nesta instituição.
+        </p>
+        <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">
+            e. Autorizo qualquer outro procedimento, exame, tratamento e/ou cirurgia, incluindo transfusão sanguínea, caso
+            ocorram situações imprevistas que demandem cuidados diferentes daqueles inicialmente propostos.
+        </p>
+        <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">
+            f. Sei que durante o procedimento cirúrgico poderá haver necessidade de complementação da anestesia com a
+            adição de outras drogas ou outras técnicas (anestesia parcial complementada com anestesia geral ou geral
+            complementada com bloqueio), buscando sempre o melhor resultado.
+        </p>
+        <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">
+            g. Fui explicado que se a evolução do quadro de saúde apresentado colocar a minha vida em risco, estou ciente de
+            que serão adotados os procedimentos médicos e hospitalares recomendáveis, na tentativa de afastar o perigo
+            de vida apuradó:
+        </p>
+        <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">
+            h. Por ocasião deste consentimento, informei ao médico anestesiologista sobre doenças pré-existentes, os
+            medicamentos em uso, cirurgias realizadas, complicações anestésicas e reações alérgicas anteriormente
+            apresentadas e, também, sobre o tempo decorrido de jejum (desde a última refeição/ingestão de líquidos).
+        </p>
+        <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">
+            i. Fui informado (a) pela equipe médica de anestesiologia que o tabagismo, o uso de drogas entorpecentes em
+            geral, a exemplo de: cocaina, maconha, anfetaminas; bem como o álcool são fatores que podem trazer prejuízo
+            ao procedimento e/ou tratamento. Fui informado, também das complicações que podem advir do uso destas
+            substâncias.
+        </p>
+        <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">
+            j. Posso a qualquer momento negar a realização de um certo tipo de técnica anestésica por julgar que não quero e
+            que minha vontade será respeitada.
+        </p>
+        <p style="text-indent: 0pt;text-align: left;">
+        <p style="text-indent: 0pt;text-align: left;">
+        <p style="text-indent: 0pt;text-align: left;">
+        <p style="text-indent: 0pt;text-align: left;">
+        <p style="text-indent: 0pt;text-align: left;">
+        <p style="text-indent: 0pt;text-align: left;">
+        <p style="text-indent: 0pt;text-align: left;">
+        <p class="s4" style="padding-top: 5pt;padding-left: 303pt;text-indent: 0pt;text-align: left;">Maceió, <u>&nbsp;&nbsp;&nbsp; </u>/<u> &nbsp;&nbsp; </u>/<u> </u> <span class="p">Hora: </span><u>&nbsp;&nbsp;&nbsp; : &nbsp; </u></p><p style="text-indent: 0pt;text-align: left;"><br/></p>
+    
+        <table style="border-collapse:collapse;margin-left:6.45pt" cellspacing="0">
+            <tr style="height:18pt">
+                <td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 17pt;text-align: left;">PACIENTE OU RESPONSÁVEL</p>
+                </td>
+            </tr>
+            <tr style="height:41pt">
+                <td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s1" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Confirmo que tive a oportunidade de fazer perguntas, recebi explicações suficientes, li, compreendo e concordo com tudo o que foi esclarecido e que me foi concedida a oportunidade de anular, questionar ou alterar qualquer</p><p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 12pt;text-align: left;">item, parágrafo, ou palavras com as quais não concordasse.</p>
+                </td>
+            </tr>
+            <tr style="height:27pt">
+                <td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome legível:</p>
+                </td>
+            </tr>
+            <tr style="height:27pt">
+                <td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Assinatura:</p>
+                </td>
+            </tr>
+            <tr style="height:39pt">
+                <td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p style="text-indent: 0pt;text-align: left;"><br/></p><p class="s1" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Grau de Parentesco do responsável:<u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u>RG OU CPF: <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u></p>
+                </td>
+            </tr>
+        </table>
+        <p style="text-indent: 0pt;text-align: left;"><br/></p>
+        <table style="border-collapse:collapse;margin-left:5.25pt" cellspacing="0">
+            <tr style="height:24pt">
+                <td style="width:263pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 17pt;text-align: left;">TESTEMUNHA 1</p></td>
+                <td style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 17pt;text-align: left;">TESTEMUNHA 2</p>
+            </td>
+            </tr>
+            <tr style="height:33pt">
+                <td style="width:263pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome legível completo:</p>
+                </td>
+                <td style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome legível completo:</p>
+                </td>
+            </tr>
+            <tr style="height:33pt">
+                <td style="width:263pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Assinatura:</p>
+                </td>
+                <td style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Assinatura:</p>
+                </td>
+            </tr>
+            <tr style="height:33pt">
+                <td style="width:263pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p style="text-indent: 0pt;text-align: left;"><br/></p><p class="s1" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">RG      OU      CPF:      <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u></p>
+                </td>
+                <td style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p style="text-indent: 0pt;text-align: left;"><br/></p><p class="s1" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">RG      OU      CPF:      <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u></p>
+                </td>
+            </tr>
+        </table>
+        <p style="text-indent: 0pt;text-align: left;"><br/></p><p style="text-indent: 0pt;text-align: left;"><br/></p>
+        <table style="border-collapse:collapse;margin-left:6.45pt" cellspacing="0">
+            <tr style="height:18pt">
+                <td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 17pt;text-align: left;">PREENCHIMENTO PELO MÉDICO</p>
+                </td>
+            </tr>
+            <tr style="height:54pt">
+                <td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s1" style="padding-left: 5pt;padding-right: 4pt;text-indent: 0pt;text-align: justify;">Expliquei todo o procedimento, exame, tratamento e/ou cirurgia a que o paciente referido está sujeito, ao próprio paciente e/ou seu responsável, sobre os benefícios, riscos e alternativas tendo respondido as perguntas formuladas pelos mesmos. De acordo com o seu entendimento, o paciente e/ou responsável, está em condições de</p><p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 12pt;text-align: justify;">compreender o que lhes foi informado.</p></td></tr><tr style="height:27pt"><td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s1" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome legível completo do médico(a):</p></td></tr><tr style="height:64pt"><td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p style="text-indent: 0pt;text-align: left;"><br/></p><p class="s1" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">CRM<u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u> Carimbo médico e assinatura:<u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u></p></td></tr></table>
+        <!-- Parágrafos adicionais e informações do médico -->
+        <table style="border-collapse:collapse;margin-left:6.45pt" cellspacing="0">
+            <!-- Tabela preenchida pelo médico -->
+        </table>    
+    </div>
+</body>
+</html>

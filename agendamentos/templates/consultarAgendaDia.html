@@ -85,11 +85,12 @@
     <div> 
       <form id="form-imprimir-agenda" action="{% url 'imprimirAgenda' data_selecionada=data %}" method="POST">
         {% csrf_token %} 
-        <input type="hidden" name="agendamento_ids" id="agendamento-ids" value="">
+        <input type="hidden" name="agendamento_ids" id="agendamento_ids" value="">
         <input type="hidden" name="data_selecionada" value="{{ data }}">
         <table class="table table-striped table-borderless table-hover">
           <thead>
             <tr>
+              <th class="text-info align-middle text-center">Ordem</th>
               <th class="text-info align-middle text-center">Prontuário</th>
               <th class="text-info align-middle text-center">Paciente</th>
               <th class="text-info align-middle text-center">Nº de Olhos</th>
@@ -100,14 +101,8 @@
               <th class="text-info align-middle text-center">Status</th>
               <th class="text-info align-middle text-center">Observação</th>
               <th class="text-info align-middle text-center">
-                <div class="col">Gerar Relatório</div>
-                <div class="col"><input type="checkbox" id="checkbox-gerar-relatorio-todos" class="form-check-input border-info"></div>
-              </th>
-              <th class="text-info align-middle text-center">
-                <div class="col">Paciente Atendido(a)</div>
-                <div class="col">
-                  <input type="checkbox" id="checkbox-atendido-todos" class="form-check-input border-info">
-                </div>
+                <div class="col">Selecionar Todos</div>
+                <div class="col"><input type="checkbox" id="checkbox-select-all" class="form-check-input border-info"></div>
               </th>
             </tr>
           </thead>
@@ -115,6 +110,7 @@
               {% for agendamento in agendamentos %}
               <tr>
                 <!-- Dados das colunas -->
+                <td class="align-middle text-center">{{ forloop.counter }}</td>
                 <td class="align-middle text-center">{{ agendamento.prontuario }}</td>
                 <td class="align-middle text-center">{{ agendamento.nome }}</td>
                 <td class="align-middle text-center">{{ agendamento.numero_de_olhos }}</td>
@@ -126,14 +122,9 @@
                 <td class="align-middle text-center">{{ agendamento.observacao }}</td>
                 <td class="align-middle">
                   <div class="align-middle text-center form-check-lg">
-                      <input type="checkbox" name="gerarRelatorioCheck" data-id="{{ agendamento.id }}" class="form-check-input border-info">
+                      <input type="checkbox" name="gerarRelatorioCheck" data-id="{{ agendamento.id }}" class="form-check-input text-info border-info">
                   </div>
-                </td>
-                <td class="align-middle">
-                  <div class="align-middle text-center form-check-lg">
-                    <input type="checkbox" name="atendidoCheck" id="atentido_check" data-id="{{ agendamento.id }}" class="form-check-input border-info">
-                  </div>
-                </td>                              
+                </td>                         
               </tr>
               {% endfor %}
             </tbody>
@@ -145,9 +136,21 @@
         </div>
       </form>
 
+      <form id="form-imprimir-documentos" action="{% url 'gerarRelatorio' %}" method="POST">{% csrf_token %} 
+        <input type="hidden" name="data_documentos_selecionada" value="{{ data }}">
+        <input type="hidden" name="agendamento_documentos_ids" id="agendamento_documentos_ids">
+        <div class="row">
+          <div class=" col text-center">
+            <button type="submit" class="btn btn-info text-white">Imprimir Documentos</button>
+          </div>          
+        </div>
+      </form>
+    </div>
+  </div>
+
       <form id="form-confirmar-atendimentos" action="{% url 'confirmarAtendimentos' %}" method="POST">{% csrf_token %} 
         <input type="hidden" name="data_selecionada" value="{{ data }}">
-        <input type="hidden" name="atendidos_id" id="atendidos_id" value="">
+        <input type="hidden" name="agendamento_ids" id="agendamento_ids" value="">
         <div class="row">
           <div class=" col text-center">
             <button type="submit" class="btn btn-info text-white">Confirmar Atendimentos</button>
@@ -160,95 +163,80 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const checkboxGerarRelatorioTodos = document.getElementById('checkbox-gerar-relatorio-todos');
-      const checkboxAtendidoCheckTodos = document.getElementById('checkbox-atendido-todos');
-      const checkboxesGerarRelatorioStatus = document.querySelectorAll('tbody input[name="gerarRelatorioCheck"]');
-      const checkboxesAtendidoCheckStatus = document.querySelectorAll('tbody input[name="atendidoCheck"]');
-      const hiddenInput = document.getElementById('agendamento-ids');
-      const atendidos_id = document.getElementById('atendidos_id');
+      const checkboxes = document.querySelectorAll('input[name="gerarRelatorioCheck"]');
       const formImprimirAgenda = document.getElementById('form-imprimir-agenda');
-      const formCofirmarAtendimentos = document.getElementById('form-confirmar-atendimentos');
-      const checkboxesAtendidos = document.querySelectorAll('tbody input[name="atendidoCheck"]');
-      // Função para verificar o status e marcar automaticamente os checkboxes
-      function marcarCheckboxesConfirmados() {
-        checkboxesGerarRelatorioStatus.forEach(checkbox => {
-          const status = checkbox.closest('tr').querySelector('[data-status]').dataset.status;
-          if (status === 'confirmado') {
-            checkbox.checked = true;
-          }
-        });
-        atualizarIdsSelecionados();
-      }
-  
-      // Chame a função ao carregar a página
-      marcarCheckboxesConfirmados();
-  
-      checkboxGerarRelatorioTodos.addEventListener('change', function () {
-        checkboxesGerarRelatorioStatus.forEach(function (checkbox) {
-          checkbox.checked = checkboxGerarRelatorioTodos.checked;
-        });
-        atualizarIdsSelecionados();
-      });
+      const formImprimirDocumentos = document.getElementById('form-imprimir-documentos');
+      const formConfirmarAtendimentos = document.getElementById('form-confirmar-atendimentos');
+      const checkboxSelectAll = document.getElementById('checkbox-select-all');
+      const dataSelecionada = document.getElementById('data-selecionada');
 
-      checkboxAtendidoCheckTodos.addEventListener('change', function () {
-        checkboxesAtendidoCheckStatus.forEach(function (checkbox) {
-          checkbox.checked = checkboxAtendidoCheckTodos.checked;
-        });
-        atualizarIdsAtendidosSelecionados();
+    checkboxSelectAll.addEventListener('change', function () {
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = checkboxSelectAll.checked;
       });
-  
-      checkboxesGerarRelatorioStatus.forEach(checkbox => {
-        checkbox.addEventListener('click', function () {
-          checkboxGerarRelatorioTodos.checked = [...checkboxesGerarRelatorioStatus].every(checkbox => checkbox.checked);
-          atualizarIdsSelecionados();
-        });
-      });
+      updateHiddenInputs();
+    });
 
-      checkboxesAtendidoCheckStatus.forEach(checkbox => {
-        checkbox.addEventListener('click', function () {
-          checkboxAtendidoCheckTodos.checked = [...checkboxesAtendidoCheckStatus].every(checkbox => checkbox.checked);
-          atualizarIdsAtendidosSelecionados();
-        });
-      });
-  
-      function atualizarIdsSelecionados() {
-        const agendamentoIds = Array.from(checkboxesGerarRelatorioStatus)
-          .filter(checkbox => checkbox.checked)
-          .map(checkbox => checkbox.dataset.id);
-  
-        // Atualize o valor do campo oculto com os IDs dos agendamentos selecionados
-        hiddenInput.value = agendamentoIds.join(',');
-      }
-
-      function atualizarIdsAtendidosSelecionados() {
-        const agendamentoIds = Array.from(checkboxesAtendidoCheckStatus)
-          .filter(checkbox => checkbox.checked)
-          .map(checkbox => checkbox.dataset.id);
-  
-        // Atualize o valor do campo oculto com os IDs dos agendamentos selecionados
-        atendidos_id.value = agendamentoIds.join(',');
-      }
-  
-      formImprimirAgenda.addEventListener('submit', function (event) {
-        const checkboxesGerarRelatorioStatus = document.querySelectorAll('tbody input[name="gerarRelatorioCheck"]:checked');
-  
-        if (checkboxesGerarRelatorioStatus.length === 0) {
-          // Se nenhum checkbox estiver marcado, exiba uma mensagem de erro e impeça o envio do formulário
-          alert('Selecione pelo menos um item.');
-          event.preventDefault(); // Isso impede o envio do formulário
-        }
-      });
-
-      formCofirmarAtendimentos.addEventListener('submit', function (event) {
-        const checkboxesAtendimentos = document.querySelectorAll('tbody input[name="atendidoCheck"]:checked');
-  
-        if (checkboxesAtendimentos.length === 0) {
-          // Se nenhum checkbox estiver marcado, exiba uma mensagem de erro e impeça o envio do formulário
-          alert('Selecione pelo menos um item.');
-          event.preventDefault(); // Isso impede o envio do formulário
-        }
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', function () {
+        updateHiddenInputs();
       });
     });
+
+    function updateHiddenInputs() {
+      const checkedCheckboxes = document.querySelectorAll('input[name="gerarRelatorioCheck"]:checked');
+      const selectedIds = Array.from(checkedCheckboxes).map(checkbox => checkbox.dataset.id);
+      
+      const hiddenInputs = document.querySelectorAll('input[name="agendamento_ids"]');
+      hiddenInputs.forEach(hiddenInput => {
+        hiddenInput.value = selectedIds.join(',');
+      });
+    }
+    function updateDocumentosHiddenInputs() {
+      const checkedCheckboxes = document.querySelectorAll('input[name="gerarRelatorioCheck"]:checked');
+      const selectedIds = Array.from(checkedCheckboxes).map(checkbox => checkbox.dataset.id);
+      
+      const hiddenInputs = document.querySelectorAll('input[name="agendamento_documentos_ids"]');
+      hiddenInputs.forEach(hiddenInput => {
+        hiddenInput.value = selectedIds.join(',');
+      });
+    }
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+          updateHiddenInputs();
+          updateDocumentosHiddenInputs();
+        });
+      });
+  
+  
+      formImprimirAgenda.addEventListener('submit', function (event) {
+        if (!areAnyCheckboxesChecked()) {
+          alert('Selecione pelo menos um item para imprimir a agenda.');
+          event.preventDefault();
+        }
+      });
+  
+      formImprimirDocumentos.addEventListener('submit', function (event) {
+        dataSelecionada.value = '{{data}}'
+        if (!areAnyCheckboxesChecked()) {
+          alert('Selecione pelo menos um item para imprimir os documentos.');
+          event.preventDefault();
+        }
+      });
+
+        function areAnyCheckboxesChecked() {
+          return document.querySelector('input[name="gerarRelatorioCheck"]:checked') !== null;
+        }
+      });
+
+      formConfirmarAtendimentos.addEventListener('submit', function (event) {
+        if (!areAnyCheckboxesChecked()) {
+          alert('Selecione pelo menos um item para confirmar os atendimentos.');
+          event.preventDefault();
+        }
+      });
+  
   </script>
+  
 </body>
 </html>

@@ -10,5 +10,5 @@ class CadastroMedicos(forms.ModelForm):
 class AtualizarCadastroMedico(forms.ModelForm):
     class Meta:
         model = Medicos
-        fields = ['crm', 'nome', 'especialidade', 'telefone', 'email', 'assinatura']
+        fields = ['crm', 'especialidade', 'telefone', 'email', 'assinatura']
 

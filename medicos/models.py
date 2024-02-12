@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Medicos(models.Model):
     id = models.AutoField(primary_key=True, auto_created=True)
-    crm = models.CharField(max_length=20)
+    crm = models.CharField(max_length=20,unique=True)
     nome = models.CharField(max_length=100)
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     especialidade = models.CharField(max_length=100)

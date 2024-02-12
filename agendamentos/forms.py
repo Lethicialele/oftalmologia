@@ -4,7 +4,7 @@ from .models import Agendamentos
 class CadastrarAgendamentos(forms.ModelForm):
     class Meta:
         model = Agendamentos
-        fields = ('numero_de_olhos', 'olho_agendado', 'diagnostico', 'nome', 'cpf', 'telefone', 'prontuario', 'email', 'data_nascimento', 'cartao_sus')
+        fields = ('numero_de_olhos', 'olho_agendado', 'diagnostico', 'nome', 'cpf', 'telefone', 'prontuario', 'email', 'data_nascimento', 'cartao_sus', 'nivel_prioridade', 'data_cadastro' )
 
     nome_mae = forms.CharField(required=False)
     enfermaria = forms.CharField(required=False)
@@ -44,4 +44,4 @@ class AtualizarCadastroAgendamentos(forms.ModelForm):
     leito = forms.CharField(required=False)
     class Meta:
         model = Agendamentos
-        fields = ('id','numero_de_olhos', 'olho_agendado', 'diagnostico', 'telefone', 'email', 'nome_mae', 'enfermaria','clinica', 'leito' )
+        fields = ('id','numero_de_olhos', 'olho_agendado', 'diagnostico', 'telefone', 'email', 'nome_mae', 'enfermaria','clinica', 'leito', 'nivel_prioridade' )

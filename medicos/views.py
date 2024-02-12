@@ -24,9 +24,12 @@ def cadastrarMedicos(request):
             medico.save()
             messages.success(request, 'Médico cadastrado com sucesso!')
             return redirect('loginMedicos')
+        else:
+            _, error = next(iter(form_medico.errors.items()))
+            messages.error(request, error)
     else:
         form_medico = CadastroMedicos()
-
+        
     return render(request, 'cadastrarMedicos.html', {'form_medico': form_medico})
 
 def mostrarMedicos(request):
@@ -52,10 +55,6 @@ def atualizarCadastrorMedicos(request):
         form = AtualizarCadastroMedico(request.POST, request.FILES, instance=medico)
 
         if form.is_valid():
-            # Check if a new password is provided
-            nova_senha = request.POST.get('nova_senha')
-            if nova_senha:
-                medico.senha = make_password(nova_senha)
             form.save()
             messages.success(request, 'Dados do médico atualizados com sucesso!')
             return render(request, 'perfil.html', {'usuario': request.user, 'medico': medico, 'form': form})

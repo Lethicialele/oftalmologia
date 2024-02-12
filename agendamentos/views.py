@@ -10,7 +10,6 @@ from django.contrib import messages
 from .models import Agendamentos
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-from django.db.models import F, ExpressionWrapper, fields, Value
 from django.db.models.functions import Now
 
 
@@ -148,6 +147,7 @@ def confirmarAtendimentos(request):
             agendamento.save()
             
         agendamentos = Agendamentos.objects.filter(data_agendada=data_selecionada)
+        agendamentos = agendamentos.order_by('-nivel_prioridade', 'data_cadastro', '-numero_de_olhos')
         messages.success(request, 'Agendamentos atualizados com sucesso!')
         return render(request, 'consultarAgendaDia.html', {'usuario': request.user, 'agendamentos': agendamentos, 'data': data_parseada})  
 
@@ -163,8 +163,8 @@ def consultarAgendaDia(request, filtro_agenda = None):
     else:
         data = datetime.strptime(filtro_agenda, '%Y-%m-%d').date() if filtro_agenda else date.today() + timedelta(days=1)
     agendamentos = Agendamentos.objects.filter(data_agendada=data, status__in=['não confirmado', 'confirmado'])
-    print(data)
-    print(agendamentos)
+    agendamentos = agendamentos.order_by('-nivel_prioridade', 'data_cadastro', '-numero_de_olhos')
+    
     return render(request, 'consultarAgendaDia.html', {'usuario': request.user, 'agendamentos': agendamentos, 'data': data})
 
 def gerarAgenda(request):
@@ -178,11 +178,10 @@ def gerarAgenda(request):
             return HttpResponse('Dados inválidos para geração de agenda', status=400)
        
         agendamentos = Agendamentos.objects.raw('''
-            SELECT *
+             SELECT *
             FROM agendamentos_agendamentos
-            WHERE status not in ('concluido', 'cancelado') and data_agendada is null
-            HAVING (datediff(now(), ultimo_atendimento) >= 30 and data_agendada < now()) or (datediff(now(), ultimo_atendimento) IS NULL)
-                ORDER BY data_nascimento desc, aplicacao_atual desc
+            WHERE status NOT IN ('concluido', 'cancelado') and data_agendada IS NULL
+            ORDER BY nivel_prioridade DESC, data_cadastro ASC, numero_de_olhos DESC
             LIMIT %s
         ''', [quantidade_pacientes])
 
@@ -198,31 +197,43 @@ def gerarAgenda(request):
     return render(request, 'gerarAgenda.html', {'usuario': request.user})
 
 def gerarRelatorio(request):
-   # Recupere os dados necessários para o relatório
-    agendamentos = Agendamentos.objects.all()  # Substitua isso pela lógica de obtenção de dados desejada
+    agendamento = None  # Inicialize com None para o caso de não haver agendamentos
 
-    # Carregue o template HTML
-    template_path = 'relatorioTemplate.html'  # Substitua pelo caminho do seu template HTML
-    template = get_template(template_path)
-    context = {'agendamentos': agendamentos}
+    if request.method == 'POST':
+        # Obtenha a lista de IDs dos agendamentos selecionados
 
-    # Renderize o template HTML
-    html = template.render(context)
+        agendamento_ids = request.POST.get('agendamento_documentos_ids', '').split(',')
 
-    # Crie um objeto de resposta HttpResponse com o cabeçalho de PDF
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'filename="relatorio.pdf"'
+        # Obtenha os agendamentos correspondentes aos IDs selecionados
+        agendamento = Agendamentos.objects.filter(id__in=agendamento_ids)
 
-    # Crie o PDF real usando o HTML renderizado
-    pisa_status = pisa.CreatePDF(
-        html, dest=response, encoding='utf-8',
-        link_callback=lambda uri, _: default_link_callback(uri, request)
-    )
+    # Se houver agendamentos, crie o contexto com os dados a serem passados para o modelo
+    if agendamento:
+        context = {
+            'agendamento': agendamento,
+            'usuario': request.user
+        }
 
-    # Se o PDF foi criado com sucesso, retorne-o na resposta
-    if pisa_status.err:
-        return HttpResponse('Erro ao gerar o relatório em PDF', status=500)
-    return response
+        # Renderize o modelo
+        template_path = 'tcleCirurgia.html'  # Atualize com o caminho correto
+        template = get_template(template_path)
+        html = template.render(context)
+
+        # Crie um objeto PDF
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'inline; filename="relatorio.pdf"'
+
+        # Converta o HTML para PDF
+        pisa_status = pisa.CreatePDF(html, dest=response)
+
+        # Se a conversão falhar, retorne um erro
+        if pisa_status.err:
+            return HttpResponse('Erro ao gerar PDF', status=500)
+        return render(request, "tcleAnestesia.html", {'usuario': request.user, 'agendamentos': agendamento})
+        # return response
+
+    # Se não houver agendamentos, retorne apenas o render do template sem contexto
+    return render(request, 'tcleCirurgia.html', {'usuario': request.user})
 
 def imprimirAgenda(request, data_selecionada):
     if data_selecionada is None:
@@ -268,8 +279,7 @@ def consultarFilaEsperaPacientes(request):
         SELECT *
         FROM agendamentos_agendamentos
         WHERE status NOT IN ('concluido', 'cancelado') and data_agendada IS NULL
-
-        ORDER BY data_nascimento DESC, aplicacao_atual DESC
+        ORDER BY nivel_prioridade DESC, data_cadastro ASC, numero_de_olhos DESC
     '''
 
     # Execute a consulta SQL
