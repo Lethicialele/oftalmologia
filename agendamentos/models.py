@@ -22,6 +22,7 @@ class Agendamentos(models.Model):
     oct = models.BooleanField(default=False)
     data_agendada = models.DateField(null=True)
     ultimo_atendimento = models.DateField(null=True)
+    ultima_atualizacao = models.DateField(null=True)
     diagnostico = models.CharField(max_length=500, null=True)
     observacao = models.CharField(max_length=500, blank=True, null=True)
     status = models.CharField(max_length=20, default='não confirmado')

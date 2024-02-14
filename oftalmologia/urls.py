@@ -19,6 +19,9 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
 from medicos import views as medicosView
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +33,4 @@ urlpatterns = [
     path('agendamentos/', include('agendamentos.urls')),
     path('sair', medicosView.sair, name="sair"),
     path('loginMedicos/', medicosView.loginMedicos, name='loginMedicos'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

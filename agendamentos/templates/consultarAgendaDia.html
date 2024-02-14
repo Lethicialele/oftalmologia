@@ -119,7 +119,7 @@
                 <td class="align-middle text-center">{{ agendamento.diagnostico }}</td>
                 <td class="align-middle text-center">{{ agendamento.telefone }}</td>
                 <td class="align-middle text-center" data-status="{{ agendamento.status }}">{{ agendamento.status }}</td>
-                <td class="align-middle text-center">{{ agendamento.observacao }}</td>
+                <td class="align-middle text-center">{{ agendamento.observacao|default:'' }}</td>
                 <td class="align-middle">
                   <div class="align-middle text-center form-check-lg">
                       <input type="checkbox" name="gerarRelatorioCheck" data-id="{{ agendamento.id }}" class="form-check-input text-info border-info">
@@ -170,72 +170,74 @@
       const checkboxSelectAll = document.getElementById('checkbox-select-all');
       const dataSelecionada = document.getElementById('data-selecionada');
 
-    checkboxSelectAll.addEventListener('change', function () {
-      checkboxes.forEach(checkbox => {
-        checkbox.checked = checkboxSelectAll.checked;
-      });
-      updateHiddenInputs();
-    });
-
-    checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', function () {
+      checkboxSelectAll.addEventListener('change', function () {
+        checkboxes.forEach(checkbox => {
+          checkbox.checked = checkboxSelectAll.checked;
+        });
+        updateDocumentosHiddenInputs();
         updateHiddenInputs();
       });
-    });
 
-    function updateHiddenInputs() {
-      const checkedCheckboxes = document.querySelectorAll('input[name="gerarRelatorioCheck"]:checked');
-      const selectedIds = Array.from(checkedCheckboxes).map(checkbox => checkbox.dataset.id);
-      
-      const hiddenInputs = document.querySelectorAll('input[name="agendamento_ids"]');
-      hiddenInputs.forEach(hiddenInput => {
-        hiddenInput.value = selectedIds.join(',');
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+          updateHiddenInputs();
+        });
       });
-    }
-    function updateDocumentosHiddenInputs() {
-      const checkedCheckboxes = document.querySelectorAll('input[name="gerarRelatorioCheck"]:checked');
-      const selectedIds = Array.from(checkedCheckboxes).map(checkbox => checkbox.dataset.id);
+
+      function updateHiddenInputs() {
+        const checkedCheckboxes = document.querySelectorAll('input[name="gerarRelatorioCheck"]:checked');
+        const selectedIds = Array.from(checkedCheckboxes).map(checkbox => checkbox.dataset.id);
+        
+        const hiddenInputs = document.querySelectorAll('input[name="agendamento_ids"]');
+        hiddenInputs.forEach(hiddenInput => {
+          hiddenInput.value = selectedIds.join(',');
+        });
+      }
       
-      const hiddenInputs = document.querySelectorAll('input[name="agendamento_documentos_ids"]');
-      hiddenInputs.forEach(hiddenInput => {
-        hiddenInput.value = selectedIds.join(',');
-      });
-    }
+      function updateDocumentosHiddenInputs() {
+        const checkedCheckboxes = document.querySelectorAll('input[name="gerarRelatorioCheck"]:checked');
+        const selectedIds = Array.from(checkedCheckboxes).map(checkbox => checkbox.dataset.id);
+        
+        const hiddenInputs = document.querySelectorAll('input[name="agendamento_documentos_ids"]');
+        hiddenInputs.forEach(hiddenInput => {
+          hiddenInput.value = selectedIds.join(',');
+        });
+      }
+
       checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function () {
           updateHiddenInputs();
           updateDocumentosHiddenInputs();
         });
       });
-  
-  
+    
+    
       formImprimirAgenda.addEventListener('submit', function (event) {
         if (!areAnyCheckboxesChecked()) {
           alert('Selecione pelo menos um item para imprimir a agenda.');
           event.preventDefault();
         }
       });
-  
+
       formImprimirDocumentos.addEventListener('submit', function (event) {
-        dataSelecionada.value = '{{data}}'
         if (!areAnyCheckboxesChecked()) {
           alert('Selecione pelo menos um item para imprimir os documentos.');
           event.preventDefault();
         }
       });
 
-        function areAnyCheckboxesChecked() {
-          return document.querySelector('input[name="gerarRelatorioCheck"]:checked') !== null;
-        }
-      });
+      function areAnyCheckboxesChecked() {
+        return document.querySelector('input[name="gerarRelatorioCheck"]:checked') !== null;
+      }
 
       formConfirmarAtendimentos.addEventListener('submit', function (event) {
-        if (!areAnyCheckboxesChecked()) {
-          alert('Selecione pelo menos um item para confirmar os atendimentos.');
+        if (!confirm("ATENÇÃO!\n- Os pacientes que NÃO forem SELECIONADOS receberão FALTA.\n- A ocorrência de 3 faltas seguidas IMPOSSIBILITA agendamentos futuros. ")) {
           event.preventDefault();
         }
       });
-  
+
+  });
+
   </script>
   
 </body>
