@@ -205,6 +205,7 @@ def consultarAgendaDia(request, filtro_agenda=None):
 
 
 def gerarAgenda(request):
+    pacientes = consultarFilaEsperaPacientes(request)
     if request.method == 'POST':
         # Processar o formulário de geração de agenda
         data_agendada = request.POST.get('data_agendada')
@@ -230,10 +231,10 @@ def gerarAgenda(request):
         agendamentos = Agendamentos.objects.filter(data_agendada=data_agendada)
 
         data_agendada = datetime.strptime(data_agendada, '%Y-%m-%d').date()
-        return render(request, 'consultarAgendaDia.html', {'usuario': request.user, 'agendamentos': agendamentos, 'data': data_agendada})
+        return consultarAgendaDia(request, data_agendada)
 
     # Renderize a página de geração de agenda (substitua com o caminho real do seu template)
-    return render(request, 'gerarAgenda.html', {'usuario': request.user})
+    return render(request, 'gerarAgenda.html', {'usuario': request.user, 'pacientes':pacientes})
 
 
 def gerarRelatorio(request):
@@ -241,40 +242,17 @@ def gerarRelatorio(request):
 
     if request.method == 'POST':
         # Obtenha a lista de IDs dos agendamentos selecionados
-
-        agendamento_ids = request.POST.get(
-            'agendamento_documentos_ids', '').split(',')
+        agendamento_ids = request.POST.get('agendamento_documentos_ids', '').split(',')
 
         # Obtenha os agendamentos correspondentes aos IDs selecionados
         agendamento = Agendamentos.objects.filter(id__in=agendamento_ids)
 
-    # Se houver agendamentos, crie o contexto com os dados a serem passados para o modelo
+    # Se houver agendamentos, redirecione para a página 'relatorio.html' com os dados dos agendamentos
     if agendamento:
-        context = {
-            'agendamento': agendamento,
-            'usuario': request.user
-        }
-
-        # Renderize o modelo
-        template_path = 'tcleAnestesia.html'  # Atualize com o caminho correto
-        template = get_template(template_path)
-        html = template.render(context)
-
-        # Crie um objeto PDF
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'inline; filename="relatorio.pdf"'
-
-        # Converta o HTML para PDF
-        pisa_status = pisa.CreatePDF(html, dest=response)
-
-        # Se a conversão falhar, retorne um erro
-        if pisa_status.err:
-            return HttpResponse('Erro ao gerar PDF', status=500)
-        return render(request, "tcleAnestesia.html", {'usuario': request.user, 'agendamentos': agendamento})
-        # return response
+        return render(request, 'relatorio.html', {'usuario': request.user, 'agendamentos': agendamento})
 
     # Se não houver agendamentos, retorne apenas o render do template sem contexto
-    return render(request, 'tcleAnestesia.html', {'usuario': request.user})
+    return render(request, 'relatorio.html', {'usuario': request.user})
 
 
 def imprimirAgenda(request, data_selecionada):
@@ -332,7 +310,7 @@ def consultarFilaEsperaPacientes(request):
     agendamentos = Agendamentos.objects.raw(consulta_sql)
 
     # Renderize a página html com os resultados
-    return render(request, 'consultarFilaEsperaPacientes.html', {'agendamentos': agendamentos, 'usuario': request.user})
+    return agendamentos
 
 
 def deletarPaciente(request):

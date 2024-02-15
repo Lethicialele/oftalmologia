@@ -145,10 +145,12 @@
         table {
             border-collapse: collapse;
             margin-left: 6.45pt;
+            max-width: 530pt
         }
 
         tr {
-            height: 18pt
+            height: 18pt;
+            max-width: 520pt;
         }
 
         ol {
@@ -161,6 +163,7 @@
         }
 
         td {
+            max-width: 520pt;
             width: 425pt;
             border-top-style: solid;
             border-top-width: 0.5pt;
@@ -205,40 +208,55 @@
     <div class="container">
         {% load static %}
         <img style=" width: 550pt; margin-bottom: 26.6pt;" src="{% static 'img/tcle.png' %}" alt="Logo do HUPAA" />
-        <table style="margin: 0 auto;">
+        <table style="margin: 0 auto; max-width: 530pt;">
             <tr>
                 <td>
-                    <p class="s1">Nome completo: {{agendamento.nome}}</p>
-                    <p class="s1">Prontuário n°: {{agendamento.prontuario}}</p>
+                    <p class="s1" style="text-align: left; max-width: 520pt;">Nome completo: {{agendamento.nome}}</p>
+                    <p class="s1" style="text-align: left; max-width: 520pt;">Prontuário n°: {{agendamento.prontuario}}</p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <p class="s1">RG ou CPF: {{agendamento.cpf}}</p>
+                    <p class="s1" style="text-align: left;">RG ou CPF: {{agendamento.cpf}}</p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <p class="s1">Nome da Mãe: {{agendamento.nome_mae}}</p>
+                    <p class="s1" style="text-align: left; max-width: 520pt">Nome da Mãe: {{agendamento.nome_mae}}</p>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <p class="s1">Data Nasc: {{agendamento.data_nascimento}} <u>&nbsp;&nbsp; </u>/<u> &nbsp; </u>/<u>
-                        </u> | SUS: {{agendamento.cartao_sus}}</p>
+                    <div style="display: flex;">
+                        <div style="flex: 3;">
+                            <p class="s1" style="text-align: left;">Data Nasc: {{agendamento.data_nascimento}}</p>
+                        </div>
+                        <div style="flex: 2;">
+                            <p class="s1" style="text-align: left;">| SUS: {{agendamento.cartao_sus}}</p>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <p class="s1">Clínica: {{agendamento.clinica}} |ENF: {{agendamento.enfermaria}} | Leito:
-                        {{agendamento}} |Fone:</p>
+                    <div style="display: flex;">
+                        <div style="flex: 3;">
+                            <p class="s1" style="text-align: left;">Clínica: {{agendamento.clinica}} </p>
+                        </div>
+                        <div style="flex: 1;">
+                            <p class="s1" style="text-align: left;">|ENF: {{agendamento.enfermaria}}</p>
+                        </div>
+                        <div style="flex: 1;">
+                            <p class="s1" style="text-align: left;">|Leito: {{agendamento.leito}}</p>
+                        </div>
+                        <div style="flex: 2;">
+                            <p class="s1" style="text-align: left;">|Fone: {{agendamento.telefone}} </p>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </table>
-        <p><br /></p>
-        <p><br /></p>
-        <h1>TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA ANESTESIA</h1>
-        <p><br /></p>
+        <h1 style="padding-top: 20pt; padding-bottom: 5pt;">TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA ANESTESIA</h1>
         <p class="s7">Declaro que fui informado(a) quanto aos principais aspectos relacionados aos procedimentos
             anestésicos dos quais poderei ser submetido nesta instituição.</p>
         <p class="s7">Autorizo um médico(a) anestesiologista desta instituição bem como integrantes de sua equipe
@@ -305,7 +323,7 @@
                     complementada com bloqueio), buscando sempre o melhor resultado.
                 </p>
             </li>
-            <li>
+            <li style="page-break-after: always;">
                 <p class="s6">
                     Fui explicado que se a evolução do quadro de saúde apresentado colocar a minha vida em risco, estou
                     ciente de
@@ -473,37 +491,55 @@
 
     <div class="container">
         <img style=" width: 550pt; margin-bottom: 26.6pt;" src="tcle.png" alt="Logo do HUPAA" />
-        <table style="border-collapse:collapse;margin-left:53.994pt" cellspacing="0">
-            <tr style="height:18pt">
-                <td style="width:425pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome completo: {{agendamento.nome}}</p>
-                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 12pt;text-align: left;">Prontuário n°: {{agendamento.prontuario}}</p>
+        <table style="margin: 0 auto; max-width: 530pt;">
+            <tr>
+                <td>
+                    <p class="s1" style="text-align: left; max-width: 520pt;">Nome completo: {{agendamento.nome}}</p>
+                    <p class="s1" style="text-align: left; max-width: 520pt;">Prontuário n°: {{agendamento.prontuario}}</p>
                 </td>
             </tr>
-            <tr style="height:18pt">
-                <td style="width:425pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">RG ou CPF: {{agendamento.cpf}}</p>
+            <tr>
+                <td>
+                    <p class="s1" style="text-align: left;">RG ou CPF: {{agendamento.cpf}}</p>
                 </td>
             </tr>
-            <tr style="height:18pt">
-                <td style="width:425pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome da Mãe: {{agendamento.nome_mae}}</p>
+            <tr>
+                <td>
+                    <p class="s1" style="text-align: left; max-width: 520pt">Nome da Mãe: {{agendamento.nome_mae}}</p>
                 </td>
             </tr>
-            <tr style="height:18pt">
-                <td style="width:425pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Data Nasc: {{agendamento.data_nascimento}} <u>&nbsp;&nbsp; </u>/<u> &nbsp; </u>/<u> </u>     | SUS: {{agendamento.cartao_sus}}</p>
+            <tr>
+                <td>
+                    <div style="display: flex;">
+                        <div style="flex: 3;">
+                            <p class="s1" style="text-align: left;">Data Nasc: {{agendamento.data_nascimento}}</p>
+                        </div>
+                        <div style="flex: 2;">
+                            <p class="s1" style="text-align: left;">| SUS: {{agendamento.cartao_sus}}</p>
+                        </div>
+                    </div>
                 </td>
             </tr>
-            <tr style="height:18pt">
-                <td style="width:425pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Clínica: {{agendamento.clinica}}                            |ENF:  {{agendamento.enfermaria}}   | Leito: {{agendamento}}    |Fone:</p>
+            <tr>
+                <td>
+                    <div style="display: flex;">
+                        <div style="flex: 3;">
+                            <p class="s1" style="text-align: left;">Clínica: {{agendamento.clinica}} </p>
+                        </div>
+                        <div style="flex: 1;">
+                            <p class="s1" style="text-align: left;">|ENF: {{agendamento.enfermaria}}</p>
+                        </div>
+                        <div style="flex: 1;">
+                            <p class="s1" style="text-align: left;">|Leito: {{agendamento.leito}}</p>
+                        </div>
+                        <div style="flex: 2;">
+                            <p class="s1" style="text-align: left;">|Fone: {{agendamento.telefone}} </p>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </table>
-        <p style="text-indent: 0pt;text-align: left;"><br/></p><p style="text-indent: 0pt;text-align: left;"><br/></p><h1 style="padding-top: 1pt;padding-left: 41pt;text-indent: 0pt;text-align: left;">TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA CIRURGIA</h1>
-        
-        <p style="text-indent: 0pt;text-align: left;"><br/></p>
+        <h1 style="padding-top: 1pt;padding-left: 41pt;text-indent: 0pt;text-align: left; padding-top: 20pt; padding-bottom: 10pt;">TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA CIRURGIA</h1>
         <p style="padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: justify;">Declaro que fui informado(a) quanto aos principais aspectos relacionados ao procedimento cirurgico dos quais poderei ser submetido nesta instituição.</p>
         <p style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: justify;">Autorizo um médico(a) cirurgião desta instituição bem como integrantes de sua equipe composta por médicos(as) residentes em cirurgia sob sua supervisão, todos devidamente cadastrados por esta instituição, a realizar o seguinte procedimento:  ___________________________________________________________________ para  a  cirurgia  proposta (escrever   nome   científico   e   nome   popular   entre   parênteses   quando   houver): ______________________________________________________________________________________ <span class="p" style="line-height: 180%;"> a ser realizada pela equipe do médico cirurgião:  _______________________________________________________________________.</p>
         <p style="text-indent: 0pt;text-align: left;"><br/></p>

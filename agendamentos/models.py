@@ -6,9 +6,9 @@ from django.contrib.auth.models import User
 
 class Agendamentos(models.Model):
     id = models.AutoField(primary_key=True, auto_created=True)
-    nome = models.CharField(max_length=100)
+    nome = models.CharField(max_length=180)
     cpf = models.CharField(max_length=14, unique=True, null=True)
-    nome_mae = models.CharField(max_length=100, default="", null=True)
+    nome_mae = models.CharField(max_length=185, default="", null=True)
     cartao_sus = models.CharField(max_length=100, default="")
     clinica = models.CharField(max_length=100, default="", null=True)
     enfermaria = models.CharField(max_length=100, default="", null=True)
