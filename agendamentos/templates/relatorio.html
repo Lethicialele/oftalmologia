@@ -207,7 +207,7 @@
     {% for agendamento in agendamentos %}
     <div class="container">
         {% load static %}
-        <img style=" width: 550pt; margin-bottom: 26.6pt;" src="{% static 'img/tcle.png' %}" alt="Logo do HUPAA" />
+        <img style=" width: 550pt; margin-bottom: 10pt;" src="{% static 'img/tcle.png' %}" alt="Logo do HUPAA" />
         <table style="margin: 0 auto; max-width: 530pt;">
             <tr>
                 <td>
@@ -256,7 +256,7 @@
                 </td>
             </tr>
         </table>
-        <h1 style="padding-top: 20pt; padding-bottom: 5pt;">TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA ANESTESIA</h1>
+        <h1 style="padding-top: 10pt; padding-bottom: 5pt;">TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA ANESTESIA</h1>
         <p class="s7">Declaro que fui informado(a) quanto aos principais aspectos relacionados aos procedimentos
             anestésicos dos quais poderei ser submetido nesta instituição.</p>
         <p class="s7">Autorizo um médico(a) anestesiologista desta instituição bem como integrantes de sua equipe
@@ -332,7 +332,7 @@
                     de vida apurado.
                 </p>
             </li>
-        <img style=" width: 550pt;" src="tcle.png" alt="Logo do HUPAA" />
+        <img style=" width: 550pt;" src="{% static 'img/tcle.png' %}" alt="Logo do HUPAA" />
             <li>
                 <p class="s6">
                     Por ocasião deste consentimento, informei ao médico anestesiologista sobre doenças pré-existentes,
@@ -490,7 +490,7 @@
     </div>
 
     <div class="container">
-        <img style=" width: 550pt; margin-bottom: 26.6pt;" src="tcle.png" alt="Logo do HUPAA" />
+        <img style=" width: 550pt; margin-bottom: 10pt;" src="{% static 'img/tcle.png' %}" alt="Logo do HUPAA" />
         <table style="margin: 0 auto; max-width: 530pt;">
             <tr>
                 <td>
@@ -554,7 +554,7 @@
             Tive a&nbsp;oportunidade de fazer perguntas que me foram respondidas satisfatoriamente, assim, tendo conhecimento, autorizo&nbsp;a&nbsp;realização do&nbsp;procedimento&nbsp;proposto.&nbsp;</p>
     </div>
     <div class="container">
-        <img style=" width: 550pt; margin-bottom: 26.6pt;" src="tcle.png" alt="Logo do HUPAA" />
+        <img style=" width: 550pt; margin-bottom: 26.6pt;" src="{% static 'img/tcle.png' %}" alt="Logo do HUPAA" />
         <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">(  ) Não foi possível a coleta deste Termo de Consentimento Livre e Esclarecido, por tratar-se de situação de Emergência.</p>
         <p style="text-indent: 0pt;text-align: left;"></p>
         <p style="text-indent: 0pt;text-align: left;"></p>
@@ -637,6 +637,31 @@
         window.onload = function () {
             window.print();
         }
+
+        // Supondo que agendamento.data_agendada seja uma string representando a data no formato "15 de fevereiro de 2024"
+        var dataAgendada = {{agendamento.data_agendada}}
+        
+        // Convertendo a string para um objeto de data JavaScript
+        var data = new Date(dataAgendada);
+    
+        // Extrair o dia, mês e ano da data
+        var dia = data.getDate();
+        var mes = data.getMonth() + 1; // Adicionando 1 porque os meses são indexados de 0 a 11
+        var ano = data.getFullYear();
+    
+        // Formatando o dia e mês para que tenham sempre dois dígitos
+        if (dia < 10) {
+            dia = '0' + dia;
+        }
+        if (mes < 10) {
+            mes = '0' + mes;
+        }
+    
+        // Criando a string formatada "dd/mm/yyyy"
+        var dataFormatada = dia + '/' + mes + '/' + ano;
+    
+        // Adicionando a data formatada ao documento HTML
+        document.write("Maceió, " + dataFormatada + " <span class='p'>Hora: ____:____</span>");
     </script>
 
 </body>
