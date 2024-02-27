@@ -57,8 +57,7 @@ def confirmarAgendamentos(request):
                 if form.is_valid():
                     if status == 'não confirmado':
                         agendamento.observacao = observacao
-                        data_atual = timezone.localtime(
-                            timezone.now()).strftime("%Y-%m-%d %H:%M:%S")
+                        data_atual = timezone.localtime(timezone.now()).strftime("%Y-%m-%d %H:%M:%S")
                         historico_entry = f"Confirmação de Agendamento ({data_atual} por {request.user}): {agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
                         agendamento.historico += historico_entry
                         agendamento.numero_atualizacoes += 1
@@ -408,6 +407,9 @@ def removerPacienteAgenda(request):
         data = agendamento.data_agendada
         agendamento.data_agendada = None
         agendamento.status = None
+        data_atual = timezone.localtime(timezone.now()).strftime("%Y-%m-%d %H:%M:%S")
+        historico_entry = f"Paciente Removido da agenda ({data_atual} por {request.user})\n"
+        agendamento.historico += historico_entry
         agendamento.save()
     else:
         agendamento_id = request.GET.get('agendamento_id')
