@@ -53,7 +53,7 @@
           <td class="align-middle text-center" style="width: 15%">{{ agendamento.diagnostico }}</td>
           <td class="align-middle text-center" style="width: 11%">{{ agendamento.telefone }}</td>
           <td class="align-middle text-center" data-status="{{ agendamento.status }}" style="width: 13%">{{ agendamento.status }}</td>
-          <td class="align-middle text-center">{{ agendamento.observacao }}</td>
+          <td class="align-middle text-center">{{ agendamento.observacao|default:'' }}</td>
                 
         </tr>
         {% endfor %}

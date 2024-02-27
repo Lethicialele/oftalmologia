@@ -19,6 +19,7 @@ urlpatterns = [
     path('confirmarAtendimentos/', views.confirmarAtendimentos, name='confirmarAtendimentos'),
     path('consultarFilaEsperaPacientes/', views.consultarFilaEsperaPacientes, name='consultarFilaEsperaPacientes'),
     path('deletarPaciente/', views.deletarPaciente, name="deletarPaciente"),
+    path('removerPacienteAgenda/', views.removerPacienteAgenda, name="removerPacienteAgenda"),
     path('agendarPaciente/', views.agendarPaciente, name="agendarPaciente"),
     path('atualizarCadastroAgendamento/', views.atualizarCadastroAgendamento, name="atualizarCadastroAgendamento"),
 

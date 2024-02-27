@@ -17,7 +17,7 @@
             font-family: Calibri, sans-serif;
             margin: 0;
             padding: 0;
-           
+
         }
 
         * {
@@ -35,6 +35,7 @@
             text-align: justify;
             /* Centralizar todo o conteúdo */
         }
+
         .s1 {
             color: black;
             font-family: Calibri, sans-serif;
@@ -101,7 +102,7 @@
             padding-top: 5pt;
             padding-left: 303pt;
             text-indent: 0pt;
-            text-align: left;
+            text-align: right;
         }
 
         .s5 {
@@ -128,6 +129,7 @@
             text-align: justify;
             line-height: 150%;
         }
+
         .s8 {
             color: black;
             font-family: Calibri, sans-serif;
@@ -136,6 +138,7 @@
             text-decoration: none;
             font-size: 11pt;
         }
+
         tbody {
             vertical-align: top;
             overflow: visible;
@@ -212,7 +215,8 @@
             <tr>
                 <td>
                     <p class="s1" style="text-align: left; max-width: 520pt;">Nome completo: {{agendamento.nome}}</p>
-                    <p class="s1" style="text-align: left; max-width: 520pt;">Prontuário n°: {{agendamento.prontuario}}</p>
+                    <p class="s1" style="text-align: left; max-width: 520pt;">Prontuário n°: {{agendamento.prontuario}}
+                    </p>
                 </td>
             </tr>
             <tr>
@@ -256,16 +260,28 @@
                 </td>
             </tr>
         </table>
-        <h1 style="padding-top: 10pt; padding-bottom: 5pt;">TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA ANESTESIA</h1>
+        <h1 style="padding-top: 10pt; padding-bottom: 5pt;">TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA ANESTESIA
+        </h1>
         <p class="s7">Declaro que fui informado(a) quanto aos principais aspectos relacionados aos procedimentos
             anestésicos dos quais poderei ser submetido nesta instituição.</p>
         <p class="s7">Autorizo um médico(a) anestesiologista desta instituição bem como integrantes de sua equipe
-            composta por médicos(as) residentes em anestesiologista sob sua supervisão, todos devidamente cadastrados por
-            esta instituição, a realizar o seguinte procedimento anestésico: _______________________________________________________
+            composta por médicos(as) residentes em anestesiologista sob sua supervisão, todos devidamente cadastrados
+            por
+            esta instituição, a realizar o seguinte procedimento anestésico:
+            _______________________________________________________
             ou a seguinte alternativa anestésica: ________________________________________________________________
-           para a cirurgia proposta (escrever nome científico e nome popular entre parênteses quando houver):
-        ________________________________________________________________________________ a ser
-            realizada pela&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; equipe &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; do &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; médico &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cirurgião:</p><p>____________________________________________________________________.</p>
+            para a cirurgia proposta (escrever nome científico e nome popular entre parênteses quando houver):
+            ________________________________________________________________________________ a ser
+            realizada
+            pela&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            equipe
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            do
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            médico
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            cirurgião:</p>
+        <p>____________________________________________________________________.</p>
         <p><br /></p>
         <p style="text-align: justify;">Declaro ainda que:</p>
         <ol type="a" style="padding-top: 6pt;">
@@ -332,7 +348,7 @@
                     de vida apurado.
                 </p>
             </li>
-        <img style=" width: 550pt;" src="{% static 'img/tcle.png' %}" alt="Logo do HUPAA" />
+            <img style=" width: 550pt;" src="{% static 'img/tcle.png' %}" alt="Logo do HUPAA" />
             <li>
                 <p class="s6">
                     Por ocasião deste consentimento, informei ao médico anestesiologista sobre doenças pré-existentes,
@@ -362,16 +378,9 @@
                 </p>
             </li>
         </ol>
-        <p>
-        <p>
-        <p>
-        <p>
-        <p>
-        <p>
-        <p>
-        <p class="s4" style="text-align: right;">Maceió, ___/___/____ <span class="p">Hora: ____:____</span>
-        </p>
-        <p><br /></p>
+        <p class="s4" style="padding-top: 5pt; text-indent: 0pt;text-align: right;">Maceió,
+            {{agendamento.data_agendada}}, Hora: ____:____</p>
+        <p style="text-indent: 0pt;text-align: left;"><br /></p>
 
         <table>
             <tr>
@@ -389,20 +398,23 @@
             </tr>
             <tr style="height:27pt">
                 <td class="t1">
-                    <p class="s1">Nome legível:</p>
+                    <p class="s1">Nome legível:
+                        _________________________________________________________________________________
+                    </p>
                 </td>
             </tr>
             <tr style="height:27pt">
                 <td class="t1">
-                    <p class="s1">Assinatura:</p>
+                    <p class="s1">Assinatura:
+                        ____________________________________________________________________________________
+                    </p>
                 </td>
             </tr>
             <tr style="height:39pt">
                 <td class="t1">
                     <p><br /></p>
-                    <p class="s1" style="text-align: left;">Grau de Parentesco do responsável:<u>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </u>RG OU CPF: <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u>
+                    <p class="s1" style="text-align: left;">Grau de Parentesco do responsável:
+                        _____________________________________ RG OU CPF: ________________________________
                     </p>
                 </td>
             </tr>
@@ -419,33 +431,31 @@
             </tr>
             <tr style="height:33pt">
                 <td class="t2">
-                    <p class="s1">Nome legível completo:</p>
+                    <p class="s1" style="text-align: left;">Nome legível completo: _________________________</p>
                 </td>
                 <td class="t2">
-                    <p class="s1">Nome legível completo:</p>
+                    <p class="s1" style="text-align: left;">Nome legível completo: _________________________</p>
                 </td>
             </tr>
             <tr style="height:33pt">
                 <td class="t2">
-                    <p class="s1">Assinatura:</p>
+                    <p class="s1">Assinatura: ___________________________________</p>
                 </td>
                 <td class="t2">
-                    <p class="s1">Assinatura:</p>
+                    <p class="s1">Assinatura: ___________________________________</p>
                 </td>
             </tr>
             <tr style="height:33pt">
                 <td class="t2">
                     <p><br /></p>
-                    <p class="s1" style="text-align: left;">RG OU CPF:
-                        <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </u>
+                    <p class="s1" style="text-align: left; padding-bottom: 5pt;">RG OU CPF:
+                        ___________________________________
                     </p>
                 </td>
                 <td class="t2">
                     <p><br /></p>
-                    <p class="s1" style="text-align: left;">RG OU CPF:
-                        <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </u>
+                    <p class="s1" style="text-align: left; padding-bottom: 5pt;">RG OU CPF:
+                        ___________________________________
                     </p>
                 </td>
             </tr>
@@ -469,17 +479,21 @@
             </tr>
             <tr style="height:27pt">
                 <td class="t1">
-                    <p class="s1">Nome legível completo do médico(a):</p>
+                    <p class="s1">Nome legível completo do médico(a): {{usuario}}</p>
                 </td>
             </tr>
             <tr style="height:64pt">
                 <td class="t1">
                     <p><br /></p>
-                    <p class="s1" style="text-align: left;">CRM<u>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </u> Carimbo médico e assinatura:<u>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </u></p>
+                    <div style="display: flex;">
+                        <div style="flex: 1;">
+                            <p class="s1" style="text-align: left;">CRM: {{medico.crm}}</p>
+                        </div>
+                        <div style="flex: 4;">
+                            <p class="s1" style="text-align: left;"> Carimbo médico e assinatura: {{medico.assinatura}}
+                            </p>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </table>
@@ -495,7 +509,8 @@
             <tr>
                 <td>
                     <p class="s1" style="text-align: left; max-width: 520pt;">Nome completo: {{agendamento.nome}}</p>
-                    <p class="s1" style="text-align: left; max-width: 520pt;">Prontuário n°: {{agendamento.prontuario}}</p>
+                    <p class="s1" style="text-align: left; max-width: 520pt;">Prontuário n°: {{agendamento.prontuario}}
+                    </p>
                 </td>
             </tr>
             <tr>
@@ -539,88 +554,192 @@
                 </td>
             </tr>
         </table>
-        <h1 style="padding-top: 1pt;padding-left: 41pt;text-indent: 0pt;text-align: left; padding-top: 20pt; padding-bottom: 10pt;">TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA CIRURGIA</h1>
-        <p style="padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: justify;">Declaro que fui informado(a) quanto aos principais aspectos relacionados ao procedimento cirurgico dos quais poderei ser submetido nesta instituição.</p>
-        <p style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: justify;">Autorizo um médico(a) cirurgião desta instituição bem como integrantes de sua equipe composta por médicos(as) residentes em cirurgia sob sua supervisão, todos devidamente cadastrados por esta instituição, a realizar o seguinte procedimento:  ___________________________________________________________________ para  a  cirurgia  proposta (escrever   nome   científico   e   nome   popular   entre   parênteses   quando   houver): ______________________________________________________________________________________ <span class="p" style="line-height: 180%;"> a ser realizada pela equipe do médico cirurgião:  _______________________________________________________________________.</p>
-        <p style="text-indent: 0pt;text-align: left;"><br/></p>
+        <h1
+            style="padding-top: 1pt;padding-left: 41pt;text-indent: 0pt;text-align: left; padding-top: 20pt; padding-bottom: 10pt;">
+            TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA CIRURGIA</h1>
+        <p style="padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: justify;">Declaro que fui
+            informado(a) quanto aos principais aspectos relacionados ao procedimento cirurgico dos quais poderei ser
+            submetido nesta instituição.</p>
+        <p style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: justify;">Autorizo
+            um médico(a) cirurgião desta instituição bem como integrantes de sua equipe composta por médicos(as)
+            residentes em cirurgia sob sua supervisão, todos devidamente cadastrados por esta instituição, a realizar o
+            seguinte procedimento: ___________________________________________________________________ para a cirurgia
+            proposta (escrever nome científico e nome popular entre parênteses quando houver):
+            ______________________________________________________________________________________ <span class="p"
+                style="line-height: 180%;"> a ser realizada pela equipe do médico cirurgião:
+                _______________________________________________________________________.</p>
+        <p style="text-indent: 0pt;text-align: left;"><br /></p>
         <p style="padding-left: 5pt;text-indent: 0pt;text-align: justify;">Declaro ainda que:</p>
-        <p style="text-indent: 0pt;text-align: left;"><br/></p>
-        <p style="padding-left: 5pt;text-indent: 0pt;line-height: 200%;text-align: justify; font-size: 11pt;">Recebi todas as informações necessárias quanto aos riscos, benefícios, alternativas de tratamento, bem como fui informado sobre os riscos e benefícios de não ser tomada nenhuma atitude terapêutica diante da natureza da(s) enfermidade(s) diagnosticada(s). 
-            Compreendo que durante o(s) procedimento(s) supracitado para tentar curar, ou melhorar a(s) supracitada(s) condição(ões) poderá(ão) apresentar-se outra(s) situação(ões) ainda não diagnosticada(s) pelo(s) exame(s) acima referido(s), assim como também poderá(ão) ocorrer situações imprevisível(eis) ou fortuitas.
-            Estou ciente que em procedimentos médicos invasivos, como citado, podem ocorrer complicações gerais como sangramento, infecção, problemas cardiovasculares e respiratórios.
-            Autorizo o médico identificado neste termo, bem como seus assistentes e/ou outros profissionais por ele selecionados a intervir no procedimento. 
-            Autorizo qualquer outro procedimento, exame, tratamento e/ou cirurgia, incluindo transfusão de sangue, em situações imprevistas que possam ocorrer e necessitem de cuidados diferentes daqueles inicialmente propostos. 
-            Confirmo que li, recebi explicações, compreendo e concordo com tudo que me foi esclarecido e que me foi concedida a oportunidade de anular, questionar, alterar qualquer espaço, parágrafo ou palavras com as quais não concordasse. 
-            Tive a&nbsp;oportunidade de fazer perguntas que me foram respondidas satisfatoriamente, assim, tendo conhecimento, autorizo&nbsp;a&nbsp;realização do&nbsp;procedimento&nbsp;proposto.&nbsp;</p>
+        <p style="text-indent: 0pt;text-align: left;"><br /></p>
+        <p style="padding-left: 5pt;text-indent: 0pt;line-height: 200%;text-align: justify; font-size: 11pt;">Recebi
+            todas as informações necessárias quanto aos riscos, benefícios, alternativas de tratamento, bem como fui
+            informado sobre os riscos e benefícios de não ser tomada nenhuma atitude terapêutica diante da natureza
+            da(s) enfermidade(s) diagnosticada(s).
+            Compreendo que durante o(s) procedimento(s) supracitado para tentar curar, ou melhorar a(s) supracitada(s)
+            condição(ões) poderá(ão) apresentar-se outra(s) situação(ões) ainda não diagnosticada(s) pelo(s) exame(s)
+            acima referido(s), assim como também poderá(ão) ocorrer situações imprevisível(eis) ou fortuitas.
+            Estou ciente que em procedimentos médicos invasivos, como citado, podem ocorrer complicações gerais como
+            sangramento, infecção, problemas cardiovasculares e respiratórios.
+            Autorizo o médico identificado neste termo, bem como seus assistentes e/ou outros profissionais por ele
+            selecionados a intervir no procedimento.
+            Autorizo qualquer outro procedimento, exame, tratamento e/ou cirurgia, incluindo transfusão de sangue, em
+            situações imprevistas que possam ocorrer e necessitem de cuidados diferentes daqueles inicialmente
+            propostos.
+            Confirmo que li, recebi explicações, compreendo e concordo com tudo que me foi esclarecido e que me foi
+            concedida a oportunidade de anular, questionar, alterar qualquer espaço, parágrafo ou palavras com as quais
+            não concordasse.
+            Tive a&nbsp;oportunidade de fazer perguntas que me foram respondidas satisfatoriamente, assim, tendo
+            conhecimento, autorizo&nbsp;a&nbsp;realização do&nbsp;procedimento&nbsp;proposto.&nbsp;</p>
     </div>
     <div class="container">
         <img style=" width: 550pt; margin-bottom: 26.6pt;" src="{% static 'img/tcle.png' %}" alt="Logo do HUPAA" />
-        <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">(  ) Não foi possível a coleta deste Termo de Consentimento Livre e Esclarecido, por tratar-se de situação de Emergência.</p>
-        <p style="text-indent: 0pt;text-align: left;"></p>
-        <p style="text-indent: 0pt;text-align: left;"></p>
-        <p style="text-indent: 0pt;text-align: left;"></p>
-        <p style="text-indent: 0pt;text-align: left;"></p>
-        <p style="text-indent: 0pt;text-align: left;"></p>
-        <p style="text-indent: 0pt;text-align: left;"></p>
-        <p style="text-indent: 0pt;text-align: left;"></p>
-        <p class="s4" style="padding-top: 5pt;padding-left: 303pt;text-indent: 0pt;text-align: left;">Maceió, <u>&nbsp;&nbsp;&nbsp; </u>/<u> &nbsp;&nbsp; </u>/<u> </u> <span class="p">Hora: </span><u>&nbsp;&nbsp;&nbsp; : &nbsp; </u></p><p style="text-indent: 0pt;text-align: left;"><br/></p>
-    
+        <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">( ) Não foi
+            possível a coleta deste Termo de Consentimento Livre e Esclarecido, por tratar-se de situação de Emergência.
+        </p>
+
+        <p class="s4" style="padding-top: 5pt; text-indent: 0pt;text-align: right;">Maceió,
+            {{agendamento.data_agendada}}, Hora: ____:____</p>
+        <p style="text-indent: 0pt;text-align: left;"><br /></p>
+
         <table style="border-collapse:collapse;margin-left:6.45pt" cellspacing="0">
             <tr style="height:18pt">
-                <td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 17pt;text-align: left;">PACIENTE OU RESPONSÁVEL</p>
+                <td
+                    style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 17pt;text-align: left;">
+                        PACIENTE OU RESPONSÁVEL</p>
                 </td>
             </tr>
             <tr style="height:41pt">
-                <td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s8" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Confirmo que tive a oportunidade de fazer perguntas, recebi explicações suficientes, li, compreendo e concordo com tudo o que foi esclarecido e que me foi concedida a oportunidade de anular, questionar ou alterar qualquer</p><p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 12pt;text-align: left;">item, parágrafo, ou palavras com as quais não concordasse.</p>
+                <td
+                    style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Confirmo que tive a
+                        oportunidade de fazer perguntas, recebi explicações suficientes, li, compreendo e concordo com
+                        tudo o que foi esclarecido e
+                        que me foi concedida a oportunidade de anular, questionar ou alterar qualquer</p>
+                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 12pt;text-align: left;">item,
+                        parágrafo, ou palavras com as quais não concordasse.</p>
                 </td>
             </tr>
             <tr style="height:27pt">
-                <td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome legível:</p>
+                <td
+                    style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome legível: ________________________________________________________________________________________________</p>
                 </td>
             </tr>
             <tr style="height:27pt">
-                <td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Assinatura:</p>
+                <td
+                    style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Assinatura: ________________________________________________________________________________________________</p>
                 </td>
             </tr>
             <tr style="height:39pt">
-                <td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p style="text-indent: 0pt;text-align: left;"><br/></p><p class="s8" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Grau de Parentesco do responsável:<u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u>RG OU CPF: <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u></p>
+                <td
+                    style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p style="text-indent: 0pt;text-align: left;"><br /></p>
+                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Grau de Parentesco do responsável:
+                        ______________________________ RG OU CPF: _________________________</p>
                 </td>
             </tr>
         </table>
-        <p style="text-indent: 0pt;text-align: left;"><br/></p>
+        <p style="text-indent: 0pt;text-align: left;"><br /></p>
         <table style="border-collapse:collapse;margin-left:5.25pt" cellspacing="0">
             <tr style="height:24pt">
-                <td style="width:263pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 17pt;text-align: left;">TESTEMUNHA 1</p></td>
-                <td style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 17pt;text-align: left;">TESTEMUNHA 2</p>
-            </td>
-            </tr>
-            <tr style="height:33pt">
-                <td style="width:263pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome legível completo:</p>
+                <td
+                    style="width:263pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 17pt;text-align: left;">
+                        TESTEMUNHA 1</p>
                 </td>
-                <td style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome legível completo:</p>
-                </td>
-            </tr>
-            <tr style="height:33pt">
-                <td style="width:263pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Assinatura:</p>
-                </td>
-                <td style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Assinatura:</p>
+                <td
+                    style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 17pt;text-align: left;">
+                        TESTEMUNHA 2</p>
                 </td>
             </tr>
             <tr style="height:33pt">
-                <td style="width:263pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p style="text-indent: 0pt;text-align: left;"><br/></p><p class="s8" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">RG      OU      CPF:      <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u></p>
+                <td
+                    style="width:263pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome
+                        legível completo: __________________________</p>
                 </td>
-                <td style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p style="text-indent: 0pt;text-align: left;"><br/></p><p class="s8" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">RG      OU      CPF:      <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u></p>
+                <td
+                    style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome
+                        legível completo: __________________________</p>
+                </td>
+            </tr>
+            <tr style="height:33pt">
+                <td
+                    style="width:263pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                        Assinatura: ____________________________________</p>
+                </td>
+                <td
+                    style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                        Assinatura: ____________________________________</p>
+                </td>
+            </tr>
+            <tr style="height:33pt">
+                <td
+                    style="width:263pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p style="text-indent: 0pt;text-align: left;"><br /></p>
+                    <p class="s1" style="text-align: left; padding-bottom: 5pt;">RG OU CPF:
+                        ___________________________________</p>
+                </td>
+                <td
+                    style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p style="text-indent: 0pt;text-align: left;"><br /></p>
+                    <p class="s1" style="text-align: left; padding-bottom: 5pt;">RG OU CPF:
+                        ___________________________________</p>
                 </td>
             </tr>
         </table>
-        <p style="text-indent: 0pt;text-align: left;"><br/></p><p style="text-indent: 0pt;text-align: left;"><br/></p>
+        <p style="text-indent: 0pt;text-align: left;"><br /></p>
+        <p style="text-indent: 0pt;text-align: left;"><br /></p>
         <table style="border-collapse:collapse;margin-left:6.45pt" cellspacing="0">
             <tr style="height:18pt">
-                <td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 17pt;text-align: left;">PREENCHIMENTO PELO MÉDICO</p>
+                <td
+                    style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 17pt;text-align: left;">
+                        PREENCHIMENTO PELO MÉDICO</p>
                 </td>
             </tr>
             <tr style="height:54pt">
-                <td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s8" style="padding-left: 5pt;padding-right: 4pt;text-indent: 0pt;text-align: justify;">Expliquei todo o procedimento, exame, tratamento e/ou cirurgia a que o paciente referido está sujeito, ao próprio paciente e/ou seu responsável, sobre os benefícios, riscos e alternativas tendo respondido as perguntas formuladas pelos mesmos. De acordo com o seu entendimento, o paciente e/ou responsável, está em condições de</p><p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 12pt;text-align: justify;">compreender o que lhes foi informado.</p></td></tr><tr style="height:27pt"><td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome legível completo do médico(a):</p></td></tr><tr style="height:64pt"><td style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p style="text-indent: 0pt;text-align: left;"><br/></p><p class="s8" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">CRM<u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u> Carimbo médico e assinatura:<u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u></p></td></tr></table>
+                <td
+                    style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s8" style="padding-left: 5pt;padding-right: 4pt;text-indent: 0pt;text-align: justify;">
+                        Expliquei todo o procedimento, exame, tratamento e/ou cirurgia a que o paciente referido está
+                        sujeito, ao próprio
+                        paciente e/ou seu responsável, sobre os benefícios, riscos e alternativas tendo respondido as
+                        perguntas formuladas
+                        pelos mesmos. De acordo com o seu entendimento, o paciente e/ou responsável, está em condições
+                        de
+                        compreender o que lhes foi informado.</p>
+                </td>
+            </tr>
+            <tr style="height:27pt">
+                <td
+                    style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome
+                        legível completo do médico(a): {{ usuario }}</p>
+                </td>
+            </tr>
+            <tr style="height:64pt">
+                <td
+                    style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p style="text-indent: 0pt;text-align: left;"><br /></p>
+                    <div style="display: flex;">
+                        <div style="flex: 1;">
+                            <p class="s1" style="text-align: left;">CRM: {{medico.crm}} </p>
+                        </div>
+                        <div style="flex: 4;">
+                            <p class="s1" style="text-align: left;"> Carimbo médico e assinatura: {{medico.assinatura}}
+                            </p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
         <!-- Parágrafos adicionais e informações do médico -->
         <table style="border-collapse:collapse;margin-left:6.45pt" cellspacing="0">
             <!-- Tabela preenchida pelo médico -->
@@ -637,31 +756,6 @@
         window.onload = function () {
             window.print();
         }
-
-        // Supondo que agendamento.data_agendada seja uma string representando a data no formato "15 de fevereiro de 2024"
-        var dataAgendada = {{agendamento.data_agendada}}
-        
-        // Convertendo a string para um objeto de data JavaScript
-        var data = new Date(dataAgendada);
-    
-        // Extrair o dia, mês e ano da data
-        var dia = data.getDate();
-        var mes = data.getMonth() + 1; // Adicionando 1 porque os meses são indexados de 0 a 11
-        var ano = data.getFullYear();
-    
-        // Formatando o dia e mês para que tenham sempre dois dígitos
-        if (dia < 10) {
-            dia = '0' + dia;
-        }
-        if (mes < 10) {
-            mes = '0' + mes;
-        }
-    
-        // Criando a string formatada "dd/mm/yyyy"
-        var dataFormatada = dia + '/' + mes + '/' + ano;
-    
-        // Adicionando a data formatada ao documento HTML
-        document.write("Maceió, " + dataFormatada + " <span class='p'>Hora: ____:____</span>");
     </script>
 
 </body>

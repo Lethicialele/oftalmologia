@@ -6,9 +6,11 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.hashers import make_password
 from .forms import AtualizarCadastroMedico, CadastroMedicos
 from django.contrib import messages
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User
 
 # Create your views here.
+
+
 def cadastrarMedicos(request):
     if request.method == "POST":
         form_medico = CadastroMedicos(request.POST)
@@ -16,9 +18,10 @@ def cadastrarMedicos(request):
             usuario_nome = request.POST['nome']
             usuario_senha = request.POST['senha']
             usuario_email = request.POST['email']
-            usuario = User.objects.create_user(usuario_nome, usuario_email, usuario_senha)
+            usuario = User.objects.create_user(
+                usuario_nome, usuario_email, usuario_senha)
             usuario.save()
-            
+
             medico = form_medico.save(commit=False)
             medico.usuario = usuario
             medico.save()
@@ -29,11 +32,13 @@ def cadastrarMedicos(request):
             messages.error(request, error)
     else:
         form_medico = CadastroMedicos()
-        
+
     return render(request, 'cadastrarMedicos.html', {'form_medico': form_medico})
+
 
 def mostrarMedicos(request):
     return Medicos.objects.all()
+
 
 def loginMedicos(request):
     if request.method == 'POST':
@@ -41,22 +46,25 @@ def loginMedicos(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('home')  # Redirecione para a página inicial após o login
+            # Redirecione para a página inicial após o login
+            return redirect('home')
     else:
         form = AuthenticationForm()
     return render(request, 'loginMedicos.html', {'form': form})
 
+
 def atualizarCadastrorMedicos(request):
     medico = request.user
-    medico_id = medico.id
-    medico = Medicos.objects.filter(id=medico_id).first()
+    medico = Medicos.objects.filter(usuario=medico).first()
 
     if request.method == "POST":
-        form = AtualizarCadastroMedico(request.POST, request.FILES, instance=medico)
+        form = AtualizarCadastroMedico(
+            request.POST, request.FILES, instance=medico)
 
         if form.is_valid():
             form.save()
-            messages.success(request, 'Dados do médico atualizados com sucesso!')
+            messages.success(
+                request, 'Dados do médico atualizados com sucesso!')
             return render(request, 'perfil.html', {'usuario': request.user, 'medico': medico, 'form': form})
         else:
             _, error = next(iter(form.errors.items()))
@@ -67,6 +75,7 @@ def atualizarCadastrorMedicos(request):
 
     return render(request, 'perfil.html', {'usuario': request.user, 'medico': medico, 'form': form})
 
-def sair(request): 
+
+def sair(request):
     logout(request)
     return redirect('/medicos/loginMedicos/')

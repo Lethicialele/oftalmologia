@@ -9,7 +9,7 @@
 
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info" style="min-width: 100%; max-width: max-content;">
     <div class="container">
       <div class="col">
         <a class="navbar-brand" href="{% url 'home' %}">Oftalmologia</a>
@@ -63,7 +63,7 @@
       </div>
     </div>
   </nav>
-  <div class="container">
+  <div class="container" style="min-width: 90%; max-width: 95%;">
     <h2 class="text-center my-4 text-info">Confirmar Agendamentos</h2>
     <div class="row">
       <div class="col-sm align-middle">
@@ -74,12 +74,14 @@
         <div class="row">
           <form action="{% url 'confirmarAgendamentos' %}" method="GET">
             {% csrf_token %}
-            <div class="mb-3">
+            <div class="col-sm">
               <label for="filtro_data" class="form-label">Filtrar por data:</label>
-              <input type="date" class="form-control" id="filtro_data" name="data_selecionada" required>
-            </div>
-            <div class="text-center mb-3">
-              <button type="submit" class="btn btn-info text-white align-middle">Filtrar</button>
+              <div class="input-group">
+                <input type="date" class="form-control" id="filtro_data" name="filtro_data" required>
+                <button type="submit" title="Filtrar" class="btn btn-info text-white"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg></button>
+              </div>
             </div>
           </form>
         </div>
@@ -93,10 +95,13 @@
         <table class="table table-striped table-borderless table-hover">
           <thead>
             <tr>
+              <th style="min-width: 0%; max-width: 0%; padding: 0%; margin: 0%;"></th>
               <th class="text-info align-middle text-center"></th>
+              <th class="text-info align-middle text-center">Opções</th>
+              <th class="text-info align-middle text-center"></th>
+              <!--<th class="text-info align-middle text-center">Ordem</th>-->
               <th class="text-info align-middle text-center">Prontuário</th>
               <th class="text-info align-middle text-center">Paciente</th>
-              <th class="text-info align-middle text-center">Procedimento</th>
               <th class="text-info align-middle text-center">Nº de Olhos</th>
               <th class="text-info align-middle text-center">Olho(s)</th>
               <th class="text-info align-middle text-center">Aplicação</th>              
@@ -108,12 +113,48 @@
           <tbody>
             {% for agendamento in agendamentos %}
             <tr>
-              <td>
+              <td style="min-width: 0%; max-width: 0%; margin: 0pt; padding: 0pt;">
                 <input type="hidden" name="id_agendamento" value="{{ agendamento.id }}">
               </td>
+              <td class="align-middle">
+                <div class="align-middle text-center form-check-lg">
+                    <form id="form-atualizar-cadastro" action="{% url 'atualizarCadastroAgendamento' %}" method="GET">{% csrf_token %}
+                        <input type="hidden" name="agendamento_id" id="agendamento_id" value="{{ agendamento.id }}">
+                        <button type="submit" class="btn btn-sm text-white" href="#" title="Atualizar Cadastro" form="form-atualizar-cadastro">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-person text-info" viewBox="0 0 16 16">
+                            <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                            <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                          </svg>
+                        </button>
+                    </form>
+                </div>
+              </td>
+              <td class="align-middle">
+                <div class="align-middle text-center form-check-lg">
+                    <form id="form-agendar-paciente" action="{% url 'agendarPaciente' %}" method="GET">{% csrf_token %}
+                        <input type="hidden" name="paciente_id" id="paciente_id" value="{{ agendamento.id }}">
+                        <button class="btn btn-sm text-white" type="submit" title="Agendar Paciente" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar-event text-info" viewBox="0 0 16 16">
+                            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                          </svg></button>
+                    </form>
+                </div>
+              </td>
+              <td class="align-middle">
+                <div class="align-middle text-center form-check-lg">
+                    <form id="form-remover-paciente-agenda" action="{% url 'removerPacienteAgenda' %}" method="POST">{% csrf_token %}
+                        <input type="hidden" name="agendamento_id" id="agendamento_id" value="{{ agendamento.id }}">
+                        <button type="button" class="btn btn-sm text-white" href="#" title="Remover Paciente da Agenda" onclick="confirmarExclusao('{{ paciente.id }}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash3 text-info" viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                              </svg>
+                        </button>
+                    </form>
+                </div>
+              </td>
+              <!--<td class="align-middle text-center">{{ forloop.counter }}</td>-->
               <td class="align-middle text-center">{{ agendamento.prontuario }}</td>
               <td class="align-middle text-center">{{ agendamento.nome }}</td>
-              <td class="align-middle text-center">{{ agendamento.id_procedimento.nome }}</td>
               <td class="align-middle text-center">{{ agendamento.numero_de_olhos }}</td>
               <td class="align-middle text-center">{{ agendamento.olho_agendado }}</td>
               <td class="align-middle text-center">{{ agendamento.aplicacao_atual }}/{{ agendamento.quantidade_aplicacoes_necessarias }}</td>
@@ -125,7 +166,7 @@
                   <option value="cancelado" {% if agendamento.status == 'cancelado' %}selected{% endif %}>Cancelado</option>
                 </select>
               </td>
-              <td class="align-middle text-center">
+              <td class="align-middle text-center" style="padding-right: 10pt;">
                 <input type="text" name="observacao" value="{{ agendamento.observacao|default:'' }}" class="form-control border-info">
               </td>
             </tr>
@@ -156,7 +197,19 @@
       
       document.getElementById('filtro_data_hidden').value = formattedDate;
     }
-  </script>
+
+  
+    function confirmarExclusao(pacienteId) {
+        var confirmacao = confirm("Tem certeza que deseja remover este paciente da agenda?\nEle voltará para fila de espera.");
+        if (confirmacao) {
+            // Se confirmado, altere o tipo do botão para "submit"
+            document.getElementById('form-remover-paciente-agenda').submit();
+        } else {
+            // Se cancelado, não faça nada
+            return false;
+        }
+    }
+</script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

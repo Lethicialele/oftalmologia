@@ -79,7 +79,7 @@
                   <td class="align-middle text-center">{{ agendamento.diagnostico }}</td>
                   <td class="align-middle text-center">{{ agendamento.telefone }}</td>
                   <td class="align-middle text-center" data-status="{{ agendamento.status }}">{{ agendamento.status }}</td>
-                  <td class="align-middle text-center">{{ agendamento.observacao }}</td>
+                  <td class="align-middle text-center">{{ agendamento.observacao|default:'' }}</td>
                 </tr>
             </tbody>
         </table>

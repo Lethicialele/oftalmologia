@@ -104,8 +104,6 @@
                 <th class="text-info align-middle text-center">Aplicação</th>
                 <th class="text-info align-middle text-center">Diagnóstico</th>
                 <th class="text-info align-middle text-center">Telefone</th>
-                <th class="text-info align-middle text-center">Status</th>
-                <th class="text-info align-middle text-center">Observação</th>
               </tr>
             </thead>
               <tbody>
@@ -120,8 +118,6 @@
                   <td class="align-middle text-center">{{ paciente.aplicacao_atual }}/{{ paciente.quantidade_aplicacoes_necessarias }}</td>
                   <td class="align-middle text-center">{{ paciente.diagnostico }}</td>
                   <td class="align-middle text-center">{{ paciente.telefone }}</td>
-                  <td class="align-middle text-center" data-status="{{ paciente.status }}">{{ paciente.status }}</td>
-                  <td class="align-middle text-center">{{ paciente.observacao|default:'' }}</td>
                   <td class="align-middle">
                     <div class="align-middle text-center form-check-lg">
                         <form id="form-deletar-paciente" action="{% url 'deletarPaciente' %}" method="POST">{% csrf_token %}
