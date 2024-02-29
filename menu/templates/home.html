@@ -11,83 +11,118 @@
       height: 90vh;
       display: flex;
       align-items: center;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .navbar-footer {
+      color: #fff;
+      /* Cor do texto */
+      padding: 10px 0;
+      /* Espaçamento interno */
+      position:fixed;
+      /* Posição fixa na parte inferior */
+      width: 100%;
+      /* Largura total */
+      bottom: 0;
+      /* Colocado na parte inferior */
+      text-align: center;
+      /* Centraliza o texto */
+    }
+
+    .custom-btn {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
   </style>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-info">
-    <div class="container">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info" style="position: fixed; width: 100%;">
+    <div class="container align-items-center">
       <div class="col">
         <a class="navbar-brand" href="{% url 'home' %}">Oftalmologia</a>
       </div>
-      <button class="navbar-toggler float-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarUsuario" aria-controls="navbarUsuario" aria-expanded="false" aria-label="Toggle navigation" id="usuarioButton">
-        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-        </svg>
-      </button>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" id="navbarNavButton">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="col collapse navbar-collapse justify-content-center position-static padding-end" id="navbarUsuario">
-        <ul class="navbar-nav">
-          <li class="nav-item dropdown bg-info " id="userDropdown">
-            <a class="nav-link dropdown-toggle btn btn-info btn-sm text-white text-center" href="#" role="button" data-bs-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
-                class="bi bi-person-circle" viewBox="0 0 16 16">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                <path fill-rule="evenodd"
-                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-              </svg> {{ usuario|default:"Usuário" }}
-            </a>
-            <div class="dropdown-menu bg-info border-info w-100 collapse" aria-labelledby="userDropdown">
-              <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'atualizarCadastrorMedicos' %}">Meu Perfil</a>
-              <a class="nav-link btn btn-info btn-sm text-white " href="{% url 'sair' %}">Sair</a>
-            </div>
-          </li>
-        </ul>
+      <div class="col">
+        <div class="d-flex justify-content-end">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarUsuario"
+            aria-controls="navbarUsuario" aria-expanded="false" aria-label="Toggle navigation" id="usuarioButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+              class="bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+              <path fill-rule="evenodd"
+                 d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+            </svg>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarUsuario">
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown bg-info " id="userDropdown">
+              <a class="nav-link dropdown-toggle btn btn-info btn-sm text-white text-center" href="#" role="button"
+                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                  class="bi bi-person-circle" viewBox="0 0 16 16">
+                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                  <path fill-rule="evenodd"
+                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                </svg> {{ usuario|default:"Usuário" }}
+              </a>
+              <div class="dropdown-menu bg-info border-info w-100 collapse" aria-labelledby="userDropdown">
+                <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'atualizarCadastrorMedicos' %}">Meu
+                  Perfil</a>
+                <a class="nav-link btn btn-info btn-sm text-white " href="{% url 'sair' %}">Sair</a>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </nav>
+  </nav>  
 
   <div class="custom-container">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <h2 class="text-center my-4">Bem-vindo à Agenda da Oftalmologia</h2>
-          <div class="row">
-            <div class="text-center col-md-6" style="padding-bottom:5pt;">
-              <a href="{% url 'consultarAgendaDia' %}" class="btn btn-info btn-lg btn-block text-white align-items-center align-middle" style="width: 180pt; height: 180pt;">Agenda</a>
-            </div>
-            <div class="text-center col-md-6" style="padding-bottom: 5pt;">
-              <a href="{% url 'gerarAgenda' %}" style="width: 180pt; height: 180pt;" class="btn btn-info btn-lg btn-block text-white text-center align-items-center align-middle">Gerar Agenda</a>
-            </div>
-            <div class="text-center col-md-6">
-              <a href="{% url 'cadastrarAgendamentos' %}" style="width: 180pt; height: 180pt;justify-content: center; align-items: center; vertical-align: middle" class="btn btn-info btn-lg btn-block text-white text-center align-items-center ">Cadastrar Paciente</a>
-            </div>
-            <div class="text-center col-md-6">
-              <a href="{% url 'confirmarAgendamentos' %}" style="width: 180pt; height: 180pt; align-items: center;justify-content: center; align-items: center; vertical-align: middle" class="btn btn-info btn-lg btn-block text-white text-center align-items-center ">Confirmar Agendados</a>
-            </div>
+    <div class="container" style="position:fixed;">
+      <div class="row justify-content-center align-middle">
+        <div class="col-md-6 justify-content-center align-items-center" style="margin-top:3%;">
+          <div class="row justify-content-center" style="height: 20%;">
+            <h2 class="text-center my-4">Bem-vindo à Agenda da Oftalmologia</h2>
+          </div>
+          <div class="d-flex justify-content-center align-items-center">
+            <table class="text-center">
+              <tr class="align-middle">
+                <td class="align-middle" style="width: 170pt; height: 170pt;">
+                  <a href="{% url 'consultarAgendaDia' %}"
+                    class="btn btn-info btn-lg text-center text-white custom-btn" title="Visualizar Pacientes Agendados">Agenda</a>
+                </td>
+                <td style="width: 170pt; height: 170pt;">
+                  <a href="{% url 'gerarAgenda' %}" class="btn btn-info btn-lg text-center text-white custom-btn" title="Agendar Pacientes da Fila de Espera">Gerar
+                    Agenda</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 170pt; height: 170pt;">
+                  <a href="{% url 'cadastrarAgendamentos' %}"
+                    class="btn btn-info btn-lg text-center text-white custom-btn" title="Cadastrar Um Novo Paciente">Cadastrar Paciente</a>
+                </td>
+                <td style="width: 170pt; height: 170pt;">
+                  <a href="{% url 'confirmarAgendamentos' %}"
+                    class="btn btn-info btn-lg text-center text-white custom-btn" title="Confirmar os Pacientes Agendados">Confirmar Agendados</a>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
-        <!-- <div class="col-md-6"> 
-          <div class="text-center mb-3">
-            <br>
-          </div>
-          <div class="text-center mb-3">
-            <a href="{% url 'cadastrarAgendamentos' %}" class="btn btn-info btn-lg btn-block text-white">Cadastrar Paciente</a>
-          </div>
-          <div class="text-center mb-3">
-            <a href="{% url 'consultarFilaEsperaPacientes' %}" class="btn btn-info btn-lg btn-block text-white">Fila de Espera</a>
-          </div>
-        </div> -->
       </div>
     </div>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="navbar-footer bg-info border-info text-center">Criado por: Aydano Pamponet Machado e Lethícia Souza
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
