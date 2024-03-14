@@ -10,5 +10,6 @@ urlpatterns = [
     path('cadastrarProcedimentos/', lambda request: redirect('cadastrarProcedimentos', permanent=True)),
     path('consultarAgendaDia/', lambda request: redirect('consultarAgendaDia', permanent=True)),
     path('gerarAgenda/', lambda request: redirect('gerarAgenda', permanent=True)),
+    path('atualizarCadastrorMedicos/', lambda request: redirect('atualizarCadastrorMedicos', permanent=True)),
     path('consultarFilaEsperaPacientes/', lambda request: redirect('consultarFilaEsperaPacientes', permanent=True)),
 ]

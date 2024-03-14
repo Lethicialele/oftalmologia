@@ -84,44 +84,11 @@
     </div>
   </nav>
 
-
-  <div class="container" style="margin-top: 4.5%; width: 95%;">
-    <h2 class="text-center my-4 text-info">Agendar Pacientes</h2>
-    <form action="{% url 'gerarAgenda' %}" method="POST">
-      {% csrf_token %}
-      <div class="mb-3">
-        <label for="data_agendada" class="form-label">Data:</label>
-        <input type="date" class="form-control" id="data_agendada" name="data_agendada" title="Data para Agendar"
-          required>
-      </div>
-      <div class="mb-3">
-        <label for="quantidade_olhos" class="form-label">Quantidade de Olhos:</label>
-        <input type="number" class="form-control" id="quantidade_olhos" name="quantidade_olhos"
-          title="Quantidade de olhos a ser agendada" min="1" required>
-      </div>
-      <div class="mb-3">
-        <label for="faltas_toleradas" class="form-label">Faltas Toleradas:</label>
-        <input type="number" class="form-control" id="max_faltas" name="max_faltas"
-          title="Quantidade de faltas toleradas" min="0" required>
-      </div>
-      <div class="text-center">
-        <button type="submit" class="btn btn-info text-white">Gerar Agenda</button>
-      </div>
-    </form>
-    <div class="mb-3">
-      {% if messages %}
-      {% for message in messages %}
-      <div
-        class="alert {% if message.tags == 'success' %}text-success{% elif message.tags == 'error' %}text-danger{% endif %}">
-        {{ message }}
-      </div>
-      {% endfor %}
-      {% endif %}
+  <div class="container" style="margin-top: 5%;">
+    <div class="row align-items-start">
+      <h2 class="text-center my-4 text-info">Pacientes na Fila de Espera</h2>
     </div>
-  </div>
 
-  <div class="container" style="margin-top: 25pt;">
-    <h2 class="text-center my-4 text-info">Pacientes na Fila de Espera</h2>
     <div class="input-group mb-3">
       <select class="btn btn-info btn-md text-white" style="border: #0dcaf0; text-align: left;" type="button"
         id="searchType" onchange="filtrarPacientes()">
@@ -133,14 +100,6 @@
             Prontuário</option>
         </ul>
       </select>
-
-      <!-- <button class="btn btn-info text-white dropdown-toggle" style="border: white;" type="button" data-bs-toggle="dropdown" aria-expanded="false">Buscar por</button>
-      <ul class="dropdown-menu bg-info" style="border: white;" id="searchType" onchange="filtrarPacientes()">
-        <li class="btn-info" style="width: 100%;"><a class="text-white btn btn-info" style="width: 100%; text-align: left;" href="#" onclick="changeSearchType('nome')" value="nome">Nome</a></li>
-        <li class="btn-info" style="width: 100%;"><a class="text-white btn btn-info" style="width: 100%; text-align: left;" href="#" onclick="changeSearchType('cpf')">CPF</a></li>
-        <li class="btn-info" style="width: 100%;"><a class="text-white btn btn-info" style="width: 100%; text-align: left;" href="#" onclick="changeSearchType('sus')">Nº SUS</a></li> -->
-      <!-- <li class="btn-info" style="width: 100%;"><a class="text-white btn btn-info" style="width: 100%; text-align: left;" href="#" onclick="changeSearchType('prontuario')" value="prontuario">Prontuário</a></li>
-       -->
       <input type="text" class="form-control" id="searchInput" name="searchInput" oninput="filtrarPacientes()"
         aria-label="Text input with dropdown button">
       <button type="submit" title="Buscar" class="btn btn-info text-white"><svg xmlns="http://www.w3.org/2000/svg"
@@ -175,7 +134,7 @@
             <td class="align-middle text-center">{{ paciente.nome }}</td>
             <td class="align-middle text-center">{{ paciente.numero_de_olhos }}</td>
             <td class="align-middle text-center">{{ paciente.olho_agendado }}</td>
-            <td class="align-middle text-center">{{ paciente.aplicacao_atual }}/{{paciente.quantidade_aplicacoes_necessarias }}</td>
+            <td class="align-middle text-center">{{ paciente.aplicacao_atual }}/{{ paciente.quantidade_aplicacoes_necessarias }}</td>
             <td class="align-middle text-center">{{ paciente.diagnostico }}</td>
             <td class="align-middle text-center">{{ paciente.telefone }}</td>
             <td class="align-middle text-center">{{ paciente.faltas }}</td>
@@ -382,6 +341,19 @@
 
     // Chama a função para exibir pacientes na primeira página ao carregar a página
     showPatientsOnPage(currentPage);
+
+    function consultarFilaEspera(chamada) {
+      // Faça uma solicitação AJAX para o servidor
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "{% url 'consultarFilaEsperaPacientes' %}?chamada=" + chamada, true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          // Atualize a tabela com os resultados recebidos do servidor
+          document.getElementById("pacientesTable").innerHTML = xhr.responseText;
+        }
+      };
+      xhr.send();
+    }
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

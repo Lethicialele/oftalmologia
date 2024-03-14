@@ -4,11 +4,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}Título da Página{% endblock %}</title>
+  <title>{% block title %}Impressão de Agenda{% endblock %}</title>
   
   <style>
+
+    @page {
+        size: landscape;
+        width: 95%;
+        height: 95%;
+    }
+    .container{
+      size: 90%;
+    }
     table {
       text-align: center;
+      width: 80%;
+      margin-left: 5%;
     }
     
     tbody tr:nth-child(even) {
@@ -21,8 +32,8 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2 class="text-center my-4 text-info">Planilha de Agendamentos</h2>
+  <div class="container" style="max-width: 95%; max-height: 95%; margin-left: 80%;">
+    <h2 class="text-center my-4 text-info" style="padding-left: 5%; margin-top: 25%;">Planilha de Agendamentos</h2>
     <div class="row">
       <div class="col-sm align-middle"><h6>Data Selecionada: {{ data_selecionada }}</h6></div>
     </div>

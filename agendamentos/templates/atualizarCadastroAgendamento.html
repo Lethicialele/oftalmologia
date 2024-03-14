@@ -7,45 +7,65 @@
   <title>Atualizar Cadastro de Paciente</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-info" style="position: fixed; width: 100%; top:0%">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info"
+    style="min-width: 100%; max-width: max-content; position: fixed; top:0%;">
     <div class="container">
-      <div class="col">
+      <div class="col" style="width: 30%;">
         <a class="navbar-brand" href="{% url 'home' %}">Oftalmologia</a>
       </div>
-      <button class="navbar-toggler float-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarUsuario" aria-controls="navbarUsuario" aria-expanded="false" aria-label="Toggle navigation" id="usuarioButton">
-        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+      <button class="navbar-toggler float-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarUsuario"
+        aria-controls="navbarUsuario" aria-expanded="false" aria-label="Toggle navigation" id="usuarioButton">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle"
+          viewBox="0 0 16 16">
           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+          <path fill-rule="evenodd"
+            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
         </svg>
       </button>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" id="navbarNavButton">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" id="navbarNavButton">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
+      <div class="col collapse navbar-collapse justify-content-center position-static"
+        style="width: 68%; margin-left: 6%;" id="navbarNav">
+        <ul class="navbar-nav justify-content-center" style="width: 70%;">
+          <li class="nav-item" style="width: 14%;">
             <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'consultarAgendaDia' %}">Agenda</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" style="width: 20%;">
             <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'gerarAgenda' %}">Gerar Agenda</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'cadastrarAgendamentos' %}">Cadastrar Paciente</a>
+          <li class="nav-item" style="width: 28%;">
+            <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'confirmarAgendamentos' %}">Confirmar
+              Agendados</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'confirmarAgendamentos' %}">Confirmar Agendados</a>
+          <li class="nav-item dropdown" style="width: 15%;">
+            <a class="nav-link dropdown btn btn-info btn-sm text-white" href="#" id="pacientesDropdown"
+              data-bs-toggle="dropdown" aria-expanded="true">Pacientes</a>
+            <ul class="dropdown-menu bg-info" aria-labelledby="pacientesDropdown" style="border-top: #0dcaf0;">
+              <li class="nav-item"><a class="nav-link dropdown-item btn-info btn-sm text-white"
+                  href="{% url 'cadastrarAgendamentos' %}">Cadastrar</a></li>
+              <li class="nav-item"><a class="nav-link dropdown-item btn-info btn-sm text-white"
+                  href="{% url 'consultarFilaEsperaPacientes' %}">Fila de Espera</a></li>
+              <li><a class="nav-link dropdown-item btn-info btn-sm text-white"
+                  href="{% url 'listarPacientesFinalizados' %}">Finalizados </a></li>
+              <li><a class="nav-link dropdown-item btn-info btn-sm text-white"
+                  href="{% url 'listarPacientesDesinteressados' %}">Desinteressados</a></li>
+            </ul>
           </li>
           <!--<li class="nav-item">
             <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'consultarFilaEsperaPacientes' %}">Fila de Espera</a>
           </li>-->
         </ul>
       </div>
-      <div class="col collapse navbar-collapse justify-content-center position-static" id="navbarUsuario">
+      <div class="col collapse navbar-collapse justify-content-center position-static" style="width: 22%; "
+        id="navbarUsuario">
         <ul class="navbar-nav">
           <li class="nav-item dropdown bg-info " id="userDropdown">
-            <a class="nav-link dropdown-toggle btn btn-info btn-sm text-white text-center" href="#" role="button" data-bs-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle btn btn-info btn-sm text-white text-center" href="#" role="button"
+              data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
                 class="bi bi-person-circle" viewBox="0 0 16 16">
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
@@ -54,7 +74,8 @@
               </svg> {{ usuario|default:"Usuário" }}
             </a>
             <div class="dropdown-menu bg-info border-info w-100 collapse" aria-labelledby="userDropdown">
-              <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'atualizarCadastrorMedicos' %}">Meu Perfil</a>
+              <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'atualizarCadastrorMedicos' %}">Meu
+                Perfil</a>
               <a class="nav-link btn btn-info btn-sm text-white " href="{% url 'sair' %}">Sair</a>
             </div>
           </li>
@@ -62,6 +83,8 @@
       </div>
     </div>
   </nav>
+
+
   <div class="container" style="margin-top: 4.5%;">
     <h2 class="text-center my-4 text-info">Atualizar Cadastro</h2>
     <form action="{% url 'atualizarCadastroAgendamento' %}" method="POST">
@@ -76,7 +99,8 @@
       </div>
       <div class="mb-3">
         <label for="cartao_sus" class="form-label">Cartão do SUS:</label>
-        <input type="text" readonly class="form-control" id="cartao_sus" name="cartao_sus" value="{{ agendamento.cartao_sus }}">
+        <input type="text" readonly class="form-control" id="cartao_sus" name="cartao_sus"
+          value="{{ agendamento.cartao_sus }}">
       </div>
       <div class="mb-3">
         <label for="clinica" class="form-label">Clinica:</label>
@@ -93,10 +117,11 @@
       <div class="mb-3">
         <label for="cpf" class="form-label">CPF:</label>
         <input type="text" readonly class="form-control" id="cpf" name="cpf" value="{{ agendamento.cpf }}">
-      </div>          
+      </div>
       <div class="mb-3">
         <label for="prontuario" class="form-label">Número do Prontuário:</label>
-        <input type="text" readonly class="form-control" id="prontuario" name="prontuario" value="{{ agendamento.prontuario }}">
+        <input type="text" readonly class="form-control" id="prontuario" name="prontuario"
+          value="{{ agendamento.prontuario }}">
       </div>
       <div class="mb-3">
         <label for="email" class="form-label" value="NÃO INFORMADO">Email:</label>
@@ -104,31 +129,40 @@
       </div>
       <div class="mb-3">
         <label for="telefone" class="form-label">Telefone:</label>
-        <input type="tel" class="form-control phone-mask" id="telefone" name="telefone" value="{{agendamento.telefone}}" required>
+        <input type="tel" class="form-control phone-mask" id="telefone" name="telefone" value="{{agendamento.telefone}}"
+          required>
       </div>
       <div class="mb-3">
         <label for="data_nascimento" class="form-label">Data de Nascimento:</label>
-        <input type="text" readonly class="form-control" id="data_nascimento" name="data_nascimento" value="{{ agendamento.data_nascimento }}">
+        <input type="text" readonly class="form-control" id="data_nascimento" name="data_nascimento"
+          value="{{ agendamento.data_nascimento }}">
       </div>
-      <div class="mb-3">
-        <label for="numero_de_olhos" class="form-label">Número de Olhos:</label>
-        <select class="form-select" id="numero_de_olhos" name="numero_de_olhos" required>
-          <option value="{{agendamento.numero_de_olhos}}" selected>{{agendamento.numero_de_olhos}}</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-        </select>
+      <div class="mb-3" hidden>
+        <input type="hidden" class="form-control" hiden value="2" id="numero_de_olhos" name="numero_de_olhos">
       </div>
-      <div class="mb-3">
+      <div class="mb-3" id="olho-agendado-container">
         <label for="olho_agendado" class="form-label">Olho Agendado:</label>
         <select class="form-select" id="olho_agendado" name="olho_agendado" required>
-          <option value="{{agendamento.olho_agendado}}" selected>{{agendamento.olho_agendado}}</option>
+          <option value="{{agendamento.olho_agendado}}" selected>{{ agendamento.olho_agendado }}</option>
+          <option value="ambos">Ambos</option>
           <option value="esquerdo">Esquerdo</option>
           <option value="direito">Direito</option>
         </select>
       </div>
       <div class="mb-3">
         <label for="diagnostico" class="form-label">Diagnóstico:</label>
-        <textarea class="form-control" id="diagnostico" value="{{agendamento.diagnostico}}" name="diagnostico" rows="3" required>{{agendamento.diagnostico}}</textarea>
+        <textarea class="form-control" id="diagnostico" value="{{agendamento.diagnostico}}" name="diagnostico" rows="3"
+          required>{{agendamento.diagnostico}}</textarea>
+      </div>
+      <div class="mb-3">
+        <label for="data_nascimento" class="form-label">Data da Última Atualização:</label>
+        <input type="text" readonly class="form-control" id="data_ultima_atualizacao" name="data_nascimento"
+          value="{{ agendamento.ultima_atualizacao }}">
+      </div>
+      <div class="mb-3">
+        <label for="diagnostico" class="form-label">Histórico:</label>
+        <textarea class="form-control" readonly id="diagnostico" value="{{agendamento.historico}}" name="historico"
+          rows="3" required>{{agendamento.historico}}</textarea>
       </div>
       <div class="mb-3">
         <div class="mb-3"><label for="nivel_prioridade" class="form-label">Nível de Prioridade:</label></div>
@@ -138,7 +172,8 @@
             <span data-label="Médio"></span>
             <span data-label="Alto"></span>
           </div>
-          <input type="range" class="form-range" min="1" max="3" id="nivel_prioridade" name="nivel_prioridade" value="{{agendamento.nivel_prioridade}}">
+          <input type="range" class="form-range" min="1" max="3" id="nivel_prioridade" name="nivel_prioridade"
+            value="{{agendamento.nivel_prioridade}}">
         </div>
         <style>
           #nivel_prioridade-labels {
@@ -160,34 +195,35 @@
             left: 50%;
             transform: translateX(-50%);
           }
+
           #nivel_prioridade::-webkit-slider-thumb {
-              background-color: #0dcaf0;
+            background-color: #0dcaf0;
           }
-      
+
           #nivel_prioridade::-moz-range-thumb {
-              background-color: #0dcaf0;
+            background-color: #0dcaf0;
           }
-      
+
           #nivel_prioridade::-ms-thumb {
-              background-color: #0dcaf0;
+            background-color: #0dcaf0;
           }
-      
+
           #nivel_prioridade::-webkit-slider-runnable-track {
-              background: var(--track-color);
+            background: var(--track-color);
           }
-      
+
           #nivel_prioridade::-moz-range-track {
-              background: var(--track-color);
+            background: var(--track-color);
           }
-      
+
           #nivel_prioridade::-ms-track {
-              background: var(--track-color);
+            background: var(--track-color);
           }
-      </style>
+        </style>
         <script>
           document.addEventListener('DOMContentLoaded', function () {
             var nivelPrioridadeInput = document.getElementById('nivel_prioridade');
-            
+
             // Função para atualizar a cor do track
             function atualizarCorTrack(value) {
               let trackColor = '';
@@ -200,19 +236,19 @@
               }
               document.documentElement.style.setProperty('--track-color', trackColor);
             }
-            
+
             // Event listener para quando o input range é alterado
             nivelPrioridadeInput.addEventListener('input', function () {
               const value = parseInt(this.value);
               atualizarCorTrack(value);
             });
-            
+
             // Inicializar a cor do track com o valor atual
             atualizarCorTrack(parseInt(nivelPrioridadeInput.value));
           });
-        </script>        
-        
-    </div>  
+        </script>
+
+      </div>
       <div class="text-center">
         <input type="hidden" name="id" id="agendamento_id" value="{{ agendamento.id }}">
         <button type="submit" class="btn btn-info text-white">Atualizar Dados</button>
@@ -221,7 +257,8 @@
     <div class="mb-3">
       {% if messages %}
       {% for message in messages %}
-      <div class="alert {% if message.tags == 'success' %}text-success{% elif message.tags == 'error' %}text-danger{% endif %}">
+      <div
+        class="alert {% if message.tags == 'success' %}text-success{% elif message.tags == 'error' %}text-danger{% endif %}">
         {{ message }}
       </div>
       {% endfor %}
@@ -231,19 +268,33 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var phoneInput = document.getElementById('telefone');
-        // Máscara de telefone
-        phoneInput.addEventListener('input', function (e) {
-            var value = e.target.value;
-            value = value.replace(/\D/g, '');
-            value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
-            value = value.replace(/(\d)(\d{4})$/, '$1-$2');
-            e.target.value = value;
-        });
+      var phoneInput = document.getElementById('telefone');
+      // Máscara de telefone
+      phoneInput.addEventListener('input', function (e) {
+        var value = e.target.value;
+        value = value.replace(/\D/g, '');
+        value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+        value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+        e.target.value = value;
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const olhoAgendadoSelect = document.getElementById('olho_agendado');
+
+      olhoAgendadoSelect.addEventListener('change', function () {
+        const numeroOlhosInput = document.getElementById('numero_de_olhos');
+
+        if (this.value === 'ambos') {
+          numeroOlhosInput.value = 2; // Se "Ambos" for selecionado, o número de olhos é 2
+        } else {
+          numeroOlhosInput.value = 1; // Se "Esquerdo" ou "Direito" for selecionado, o número de olhos é 1
+        }
+      });
     });
   </script>
-  
- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
