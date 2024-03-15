@@ -141,14 +141,13 @@
             <!-- Botões de ação -->
             <td class="align-middle">
               <div class="align-middle text-center form-check-lg">
-                <form id="form-deletar-paciente-{{ paciente.id }}" action="{% url 'deletarPaciente' %}" method="POST">{% csrf_token %}
+                <form id="form-mover-paciente-desinteressado-{{ paciente.id }}" action="{% url 'moverParaDesinteressados' %}" method="POST">{% csrf_token %}
                   <input type="hidden" name="paciente_id" value="{{ paciente.id }}">
-                  <button type="button" class="btn btn-sm text-white" href="#" title="Deletar Paciente"
+                  <button type="button" class="btn btn-sm text-white" href="#" title="Paciente Desinteressado"
                     onclick="confirmarExclusao('{{ paciente.id }}')">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                      class="bi bi-trash3 text-info" viewBox="0 0 16 16">
-                      <path
-                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-person-exclamation text-info" viewBox="0 0 16 16">
+                      <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
+                      <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1.5a.5.5 0 0 0 1 0V11a.5.5 0 0 0-.5-.5m0 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
                     </svg>
                   </button>
                 </form>
@@ -209,10 +208,10 @@
   </div>
   <script>
     function confirmarExclusao(pacienteId) {
-      var confirmacao = confirm("Tem certeza que deseja deletar este paciente?");
+      var confirmacao = confirm("Tem certeza que deseja mover este paciente para lista de desinteressados?");
       if (confirmacao) {
         // Se confirmado, altere o tipo do botão para "submit"
-        document.getElementById('form-deletar-paciente-' + pacienteId).submit();
+        document.getElementById('form-mover-paciente-desinteressado-' + pacienteId).submit();
       } else {
         // Se cancelado, não faça nada
         return false;
@@ -354,7 +353,45 @@
       };
       xhr.send();
     }
-  </script>
+
+    function confirmarExclusao(pacienteId) {
+        var confirmacao = confirm("Tem certeza que deseja mover este paciente para lista de desinteressados?");
+        if (confirmacao) {
+            // Se confirmado, altere o tipo do botão para "submit"
+            document.getElementById('form-mover-paciente-desinteressado-' + pacienteId).submit();
+        } else {
+            // Se cancelado, não faça nada
+            return false;
+        }
+    }
+
+    function deletarPaciente(pacienteId) {
+        if (confirm("Tem certeza que deseja excluir este paciente?")) {
+            fetch('/caminho/para/deletar/paciente/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    paciente_id: pacienteId
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Recarrega a página após a exclusão do paciente
+                    location.reload();
+                } else {
+                    console.error('Ocorreu um erro durante a exclusão do paciente.');
+                }
+            })
+            .catch(error => {
+                console.error('Ocorreu um erro durante a exclusão do paciente:', error);
+            });
+        }
+    }
+</script>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

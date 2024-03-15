@@ -90,23 +90,24 @@
     </div>
 
     <div class="input-group mb-3">
-      <select class="btn btn-info btn-md text-white" style="border: #0dcaf0; text-align: left;" type="button"
-        id="searchType" onchange="filtrarPacientes()">
+      <select class="btn btn-info btn-md text-white" style="border: #0dcaf0; text-align: left;" type="button" id="searchType" onchange="filtrarPacientes()">
         <ul class="dropdown-menu bg-info" style="border: #0dcaf0;">
-          <option class="btn btn-info text-white" style="text-align: left; border: #0dcaf0; padding: 0%; margin: 0%;"
-            selected disabled>Buscar por:</option>
+          <option class="btn btn-info text-white" style="text-align: left; border: #0dcaf0; padding: 0%; margin: 0%;" selected disabled>Buscar por:</option>
           <option class="btn btn-info text-white" style="text-align: left; border: #0dcaf0;" value="nome">Nome</option>
-          <option class="btn btn-info text-white" style="text-align: left; border: #0dcaf0;" value="prontuario">
-            Prontuário</option>
+          <option class="btn btn-info text-white" style="text-align: left; border: #0dcaf0;" value="prontuario">Prontuário</option>
         </ul>
       </select>
-      <input type="text" class="form-control" id="searchInput" name="searchInput" oninput="filtrarPacientes()"
-        aria-label="Text input with dropdown button">
-      <button type="submit" title="Buscar" class="btn btn-info text-white"><svg xmlns="http://www.w3.org/2000/svg"
-          width="17" height="17" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-          <path
-            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-        </svg></button>
+      <input type="text" class="form-control" id="searchInput" name="searchInput" oninput="filtrarPacientes()" aria-label="Text input with dropdown button">
+      <button type="submit" title="Buscar" class="btn btn-info text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+        </svg>
+      </button>
+      <select class="btn btn-info btn-md text-white" style="border: #0dcaf0; text-align: left;" type="button" id="sortOption" onchange="ordenarPacientes()">
+        <option class="btn btn-info text-white" style="text-align: left; border: #0dcaf0;" selected disabled>Ordenar por:</option>
+        <option class="btn btn-info text-white" style="text-align: left; border: #0dcaf0;" value="faltas">Faltas</option>
+        <option class="btn btn-info text-white" style="text-align: left; border: #0dcaf0;" value="olhos">Número de Olhos</option>
+      </select>
     </div>
     <div class="mb-3">
       <table id="pacientesTable" class="table table-striped table-borderless table-hover">
@@ -134,16 +135,15 @@
             <td class="align-middle text-center">{{ paciente.nome }}</td>
             <td class="align-middle text-center">{{ paciente.numero_de_olhos }}</td>
             <td class="align-middle text-center">{{ paciente.olho_agendado }}</td>
-            <td class="align-middle text-center">{{ paciente.aplicacao_atual }}/{{
-              paciente.quantidade_aplicacoes_necessarias }}</td>
+            <td class="align-middle text-center">{{ paciente.aplicacao_atual }}/{{ paciente.quantidade_aplicacoes_necessarias }}</td>
             <td class="align-middle text-center">{{ paciente.diagnostico }}</td>
             <td class="align-middle text-center">{{ paciente.telefone }}</td>
             <td class="align-middle text-center">{{ paciente.faltas }}</td>
             <!-- Botões de ação -->
             <td class="align-middle">
               <div class="align-middle text-center form-check-lg">
-                <form id="form-deletar-paciente-{{ paciente.id }}" action="{% url 'deletarPaciente' %}" method="POST">{%
-                  csrf_token %}
+                <form id="form-deletar-paciente-{{ paciente.id }}" action="{% url 'deletarPaciente' %}" method="POST">
+                  {% csrf_token %}
                   <input type="hidden" name="paciente_id" value="{{ paciente.id }}">
                   <button type="button" class="btn btn-sm text-white" href="#" title="Deletar Paciente"
                     onclick="confirmarExclusao('{{ paciente.id }}')">
@@ -174,8 +174,7 @@
             </td>
             <td class="align-middle">
               <div class="align-middle text-center form-check-lg">
-                <form id="form-agendar-paciente-{{ paciente.id }}" action="{% url 'agendarPaciente' %}" method="GET">{%
-                  csrf_token %}
+                <form id="form-agendar-paciente-{{ paciente.id }}" action="{% url 'agendarPaciente' %}" method="GET">{% csrf_token %}
                   <input type="hidden" name="paciente_id" value="{{ paciente.id }}">
                   <button class="btn btn-sm text-white" type="submit" title="Agendar Paciente"><svg
                       xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -212,7 +211,7 @@
   </div>
   <script>
     function confirmarExclusao(pacienteId) {
-      var confirmacao = confirm("Tem certeza que deseja deletar este paciente?");
+      var confirmacao = confirm("Tem certeza que deseja DELETAR este paciente do BANCO DE DADOS?\nTodos os dados dele serão perdidos.\nEle terá que ser cadastrado novamente caso necessário.");
       if (confirmacao) {
         // Se confirmado, altere o tipo do botão para "submit"
         document.getElementById('form-deletar-paciente-' + pacienteId).submit();
@@ -357,6 +356,46 @@
       };
       xhr.send();
     }
+
+    function ordenarPacientes() {
+  var selectBox = document.getElementById("sortOption");
+  var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+  var table = document.getElementById("pacientesTable");
+  var rows, switching, i, x, y, shouldSwitch;
+  
+  switching = true;
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("td")[getColumnIndex(selectedValue)];
+      y = rows[i + 1].getElementsByTagName("td")[getColumnIndex(selectedValue)];
+      if (selectedValue === "faltas") {
+        shouldSwitch = parseInt(x.innerHTML) > parseInt(y.innerHTML);
+      } else {
+        shouldSwitch = parseInt(x.innerHTML) < parseInt(y.innerHTML);
+      }
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        break;
+      }
+    }
+  }
+}
+
+function getColumnIndex(sortOption) {
+  switch (sortOption) {
+    case "faltas":
+      return 8; // Índice da coluna de faltas
+    case "olhos":
+      return 3; // Índice da coluna de número de olhos
+    default:
+      return 2; // Índice da coluna de nome (padrão)
+  }
+}
+
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

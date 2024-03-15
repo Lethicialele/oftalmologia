@@ -134,20 +134,20 @@ def confirmarAtendimentos(request):
             agendamentos = Agendamentos.objects.filter(id__in=atendidos_ids)
 
             for contador, agendamento in enumerate(agendamentos):
-                if agendamento.ultima_atualizacao.isoformat() == data_selecionada:
+                if agendamento.ultima_atualizacao == data_selecionada:
                     break
                 agendamento.numero_atualizacoes += 1
                 agendamento.atendido += 1
                 agendamento.aplicacao_atual += 1
-                historico_entry = f"Atendido! (em {data_atual} por {request.user}): Data Agendada: {agendamento.data_agendada} - Status: {agendamento.status}, Observação: {agendamento.observacao}\n"
+                historico_entry = f"Atendido! (em {data_atual} por {request.user}): Data Agendada: {agendamento.data_agendada} - Status: {agendamento.status} - Aplicação: {agendamento.aplicacao_atual}/{agendamento.quantidade_aplicacoes_necessarias}\n"
                 agendamento.historico += historico_entry
                 agendamento.ultimo_atendimento = data_selecionada
                 agendamento.ultima_atualizacao = data_selecionada
                 agendamento.status = 'não confirmado'
-                if agendamento.atendido == 2:
+                if agendamento.quantidade_aplicacoes_necessarias - agendamento.atendido == 1:
                     agendamento.oct = True
                     agendamento.observacao = ''
-                elif agendamento.atendido == 3:
+                elif agendamento.quantidade_aplicacoes_necessarias - agendamento.atendido == 0:
                     agendamento.status = 'concluido'
                 else:
                     agendamento.status = 'não confirmado'
@@ -159,9 +159,9 @@ def confirmarAtendimentos(request):
             data_agendada=data_selecionada).exclude(id__in=atendidos_ids)
 
         for contador, agendamento in enumerate(agendamentos):
-            if agendamento.ultima_atualizacao.isoformat() == data_selecionada:
+            if agendamento.ultima_atualizacao == data_selecionada:
                 break
-            historico_entry = f"FALTOU no atendimento (em {data_atual} por {request.user}): Data Agendada: {agendamento.data_agendada} - Status: {agendamento.status}\n"
+            historico_entry = f"FALTOU no atendimento (em {data_atual} por {request.user}): Data Agendada: {agendamento.data_agendada} - Status: {agendamento.status} - Aplicação: {agendamento.aplicacao_atual}/{agendamento.quantidade_aplicacoes_necessarias}\n"
             agendamento.historico += historico_entry
             agendamento.status = 'não confirmado'
             agendamento.ultima_atualizacao = data_selecionada
@@ -227,7 +227,7 @@ def gerarAgenda(request):
         # Consulta para buscar os agendamentos que atendem aos critérios
         agendamentos = Agendamentos.objects.raw('''
             SELECT * FROM agendamentos_agendamentos
-            WHERE status NOT IN ('concluido', 'cancelado')
+            WHERE status NOT IN ('concluido', 'cancelado', 'desinteressado')
             AND data_agendada IS NULL AND faltas <= %s
             ORDER BY nivel_prioridade DESC, data_cadastro ASC, numero_de_olhos DESC
         ''', [max_faltas])
@@ -334,7 +334,7 @@ def consultarFilaEsperaPacientes(request, chamada=None):
             consulta_sql = '''
             SELECT *
             FROM agendamentos_agendamentos
-            WHERE status NOT IN ('concluido', 'cancelado') and data_agendada IS NULL
+            WHERE status NOT IN ('concluido', 'cancelado', 'desinteressado') and data_agendada IS NULL
             ORDER BY nivel_prioridade DESC, data_cadastro ASC, numero_de_olhos DESC
         '''
             agendamentos = Agendamentos.objects.raw(consulta_sql)
@@ -344,7 +344,7 @@ def consultarFilaEsperaPacientes(request, chamada=None):
             consulta_sql = '''
             SELECT *
             FROM agendamentos_agendamentos
-            WHERE status NOT IN ('concluido', 'cancelado') and data_agendada IS NULL
+            WHERE status NOT IN ('concluido', 'cancelado', 'desinteressado') and data_agendada IS NULL
             ORDER BY nivel_prioridade DESC, data_cadastro ASC, numero_de_olhos DESC
         '''
             agendamentos = Agendamentos.objects.raw(consulta_sql)
@@ -354,7 +354,7 @@ def consultarFilaEsperaPacientes(request, chamada=None):
             consulta_sql = '''
             SELECT *
             FROM agendamentos_agendamentos
-            WHERE status NOT IN ('concluido', 'cancelado') and data_agendada IS NULL
+            WHERE status NOT IN ('concluido', 'cancelado', 'desinteressado') and data_agendada IS NULL
             ORDER BY nivel_prioridade DESC, data_cadastro ASC, numero_de_olhos DESC
         '''
             agendamentos = Agendamentos.objects.raw(consulta_sql)
@@ -365,7 +365,7 @@ def consultarFilaEsperaPacientes(request, chamada=None):
         consulta_sql = '''
         SELECT *
         FROM agendamentos_agendamentos
-        WHERE status NOT IN ('concluido', 'cancelado') and data_agendada IS NULL
+        WHERE status NOT IN ('concluido', 'cancelado', 'desinteressado') and data_agendada IS NULL
         ORDER BY nivel_prioridade DESC, data_cadastro ASC, numero_de_olhos DESC
     '''
         agendamentos = Agendamentos.objects.raw(consulta_sql)
@@ -383,11 +383,24 @@ def listarPacientesFinalizados(request):
     return render(request, 'pacientesFinalizados.html', {'usuario': request.user, 'pacientes': agendamentos})
 
 
+def reiniciarPacienteFinalizado(request):
+    paciente_id = request.POST.get('paciente_id')
+    agendamento = Agendamentos.objects.filter(id=paciente_id).first()
+    agendamento.status = 'não confirmado'
+    agendamento.observacao = ''
+    agendamento.quantidade_aplicacoes_necessarias = +3
+    agendamento.save()
+
+    messages.success(request, 'Paciente movido para lista de espera com sucesso!')
+
+    return redirect('listarPacientesFinalizados')
+
+
 def listarPacientesDesinteressados(request):
     consulta_sql = '''
         SELECT *
         FROM agendamentos_agendamentos
-        WHERE status IN ('concluido')
+        WHERE status IN ('desinteressado')
         ORDER BY nivel_prioridade DESC, data_cadastro ASC, numero_de_olhos DESC
         '''
     agendamentos = Agendamentos.objects.raw(consulta_sql)
@@ -395,13 +408,32 @@ def listarPacientesDesinteressados(request):
 
 
 def deletarPaciente(request):
+    if request.method == 'POST':
+        paciente_id = request.POST.get('paciente_id')
+        agendamento = get_object_or_404(Agendamentos, id=paciente_id)
+        agendamento.delete()
+
+        messages.success(request, 'Paciente deletado com sucesso!')
+    
+    return HttpResponse(status=204)
+
+
+def moverParaDesinteressados(request):
     paciente_id = request.POST.get('paciente_id')
+    motivo = request.POST.get('motivo')
     agendamento = Agendamentos.objects.filter(id=paciente_id).first()
-    agendamento.delete()
+    agendamento.status = 'desinteressado'
+    
+    # Adicionando o motivo ao registro de histórico
+    data_atual = timezone.localtime(timezone.now()).strftime("%Y-%m-%d %H:%M:%S")
+    historico_entry = f"Movido para desinteressados (em {data_atual} por {request.user}): Status: {agendamento.status} Motivo: {motivo} \n"
+    agendamento.historico += historico_entry
+    
+    agendamento.save()
 
-    messages.success(request, 'Paciente deletado com sucesso!')
+    messages.success(request, 'Paciente movido para lista de desinteressados com sucesso!')
 
-    return redirect('consultarFilaEsperaPacientes')
+    return redirect('listarPacientesDesinteressados')
 
 
 def agendarPaciente(request):

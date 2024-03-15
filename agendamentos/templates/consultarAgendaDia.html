@@ -149,10 +149,10 @@
               <!-- Dados das colunas -->
               <td class="align-middle">
                 <div class="align-middle text-center form-check-lg">
-                  <form id="form-atualizar-cadastro" action="{% url 'atualizarCadastroAgendamento' %}" method="GET">{% csrf_token %}
-                    <input type="hidden" name="agendamento_id" id="agendamento_id" value="{{ agendamento.id }}">
+                  <form id="form-atualizar-cadastro-{{ agendamento.id }}" action="{% url 'atualizarCadastroAgendamento' %}" method="GET">{% csrf_token %}
+                    <input type="hidden" name="agendamento_id" id="agendamento_id_{{ agendamento.id }}" value="{{ agendamento.id }}">
                     <button type="submit" class="btn btn-sm text-white" title="Atualizar Cadastro"
-                      form="form-atualizar-cadastro">
+                      form="form-atualizar-cadastro-{{ agendamento.id }}">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                         class="bi bi-file-person text-info" viewBox="0 0 16 16">
                         <path
@@ -407,6 +407,29 @@
         });
       }
     });
+
+ document.addEventListener('DOMContentLoaded', function () {
+    const formsAtualizarCadastro = document.querySelectorAll('[id^="form-atualizar-cadastro-"]');
+    
+    formsAtualizarCadastro.forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que o formulário seja enviado antes do tratamento
+            
+            // Captura o ID do agendamento
+            const agendamentoIdInput = this.querySelector('input[name="agendamento_id"]');
+            const agendamentoId = agendamentoIdInput.value;
+            
+            // Atualiza o valor do input hidden com o ID do agendamento
+            const hiddenInput = this.querySelector('input[name="agendamento_ids"]');
+            hiddenInput.value = agendamentoId;
+            
+            // Submete o formulário manualmente
+            this.submit();
+        });
+    });
+});
+
+
   </script>
 
 

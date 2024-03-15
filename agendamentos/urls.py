@@ -42,4 +42,6 @@ urlpatterns = [
          name="listarPacientesDesinteressados"),
     path('listarPacientesFinalizados/', views.listarPacientesFinalizados,
          name="listarPacientesFinalizados"),
+     path('moverParaDesinteressados/', views.moverParaDesinteressados,
+         name="moverParaDesinteressados"),
 ]
