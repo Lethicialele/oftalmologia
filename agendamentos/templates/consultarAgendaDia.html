@@ -53,7 +53,7 @@
               <li><a class="nav-link dropdown-item btn-info btn-sm text-white"
                   href="{% url 'listarPacientesFinalizados' %}">Finalizados </a></li>
               <li><a class="nav-link dropdown-item btn-info btn-sm text-white"
-                  href="{% url 'listarPacientesDesinteressados' %}">Desinteressados</a></li>
+                  href="{% url 'listarPacientesDesinteressados' %}">Inativos</a></li>
             </ul>
           </li>
           <!--<li class="nav-item">
@@ -77,7 +77,7 @@
             <div class="dropdown-menu bg-info border-info w-100 collapse" aria-labelledby="userDropdown">
               <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'atualizarCadastrorMedicos' %}">Meu
                 Perfil</a>
-              <a class="nav-link btn btn-info btn-sm text-white " href="{% url 'sair' %}">Sair</a>
+              <a class="nav-link btn btn-info btn-sm text-white" href="{% url 'sair' %}">Sair</a>
             </div>
           </li>
         </ul>
@@ -214,34 +214,144 @@
             {% endfor %}
           </tbody>
         </table>
+        
         <div class="row">
-          <div class=" col text-center">
-            <button type="submit" class="btn btn-info text-white" style="margin: 5pt;">Imprimir Agenda</button>
+          <div class="col" style="margin-left: 200px;">
+            <div class=" col text-center">
+              <button type="submit" class="btn btn-info text-white" style="margin: 5pt;">Imprimir Agenda</button>
+            </div>
+            <div class="col text-center">
+              <div class="d-flex justify-content-center"> <!-- Adicionando as classes para centralizar -->
+                <form id="form-confirmar-atendimentos" action="{% url 'confirmarAtendimentos' %}" method="POST">{% csrf_token %}
+                  <input type="hidden" name="data_selecionada" value="{{ data }}">
+                  <input type="hidden" name="agendamento_ids" id="agendamento_ids" value="">
+                  <button type="submit" class="btn btn-info text-white" style="margin: 5pt;">Confirmar Atendimentos</button>
+                </form>
+              </div>
+            </div>
+            <div class="col text-end">                            
+            </div>
           </div>
-        </div>
+        <div class="container border rounded p-4" style="max-width: 150px;">
+          <form id="form-imprimir-documentos" action="{% url 'gerarRelatorio' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="data_documentos_selecionada" value="{{ data }}">
+            <input type="hidden" name="agendamento_documentos_ids" id="agendamento_documentos_ids">
+            
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="documentos" id="documentos">
+              <label class="form-check-label" for="documentos">Documentos</label>
+            </div>
+            
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="receitas" id="receitas">
+              <label class="form-check-label" for="receitas">Receitas</label>
+            </div>
+            
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="relatorios" id="relatorios">
+              <label class="form-check-label" for="relatorios">Relatórios</label>
+            </div>
+            
+            <div class="row mt-3">
+              <div class="col text-center">
+                <button type="submit" class="btn btn-info text-white">Imprimir</button>
+              </div>
+            </div>
+          </form>
+        </div>                        
+      </div>
+            <!-- <div class="btn-group">
+              <button type="button" class="btn btn-info dropdown-toggle text-white" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Imprimir
+              </button>
+              <ul class="dropdown-menu bg-info">
+                 <li>
+                  <input type="checkbox" id="imprimirAgenda" class="dropdown-item visually-hidden" name="opcao_imprimir"
+                    value="agenda">
+                  <label class="dropdown-item text-white" for="imprimirAgenda">Agenda</label>
+                </li>
+                <li>
+                  <form id="form-imprimir-documentos" action="{% url 'gerarRelatorio' %}" method="POST">{% csrf_token %}
+                    <input type="hidden" name="data_documentos_selecionada" value="{{ data }}">
+                    <input type="hidden" name="agendamento_documentos_ids" id="agendamento_documentos_ids">
+                    <div class="row">
+                      <div class=" col text-center">
+                        <button type="submit" class="btn btn-info text-white" style="margin: 5pt;">Documentos</button>
+                      </div>
+                    </div>
+                  </form>
+                  <input type="checkbox" id="imprimirDocumentos" class="dropdown-item visually-hidden" name="opcao_imprimir"
+                    value="documentos">
+                </li>
+                <li>
+                  <input type="checkbox" id="imprimirReceitas" class="dropdown-item visually-hidden" name="opcao_imprimir"
+                    value="receitas">
+                  <label class="dropdown-item text-white" for="imprimirReceitas">Receitas</label>
+                </li>
+                <li>
+                  <input type="checkbox" id="imprimirRelatorios" class="dropdown-item visually-hidden" name="opcao_imprimir"
+                    value="relatorios">
+                  <label class="dropdown-item text-white" for="imprimirRelatorios">Relatórios</label>
+                </li>
+              </ul>
+            </div>-->
       </form>
 
-      <form id="form-imprimir-documentos" action="{% url 'gerarRelatorio' %}" method="POST">{% csrf_token %}
-        <input type="hidden" name="data_documentos_selecionada" value="{{ data }}">
-        <input type="hidden" name="agendamento_documentos_ids" id="agendamento_documentos_ids">
-        <div class="row">
-          <div class=" col text-center">
-            <button type="submit" class="btn btn-info text-white" style="margin: 5pt;">Imprimir Documentos</button>
+      <!-- <div class="row">
+        <div class="col text-center" style="margin-left: 33.18%;">
+          <div class="d-flex justify-content-center"> 
+            <form id="form-confirmar-atendimentos" action="{% url 'confirmarAtendimentos' %}" method="POST">{% csrf_token %}
+              <input type="hidden" name="data_selecionada" value="{{ data }}">
+              <input type="hidden" name="agendamento_ids" id="agendamento_ids" value="">
+              <button type="submit" class="btn btn-info text-white" style="margin: 5pt;">Confirmar Atendimentos</button>
+            </form>
           </div>
         </div>
-      </form>
+        <div class="col text-end">
+          <div class="btn-group">
+            <button type="button" class="btn btn-info dropdown-toggle text-white" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Imprimir
+            </button>
+            <ul class="dropdown-menu bg-info">
+              <li>
+                <input type="checkbox" id="imprimirAgenda" class="dropdown-item visually-hidden" name="opcao_imprimir"
+                  value="agenda">
+                <label class="dropdown-item text-white" for="imprimirAgenda">Agenda</label>
+              </li>
+              <li>
+                <form id="form-imprimir-documentos" action="{% url 'gerarRelatorio' %}" method="POST">{% csrf_token %}
+                  <input type="hidden" name="data_documentos_selecionada" value="{{ data }}">
+                  <input type="hidden" name="agendamento_documentos_ids" id="agendamento_documentos_ids">
+                  <div class="row">
+                    <div class=" col text-center">
+                      <button type="submit" class="btn btn-info text-white" style="margin: 5pt;">Documentos</button>
+                    </div>
+                  </div>
+                </form>
+                <input type="checkbox" id="imprimirDocumentos" class="dropdown-item visually-hidden" name="opcao_imprimir"
+                  value="documentos">
+                <label class="dropdown-item text-white" for="imprimirDocumentos">Documentos</label>
+              </li>
+              <li>
+                <input type="checkbox" id="imprimirReceitas" class="dropdown-item visually-hidden" name="opcao_imprimir"
+                  value="receitas">
+                <label class="dropdown-item text-white" for="imprimirReceitas">Receitas</label>
+              </li>
+              <li>
+                <input type="checkbox" id="imprimirRelatorios" class="dropdown-item visually-hidden" name="opcao_imprimir"
+                  value="relatorios">
+                <label class="dropdown-item text-white" for="imprimirRelatorios">Relatórios</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div> -->
+
     </div>
   </div>
-
-  <form id="form-confirmar-atendimentos" action="{% url 'confirmarAtendimentos' %}" method="POST">{% csrf_token %}
-    <input type="hidden" name="data_selecionada" value="{{ data }}">
-    <input type="hidden" name="agendamento_ids" id="agendamento_ids" value="">
-    <div class="row">
-      <div class=" col text-center">
-        <button type="submit" class="btn btn-info text-white" style="margin: 5pt;">Confirmar Atendimentos</button>
-      </div>
-    </div>
-  </form>
   </div>
   </div>
 
@@ -277,7 +387,9 @@
 
       checkboxSelectConfirmed.addEventListener('change', function () {
         checkboxes.forEach(checkbox => {
-          checkbox.checked = checkboxSelectAll.checked;
+          if (checkbox.dataset.status === 'confirmado') {
+            checkbox.checked = checkboxSelectConfirmed.checked;
+          }
         });
         updateDocumentosHiddenInputs();
         updateHiddenInputs();
@@ -285,9 +397,16 @@
 
       checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function () {
+          verifyIfAllIsClick(checkbox)
           updateHiddenInputs();
         });
       });
+
+      function verifyIfAllIsClick(actualCheckbox) {
+        if(checkboxSelectAll.checked && !actualCheckbox.checked){
+          checkboxSelectAll.checked = false;
+        }
+      }
 
       function updateHiddenInputs() {
         const checkedCheckboxes = document.querySelectorAll('input[name="gerarRelatorioCheck"]:checked');
@@ -336,15 +455,16 @@
       }
 
       formConfirmarAtendimentos.addEventListener('submit', function (event) {
-        if (!confirm("ATENÇÃO!\n- Os pacientes que NÃO forem SELECIONADOS receberão FALTA.\n- A ocorrência de 3 faltas seguidas IMPOSSIBILITA agendamentos futuros. ")) {
+        if (!confirm("ATENÇÃO!\n\n VOCÊ SÓ PODERÁ CONFIRMAR O ATENDIMENTO 1 VEZ!\n\n - Os pacientes CONFIRMADOS serão movidos para a FILA de ESPERA ou FINALIZADOS\n - Os pacientes que NÃO forem SELECIONADOS receberão FALTA.\n ")) {
           event.preventDefault();
         }
       });
 
       checkboxes.forEach(checkbox => {
-        checkbox.checked = checkbox.dataset.checked === 'true'; // Marca os checkboxes se estavam marcados antes
+        checkbox.checked = checkbox.dataset.checked == 'true'; // Marca os checkboxes se estavam marcados antes
       });
 
+    
       updateHiddenInputs(); // Atualiza os campos de input hidden ao carregar a página
 
       function updateHiddenInputs() {
@@ -356,7 +476,6 @@
           hiddenInput.value = selectedIds.join(',');
         });
       }
-
 
     });
     function confirmarExclusao(agendamentoId) {
@@ -430,7 +549,22 @@
 });
 
 
-  </script>
+var dataAtual = new Date();
+
+// Calcula uma semana atrás a partir da data atual
+var umaSemanaAtras = new Date(dataAtual);
+umaSemanaAtras.setDate(dataAtual.getDate() - 7);
+
+// Formata a data para o formato do input de data
+var ano = umaSemanaAtras.getFullYear();
+var mes = (umaSemanaAtras.getMonth() + 1).toString().padStart(2, '0');
+var dia = umaSemanaAtras.getDate().toString().padStart(2, '0');
+var dataFormatada = ano + '-' + mes + '-' + dia;
+
+// Define a data mínima para o input de data
+document.getElementById("filtro_data").min = dataFormatada;
+
+</script>
 
 
 </body>

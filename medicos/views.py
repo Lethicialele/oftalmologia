@@ -78,4 +78,5 @@ def atualizarCadastrorMedicos(request):
 
 def sair(request):
     logout(request)
+    request.session.flush()  # Limpa os dados da sessão
     return redirect('/medicos/loginMedicos/')

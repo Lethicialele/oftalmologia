@@ -52,7 +52,7 @@
               <li><a class="nav-link dropdown-item btn-info btn-sm text-white"
                   href="{% url 'listarPacientesFinalizados' %}">Finalizados </a></li>
               <li><a class="nav-link dropdown-item btn-info btn-sm text-white"
-                  href="{% url 'listarPacientesDesinteressados' %}">Desinteressados</a></li>
+                  href="{% url 'listarPacientesDesinteressados' %}">Inativos</a></li>
             </ul>
           </li>
           <!--<li class="nav-item">
@@ -98,8 +98,7 @@
               <td class="align-middle text-center">{{ agendamento.nome }}</td>
               <td class="align-middle text-center">{{ agendamento.numero_de_olhos }}</td>
               <td class="align-middle text-center">{{ agendamento.olho_agendado }}</td>
-              <td class="align-middle text-center">{{ agendamento.aplicacao_atual }}/{{
-                agendamento.quantidade_aplicacoes_necessarias }}</td>
+              <td class="align-middle text-center">{{ agendamento.aplicacao_atual }}/{{agendamento.quantidade_aplicacoes_necessarias }}</td>
               <td class="align-middle text-center">{{ agendamento.diagnostico }}</td>
               <td class="align-middle text-center">{{ agendamento.telefone }}</td>
               <td class="align-middle text-center" data-status="{{ agendamento.status }}">{{ agendamento.status }}</td>

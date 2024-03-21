@@ -144,6 +144,7 @@ def confirmarAtendimentos(request):
                 agendamento.ultimo_atendimento = data_selecionada
                 agendamento.ultima_atualizacao = data_selecionada
                 agendamento.status = 'não confirmado'
+                agendamento.data_agendada = None
                 if agendamento.quantidade_aplicacoes_necessarias - agendamento.atendido == 1:
                     agendamento.oct = True
                     agendamento.observacao = ''
@@ -166,6 +167,7 @@ def confirmarAtendimentos(request):
             agendamento.status = 'não confirmado'
             agendamento.ultima_atualizacao = data_selecionada
             agendamento.observacao = ''
+            agendamento.data_agendada = None
             agendamento.faltas += 1
             agendamento.save()
 
@@ -265,21 +267,36 @@ def gerarAgenda(request):
 
 
 def gerarRelatorio(request):
-    agendamento = None  # Inicialize com None para o caso de não haver agendamentos
+    agendamentos = None  # Inicialize com None para o caso de não haver agendamentos
     medico = request.user
     medico = Medicos.objects.filter(usuario=medico).first()
 
     if request.method == 'POST':
+        print(request.POST)
+        documentos = (request.POST.get("documentos")) == 'on'
+        receitas = (request.POST.get("receitas")) == 'on'
+        relatorios = (request.POST.get("relatorios")) == 'on'
+
         # Obtenha a lista de IDs dos agendamentos selecionados
         agendamento_ids = request.POST.get(
             'agendamento_documentos_ids', '').split(',')
 
         # Obtenha os agendamentos correspondentes aos IDs selecionados
-        agendamento = Agendamentos.objects.filter(id__in=agendamento_ids)
+        agendamentos = Agendamentos.objects.filter(id__in=agendamento_ids)
 
     # Se houver agendamentos, redirecione para a página 'relatorio.html' com os dados dos agendamentos
-    if agendamento:
-        return render(request, 'relatorio.html', {'usuario': request.user, 'agendamentos': agendamento, 'medico': medico})
+    for agendamento in agendamentos:
+        if agendamento.olho_agendado == 'esquerdo':
+            agendamento.olho_agendado = 'OLHO ESQUERDO'
+        elif agendamento.olho_agendado == 'direito':
+            agendamento.olho_agendado = 'OLHO DIREITO'
+        else:
+            agendamento.olho_agendado = 'OLHO ESQUERDO E DIREITO'
+
+    if agendamentos:
+        return render(request, 'relatorio.html', {'usuario': request.user, 'agendamentos': agendamentos, 'medico': medico,
+                                                  'documentos': documentos, 'receitas': receitas, 'relatorios': relatorios
+                                                  })
 
     # Se não houver agendamentos, retorne apenas o render do template sem contexto
     return render(request, 'relatorio.html', {'usuario': request.user, 'medico': medico, 'selecionados_ids': agendamento_ids})
@@ -334,7 +351,9 @@ def consultarFilaEsperaPacientes(request, chamada=None):
             consulta_sql = '''
             SELECT *
             FROM agendamentos_agendamentos
-            WHERE status NOT IN ('concluido', 'cancelado', 'desinteressado') and data_agendada IS NULL
+            WHERE status NOT IN ('concluido', 'cancelado', 'desinteressado')
+            AND data_agendada IS NULL
+            AND DATEDIFF(CURRENT_DATE, ultimo_atendimento) > 30
             ORDER BY nivel_prioridade DESC, data_cadastro ASC, numero_de_olhos DESC
         '''
             agendamentos = Agendamentos.objects.raw(consulta_sql)
@@ -350,17 +369,16 @@ def consultarFilaEsperaPacientes(request, chamada=None):
             agendamentos = Agendamentos.objects.raw(consulta_sql)
             return render(request, 'pacientesFilaEspera.html', {'usuario': request.user, 'pacientes': agendamentos})
         else:
-            print("entrou else dentro if")
             consulta_sql = '''
             SELECT *
             FROM agendamentos_agendamentos
             WHERE status NOT IN ('concluido', 'cancelado', 'desinteressado') and data_agendada IS NULL
+            AND DATEDIFF(CURRENT_DATE, ultimo_atendimento) > 30
             ORDER BY nivel_prioridade DESC, data_cadastro ASC, numero_de_olhos DESC
         '''
             agendamentos = Agendamentos.objects.raw(consulta_sql)
             return render(request, 'pacientesFilaEspera.html', {'usuario': request.user, 'pacientes': agendamentos})
     else:
-        print("entrou else")
         print(chamada)
         consulta_sql = '''
         SELECT *
@@ -388,10 +406,11 @@ def reiniciarPacienteFinalizado(request):
     agendamento = Agendamentos.objects.filter(id=paciente_id).first()
     agendamento.status = 'não confirmado'
     agendamento.observacao = ''
-    agendamento.quantidade_aplicacoes_necessarias = +3
+    agendamento.quantidade_aplicacoes_necessarias += 3
     agendamento.save()
 
-    messages.success(request, 'Paciente movido para lista de espera com sucesso!')
+    messages.success(
+        request, 'Paciente movido para lista de espera com sucesso!')
 
     return redirect('listarPacientesFinalizados')
 
@@ -414,7 +433,7 @@ def deletarPaciente(request):
         agendamento.delete()
 
         messages.success(request, 'Paciente deletado com sucesso!')
-    
+
     return HttpResponse(status=204)
 
 
@@ -423,15 +442,17 @@ def moverParaDesinteressados(request):
     motivo = request.POST.get('motivo')
     agendamento = Agendamentos.objects.filter(id=paciente_id).first()
     agendamento.status = 'desinteressado'
-    
+
     # Adicionando o motivo ao registro de histórico
-    data_atual = timezone.localtime(timezone.now()).strftime("%Y-%m-%d %H:%M:%S")
-    historico_entry = f"Movido para desinteressados (em {data_atual} por {request.user}): Status: {agendamento.status} Motivo: {motivo} \n"
+    data_atual = timezone.localtime(
+        timezone.now()).strftime("%Y-%m-%d %H:%M:%S")
+    historico_entry = f"Movido para inativos (em {data_atual} por {request.user}): Status: {agendamento.status} Motivo: {motivo} \n"
     agendamento.historico += historico_entry
-    
+
     agendamento.save()
 
-    messages.success(request, 'Paciente movido para lista de desinteressados com sucesso!')
+    messages.success(
+        request, 'Paciente movido para lista de inativos com sucesso!')
 
     return redirect('listarPacientesDesinteressados')
 
@@ -446,6 +467,8 @@ def agendarPaciente(request):
         # Atualize o objeto agendamento com a nova data_agendada
         agendamento.data_agendada = data_agendada
         agendamento.status = 'não confirmado'
+        if agendamento.quantidade_aplicacoes_necessarias == agendamento.aplicacao_atual:
+            agendamento.quantidade_aplicacoes_necessarias += 3
         data_atual = timezone.localtime(
             timezone.now()).strftime("%Y-%m-%d %H:%M:%S")
         historico_entry = f"Agendamento Manual (em {data_atual} por {request.user}): Data agendada: {agendamento.data_agendada}\n"

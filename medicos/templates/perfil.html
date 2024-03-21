@@ -52,7 +52,7 @@
               <li><a class="nav-link dropdown-item btn-info btn-sm text-white"
                   href="{% url 'listarPacientesFinalizados' %}">Finalizados </a></li>
               <li><a class="nav-link dropdown-item btn-info btn-sm text-white"
-                  href="{% url 'listarPacientesDesinteressados' %}">Desinteressados</a></li>
+                  href="{% url 'listarPacientesDesinteressados' %}">Inativos</a></li>
             </ul>
           </li>
           <!--<li class="nav-item">
@@ -110,10 +110,10 @@
         <input type="tel" class="form-control phone-mask" id="telefone" name="telefone" value="{{medico.telefone}}"
           required>
       </div>
-      <div class="mb-4">
+      <!-- <div class="mb-4">
         <label for="assinatura" class="form-label">Assinatura:</label>
         <input type="file" class="form-control" id="assinatura" name="assinatura" value="{{medico.assinatura}}">
-      </div>
+      </div> -->
       <div class="mb-3">
         <label for="password" class="form-label">Nova Senha:</label>
         <a class="text-info" href="{% url 'password_reset' %}">Redefinir a senha</a>

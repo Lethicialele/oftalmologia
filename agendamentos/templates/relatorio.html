@@ -1,10 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt" lang="pt">
+
+</html>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>file_1706402254625</title>
-    <meta name="author" content="Nayara Araujo Correia da Silva" />
+    <meta name="author" />
+</head>
+
+<body>
+    {% for agendamento in agendamentos %}
+    {% if documentos %}
     <style type="text/css">
         @page {
             size: A4;
@@ -13,30 +21,19 @@
             margin-bottom: 1cm;
         }
 
-        body {
+        #documentos-container body {
             font-family: Calibri, sans-serif;
             margin: 0;
             padding: 0;
-
         }
 
-        * {
+        #documentos-container * {
             margin: 0;
             padding: 0;
             text-indent: 0;
         }
 
-        .container {
-            page-break-after: always;
-            max-width: 550pt;
-            /* Largura de uma folha A4 em pixels */
-            margin: 0 auto;
-            /* Centralizar o conteúdo na página */
-            text-align: justify;
-            /* Centralizar todo o conteúdo */
-        }
-
-        .s1 {
+        #documentos-container .s1 {
             color: black;
             font-family: Calibri, sans-serif;
             font-style: normal;
@@ -52,7 +49,7 @@
             text-align: justify;
         }
 
-        h1 {
+        #documentos-container h1 {
             color: black;
             font-family: Calibri, sans-serif;
             font-style: normal;
@@ -67,8 +64,7 @@
             text-align: center;
         }
 
-        .p,
-        p {
+        #documentos-container p {
             color: black;
             font-family: Calibri, sans-serif;
             font-style: normal;
@@ -78,7 +74,7 @@
             margin: 2pt;
         }
 
-        .s3 {
+        #documentos-container .s3 {
             color: black;
             font-family: Calibri, sans-serif;
             font-style: normal;
@@ -92,7 +88,7 @@
             text-align: justify;
         }
 
-        .s4 {
+        #documentos-container .s4 {
             color: black;
             font-family: Calibri, sans-serif;
             font-style: normal;
@@ -105,7 +101,7 @@
             text-align: right;
         }
 
-        .s5 {
+        #documentos-container .s5 {
             color: black;
             font-family: Calibri, sans-serif;
             font-style: normal;
@@ -115,7 +111,7 @@
             padding-left: 5.32pt;
         }
 
-        .s6 {
+        #documentos-container .s6 {
             padding-left: 3pt;
             text-indent: 0pt;
             line-height: 130%;
@@ -123,14 +119,14 @@
             font-size: 11.26pt;
         }
 
-        .s7 {
+        #documentos-container .s7 {
             padding-bottom: 2.66pt;
             padding-top: 2.66pt;
             text-align: justify;
             line-height: 150%;
         }
 
-        .s8 {
+        #documentos-container .s8 {
             color: black;
             font-family: Calibri, sans-serif;
             font-style: normal;
@@ -139,24 +135,24 @@
             font-size: 11pt;
         }
 
-        tbody {
+        #documentos-container tbody {
             vertical-align: top;
             overflow: visible;
             border-collapse: collapse;
         }
 
-        table {
+        #documentos-container table {
             border-collapse: collapse;
             margin-left: 6.45pt;
             max-width: 530pt
         }
 
-        tr {
+        #documentos-container tr {
             height: 18pt;
             max-width: 520pt;
         }
 
-        ol {
+        #documentos-container ol {
             margin-left: 11pt;
             font-family: Calibri, sans-serif;
             font-style: normal;
@@ -165,7 +161,7 @@
             font-size: 11pt;
         }
 
-        td {
+        #documentos-container td {
             max-width: 520pt;
             width: 425pt;
             border-top-style: solid;
@@ -178,7 +174,7 @@
             border-right-width: 0.5pt;
         }
 
-        .t1 {
+        #documentos-container .t1 {
             width: 520pt;
             border-top-style: solid;
             border-top-width: 1pt;
@@ -190,7 +186,7 @@
             border-right-width: 1pt
         }
 
-        .t2 {
+        #documentos-container .t2 {
             width: 260pt;
             border-top-style: solid;
             border-top-width: 1pt;
@@ -202,308 +198,8 @@
             border-right-width: 1pt
         }
     </style>
-</head>
-
-
-
-<body>
-    {% for agendamento in agendamentos %}
-    <div class="container">
-        {% load static %}
-        <img style=" width: 550pt; margin-bottom: 10pt;" src="{% static 'img/tcle.png' %}" alt="Logo do HUPAA" />
-        <table style="margin: 0 auto; max-width: 530pt;">
-            <tr>
-                <td>
-                    <p class="s1" style="text-align: left; max-width: 520pt;">Nome completo: {{agendamento.nome}}</p>
-                    <p class="s1" style="text-align: left; max-width: 520pt;">Prontuário n°: {{agendamento.prontuario}}
-                    </p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p class="s1" style="text-align: left;">RG ou CPF: {{agendamento.cpf}}</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p class="s1" style="text-align: left; max-width: 520pt">Nome da Mãe: {{agendamento.nome_mae}}</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="display: flex;">
-                        <div style="flex: 3;">
-                            <p class="s1" style="text-align: left;">Data Nasc: {{agendamento.data_nascimento}}</p>
-                        </div>
-                        <div style="flex: 2;">
-                            <p class="s1" style="text-align: left;">| SUS: {{agendamento.cartao_sus}}</p>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="display: flex;">
-                        <div style="flex: 3;">
-                            <p class="s1" style="text-align: left;">Clínica: {{agendamento.clinica}} </p>
-                        </div>
-                        <div style="flex: 1;">
-                            <p class="s1" style="text-align: left;">|ENF: {{agendamento.enfermaria}}</p>
-                        </div>
-                        <div style="flex: 1;">
-                            <p class="s1" style="text-align: left;">|Leito: {{agendamento.leito}}</p>
-                        </div>
-                        <div style="flex: 2;">
-                            <p class="s1" style="text-align: left;">|Fone: {{agendamento.telefone}} </p>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <h1 style="padding-top: 10pt; padding-bottom: 5pt;">TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO PARA ANESTESIA
-        </h1>
-        <p class="s7">Declaro que fui informado(a) quanto aos principais aspectos relacionados aos procedimentos
-            anestésicos dos quais poderei ser submetido nesta instituição.</p>
-        <p class="s7">Autorizo um médico(a) anestesiologista desta instituição bem como integrantes de sua equipe
-            composta por médicos(as) residentes em anestesiologista sob sua supervisão, todos devidamente cadastrados
-            por
-            esta instituição, a realizar o seguinte procedimento anestésico:
-            _______________________________________________________
-            ou a seguinte alternativa anestésica: ________________________________________________________________
-            para a cirurgia proposta (escrever nome científico e nome popular entre parênteses quando houver):
-            ________________________________________________________________________________ a ser
-            realizada
-            pela&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            equipe
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            do
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            médico
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            cirurgião:</p>
-        <p>____________________________________________________________________.</p>
-        <p><br /></p>
-        <p style="text-align: justify;">Declaro ainda que:</p>
-        <ol type="a" style="padding-top: 6pt;">
-            <li>
-                <p class="s6">
-                    Estou ciente de que para realizar o(s) procedimento(s) proposto(s) será necessário o emprego de
-                    anestesia,
-                    cujos métodos, as técnicas e os fármacos serão indicados pela equipe médica de anestesiologia antes
-                    do seu ato
-                    no centro cirúrgico. A(s) alternativa(s) de procedimento anestésico indicadas para possibilitar o
-                    procedimento.a
-                    ser realizado, seus benefícios, riscos e complicações me foram explicadas satisfatoriamente.<br />
-                </p>
-            </li>
-            <li>
-                <p class="s6">
-                    Fui esclarecido de que a anestesia envolve procedimentos invasivos e que podem ocorrer lesões que na
-                    maioria
-                    das vezes são temporárias. Raramente ocorrem lgsões permanentes, mas podem ocorrer, mesmo que o
-                    procedimento tenha sido realizado sob o mais rigoróso padrão técnico. Assim como fui esclarecido,
-                    também, de
-                    que a resposta à administração de medicamentos é individual e que a ocorrência de efeitos colaterais
-                    ou
-                    indesejados é imprevisível.
-                </p>
-            </li>
-            <li>
-                <p class="s6">
-                    Fui informado que as ações médicas necessárias para promover o estado de anestesia podem desencadear
-                    complicações, algumas das quais: dificuldades respiratórias, transtornos cardíacos e vasculares,
-                    reações alérgicas
-                    ou tóxicas, lesões bucais, na pele, alterações neurológicas.
-                </p>
-            </li>
-            <li>
-                <p class="s6">
-                    Entendo que não existe garantia absoluta sobre os resultados a serem obtidos, mas que serão
-                    utilizados todos os
-                    “recursos, medicamentos e equipamentos disponíveis nesta instituição.
-                </p>
-            </li>
-            <li>
-                <p class="s6">
-                    Autorizo qualquer outro procedimento, exame, tratamento e/ou cirurgia, incluindo transfusão
-                    sanguínea, caso
-                    ocorram situações imprevistas que demandem cuidados diferentes daqueles inicialmente propostos.
-                </p>
-            </li>
-            <li>
-                <p class="s6">
-                    Sei que durante o procedimento cirúrgico poderá haver necessidade de complementação da anestesia com
-                    a
-                    adição de outras drogas ou outras técnicas (anestesia parcial complementada com anestesia geral ou
-                    geral
-                    complementada com bloqueio), buscando sempre o melhor resultado.
-                </p>
-            </li>
-            <li style="page-break-after: always;">
-                <p class="s6">
-                    Fui explicado que se a evolução do quadro de saúde apresentado colocar a minha vida em risco, estou
-                    ciente de
-                    que serão adotados os procedimentos médicos e hospitalares recomendáveis, na tentativa de afastar o
-                    perigo
-                    de vida apurado.
-                </p>
-            </li>
-            <img style=" width: 550pt;" src="{% static 'img/tcle.png' %}" alt="Logo do HUPAA" />
-            <li>
-                <p class="s6">
-                    Por ocasião deste consentimento, informei ao médico anestesiologista sobre doenças pré-existentes,
-                    os
-                    medicamentos em uso, cirurgias realizadas, complicações anestésicas e reações alérgicas
-                    anteriormente
-                    apresentadas e, também, sobre o tempo decorrido de jejum (desde a última refeição/ingestão de
-                    líquidos).
-                </p>
-            </li>
-            <li>
-                <p class="s6">
-                    Fui informado (a) pela equipe médica de anestesiologia que o tabagismo, o uso de drogas
-                    entorpecentes em
-                    geral, a exemplo de: cocaina, maconha, anfetaminas; bem como o álcool são fatores que podem trazer
-                    prejuízo
-                    ao procedimento e/ou tratamento. Fui informado, também das complicações que podem advir do uso
-                    destas
-                    substâncias.
-                </p>
-            </li>
-            <li>
-                <p class="s6">
-                    Posso a qualquer momento negar a realização de um certo tipo de técnica anestésica por julgar que
-                    não quero e
-                    que minha vontade será respeitada.
-                </p>
-            </li>
-        </ol>
-        <p class="s4" style="padding-top: 5pt; text-indent: 0pt;text-align: right;">Maceió,
-            {{agendamento.data_agendada}}, Hora: ____:____</p>
-        <p style="text-indent: 0pt;text-align: left;"><br /></p>
-
-        <table>
-            <tr>
-                <td class="t1">
-                    <p class="s5" style="line-height: 17pt;text-align: left;">PACIENTE OU RESPONSÁVEL</p>
-                </td>
-            </tr>
-            <tr style="height:41pt">
-                <td class="t1">
-                    <p class="s1" style="text-align: justify;">Confirmo que tive a oportunidade de fazer perguntas,
-                        recebi explicações suficientes, li, compreendo e concordo com tudo o que foi esclarecido e que
-                        me foi concedida a oportunidade de anular, questionar ou alterar qualquer item, parágrafo, ou
-                        palavras com as quais não concordasse.</p>
-                </td>
-            </tr>
-            <tr style="height:27pt">
-                <td class="t1">
-                    <p class="s1">Nome legível:
-                        _________________________________________________________________________________
-                    </p>
-                </td>
-            </tr>
-            <tr style="height:27pt">
-                <td class="t1">
-                    <p class="s1">Assinatura:
-                        ____________________________________________________________________________________
-                    </p>
-                </td>
-            </tr>
-            <tr style="height:39pt">
-                <td class="t1">
-                    <p><br /></p>
-                    <p class="s1" style="text-align: left;">Grau de Parentesco do responsável:
-                        _____________________________________ RG OU CPF: ________________________________
-                    </p>
-                </td>
-            </tr>
-        </table>
-        <p><br /></p>
-        <table style="border-collapse:collapse;margin-left:6.45pt">
-            <tr style="height:24pt">
-                <td class="t2">
-                    <p class="s5" style="line-height: 17pt;text-align: left;">TESTEMUNHA 1</p>
-                </td>
-                <td class="t2">
-                    <p class="s5" style="line-height: 17pt;text-align: left;">TESTEMUNHA 2</p>
-                </td>
-            </tr>
-            <tr style="height:33pt">
-                <td class="t2">
-                    <p class="s1" style="text-align: left;">Nome legível completo: _________________________</p>
-                </td>
-                <td class="t2">
-                    <p class="s1" style="text-align: left;">Nome legível completo: _________________________</p>
-                </td>
-            </tr>
-            <tr style="height:33pt">
-                <td class="t2">
-                    <p class="s1">Assinatura: ___________________________________</p>
-                </td>
-                <td class="t2">
-                    <p class="s1">Assinatura: ___________________________________</p>
-                </td>
-            </tr>
-            <tr style="height:33pt">
-                <td class="t2">
-                    <p><br /></p>
-                    <p class="s1" style="text-align: left; padding-bottom: 5pt;">RG OU CPF:
-                        ___________________________________
-                    </p>
-                </td>
-                <td class="t2">
-                    <p><br /></p>
-                    <p class="s1" style="text-align: left; padding-bottom: 5pt;">RG OU CPF:
-                        ___________________________________
-                    </p>
-                </td>
-            </tr>
-        </table>
-        <p><br /></p>
-        <p><br /></p>
-        <table style="border-collapse:collapse;margin-left:6.45pt" cellspacing="0">
-            <tr>
-                <td class="t1">
-                    <p class="s5" style="line-height: 17pt;text-align: left;">PREENCHIMENTO PELO MÉDICO</p>
-                </td>
-            </tr>
-            <tr style="height:54pt">
-                <td class="t1">
-                    <p class="s1">Expliquei todo o procedimento, exame, tratamento e/ou cirurgia a que o paciente
-                        referido está sujeito, ao próprio paciente e/ou seu responsável, sobre os benefícios, riscos e
-                        alternativas tendo respondido as perguntas formuladas pelos mesmos. De acordo com o seu
-                        entendimento, o paciente e/ou responsável, está em condições de compreender o que lhes foi
-                        informado.</p>
-                </td>
-            </tr>
-            <tr style="height:27pt">
-                <td class="t1">
-                    <p class="s1">Nome legível completo do médico(a): {{usuario}}</p>
-                </td>
-            </tr>
-            <tr style="height:64pt">
-                <td class="t1">
-                    <p><br /></p>
-                    <div style="display: flex;">
-                        <div style="flex: 1;">
-                            <p class="s1" style="text-align: left;">CRM: {{medico.crm}}</p>
-                        </div>
-                        <div style="flex: 4;">
-                            <p class="s1" style="text-align: left;"> Carimbo médico e assinatura: {{medico.assinatura}}
-                            </p>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <!-- Parágrafos adicionais e informações do médico -->
-        <table style="border-collapse:collapse;margin-left:6.45pt" cellspacing="0">
-            <!-- Tabela preenchida pelo médico -->
-        </table>
-    </div>
-
-    <div class="container">
+    <div class="container" id="documentos-container"
+        style="page-break-after: always; max-width: 550pt; margin: 0 auto; text-align: justify;">
         <img style=" width: 550pt; margin-bottom: 10pt;" src="{% static 'img/tcle.png' %}" alt="Logo do HUPAA" />
         <table style="margin: 0 auto; max-width: 530pt;">
             <tr>
@@ -563,11 +259,8 @@
         <p style="padding-top: 6pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: justify;">Autorizo
             um médico(a) cirurgião desta instituição bem como integrantes de sua equipe composta por médicos(as)
             residentes em cirurgia sob sua supervisão, todos devidamente cadastrados por esta instituição, a realizar o
-            seguinte procedimento: ___________________________________________________________________ para a cirurgia
-            proposta (escrever nome científico e nome popular entre parênteses quando houver):
-            ______________________________________________________________________________________ <span class="p"
-                style="line-height: 180%;"> a ser realizada pela equipe do médico cirurgião:
-                _______________________________________________________________________.</p>
+            seguinte procedimento: <span style="text-decoration: underline">APLICAÇÃO INTRAVÍTREA DE AVASTIN EM
+                {{agendamento.olho_agendado}}</span>.</p>
         <p style="text-indent: 0pt;text-align: left;"><br /></p>
         <p style="padding-left: 5pt;text-indent: 0pt;text-align: justify;">Declaro ainda que:</p>
         <p style="text-indent: 0pt;text-align: left;"><br /></p>
@@ -590,8 +283,16 @@
             não concordasse.
             Tive a&nbsp;oportunidade de fazer perguntas que me foram respondidas satisfatoriamente, assim, tendo
             conhecimento, autorizo&nbsp;a&nbsp;realização do&nbsp;procedimento&nbsp;proposto.&nbsp;</p>
+
+        <p class="c17" style="margin-top: 10%; text-align: center; font-size: 10pt;"><span class="c19">Hospital
+                Universit&aacute;rio
+                Professor Alberto Antunes -
+                HUPAA/UFAL, Tel: 3322-2344/ 3202-3800<br>Av. Lourival Melo Mota, S/N - Tabuleiro do
+                Martins,
+                Cep: 57072-900. Macei&oacute;-AL</span></p>
     </div>
-    <div class="container">
+    <div class="container" id="documentos-container"
+        style="page-break-after: always; max-width: 550pt; margin: 0 auto; text-align: justify;">
         <img style=" width: 550pt; margin-bottom: 26.6pt;" src="{% static 'img/tcle.png' %}" alt="Logo do HUPAA" />
         <p style="padding-top: 4pt;padding-left: 5pt;text-indent: 0pt;line-height: 150%;text-align: left;">( ) Não foi
             possível a coleta deste Termo de Consentimento Livre e Esclarecido, por tratar-se de situação de Emergência.
@@ -623,21 +324,28 @@
             <tr style="height:27pt">
                 <td
                     style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome legível: ________________________________________________________________________________________________</p>
+                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Nome
+                        legível:
+                        ________________________________________________________________________________________________
+                    </p>
                 </td>
             </tr>
             <tr style="height:27pt">
                 <td
                     style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">Assinatura: ________________________________________________________________________________________________</p>
+                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
+                        Assinatura:
+                        ________________________________________________________________________________________________
+                    </p>
                 </td>
             </tr>
             <tr style="height:39pt">
                 <td
                     style="width:520pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                     <p style="text-indent: 0pt;text-align: left;"><br /></p>
-                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Grau de Parentesco do responsável:
-                        ______________________________ RG OU CPF: _________________________</p>
+                    <p class="s8" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Grau de Parentesco do
+                        responsável:
+                        __________________________ RG OU CPF: _________________________</p>
                 </td>
             </tr>
         </table>
@@ -732,9 +440,17 @@
                         <div style="flex: 1;">
                             <p class="s1" style="text-align: left;">CRM: {{medico.crm}} </p>
                         </div>
-                        <div style="flex: 4;">
-                            <p class="s1" style="text-align: left;"> Carimbo médico e assinatura: {{medico.assinatura}}
+                        <div style="flex: 1;">
+                            <p class="s1" style="text-align: left;"> Carimbo médico e assinatura:
                             </p>
+                        </div>
+                        <div style="flex: 1; text-align: center;">
+                            <p style="margin-bottom: -8px; margin-left: -150px;"><span
+                                    style="font-size: 8pt;">{{usuario}}</span></p>
+                            <p style="margin-bottom: -8px; margin-left: -150px;"><span
+                                    style="font-size: 8pt;">M&eacute;dico</span></p>
+                            <p style="margin-bottom: -8px; margin-left: -150px;"><span style="font-size: 8pt;">CRM-AL
+                                    {{medico.crm}}</span>
                         </div>
                     </div>
                 </td>
@@ -744,20 +460,1841 @@
         <table style="border-collapse:collapse;margin-left:6.45pt" cellspacing="0">
             <!-- Tabela preenchida pelo médico -->
         </table>
+
+        <p class="c17" style="margin-top: 10%; text-align: center; font-size: 10pt;"><span class="c19">Hospital
+                Universit&aacute;rio
+                Professor Alberto Antunes -
+                HUPAA/UFAL, Tel: 3322-2344/ 3202-3800<br>Av. Lourival Melo Mota, S/N - Tabuleiro do
+                Martins,
+                Cep: 57072-900. Macei&oacute;-AL</span></p>
     </div>
+    {% endif %}
+
+    {% if receitas %}
+    <style type="text/css">
+        @import url(https://themes.googleusercontent.com/fonts/css?kit=tId4hC7h3QXnitVZUf8ul4ssHdQx5k1g1XcmPEeZqqYvothSo-82XNN5GC3c1mey);
+
+        @page {
+            size: portrait
+        }
+
+        #receitas-container {
+            transform: rotate(-90deg)
+        }
+
+        #receitas-container ol {
+            margin: 0;
+            padding: 0
+        }
+
+        #receitas-container table td,
+        table th {
+            padding: 0
+        }
+
+        #receitas-container .c9 {
+            border-right-style: solid;
+            padding: 5pt 5pt 5pt 5pt;
+            border-bottom-color: #ffffff;
+            border-top-width: 0pt;
+            border-right-width: 0pt;
+            border-left-color: #ffffff;
+            vertical-align: top;
+            border-right-color: #ffffff;
+            border-left-width: 0pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 0pt;
+            width: 390.8pt;
+            border-top-color: #ffffff;
+            border-bottom-style: solid
+        }
+
+        #receitas-container .c13 {
+            border-right-style: solid;
+            padding: 5pt 5pt 5pt 5pt;
+            border-bottom-color: #ffffff;
+            border-top-width: 0pt;
+            border-right-width: 0pt;
+            border-left-color: #ffffff;
+            vertical-align: top;
+            border-right-color: #ffffff;
+            border-left-width: 0pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 0pt;
+            width: 384pt;
+            border-top-color: #ffffff;
+            border-bottom-style: solid
+        }
+
+        #receitas-container .c5 {
+            margin-left: -11.7pt;
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.0791666666666666;
+            orphans: 2;
+            widows: 2;
+            text-align: center;
+            margin-right: 28.6pt
+        }
+
+        #receitas-container .c1 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 11pt;
+            font-family: "Arial";
+            font-style: normal
+        }
+
+        #receitas-container .c8 {
+            padding-top: 0pt;
+            padding-bottom: 10pt;
+            line-height: 1.1500000000000001;
+            orphans: 2;
+            widows: 2;
+            text-align: left;
+            height: 11pt
+        }
+
+        #receitas-container .c3 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: left;
+            height: 11pt
+        }
+
+        #receitas-container .c15 {
+            padding-top: 12pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: center;
+            height: 11pt
+        }
+
+        #receitas-container .c2 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left;
+            height: 11pt
+        }
+
+        #receitas-container .c7 {
+            -webkit-text-decoration-skip: none;
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-skip-ink: none;
+            font-size: 12pt;
+            font-family: "Calibri";
+            font-style: italic
+        }
+
+        #receitas-container .c0 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 8pt;
+            font-family: "Arial";
+            font-style: normal
+        }
+
+        #receitas-container .c16 {
+            margin-left: 113.4pt;
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: center
+        }
+
+        #receitas-container .c14 {
+            padding-top: 0pt;
+            padding-bottom: 10pt;
+            line-height: 1.1500000000000001;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #receitas-container .c26 {
+            -webkit-text-decoration-skip: none;
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-skip-ink: none;
+            font-size: 12pt;
+            font-family: "Arial Black"
+        }
+
+        #receitas-container .c11 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #receitas-container .c10 {
+            padding-top: 0pt;
+            padding-bottom: 10pt;
+            line-height: 1.1500000000000001;
+            orphans: 2;
+            widows: 2;
+            text-align: center
+        }
+
+        #receitas-container .c24 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-family: "Arial";
+            font-style: normal
+        }
+
+        #receitas-container .c17 {
+            padding-top: 12pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: center
+        }
+
+        #receitas-container .c18 {
+            margin-left: -42.8pt;
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin-right: auto
+        }
+
+        #receitas-container .c4 {
+            font-size: 12pt;
+            font-family: "Calibri";
+            font-weight: 400
+        }
+
+        #receitas-container .c20 {
+            font-size: 12pt;
+            font-family: "Calibri";
+            font-weight: 700
+        }
+
+        #receitas-container .c6 {
+            background-color: #ffffff;
+            max-width: 451.4pt;
+            padding: 72pt 72pt 72pt 72pt
+        }
+
+        #receitas-container .c25 {
+            font-weight: 400;
+            font-family: "Calibri"
+        }
+
+        #receitas-container .c12 {
+            font-size: 8pt
+        }
+
+        #receitas-container .c19 {
+            font-size: 9pt
+        }
+
+        #receitas-container .c22 {
+            height: 0pt
+        }
+
+        #receitas-container .c21 {
+            text-indent: 36pt
+        }
+
+        #receitas-container .c23 {
+            margin-left: 113.4pt
+        }
+
+        #receitas-container .title {
+            padding-top: 0pt;
+            color: #000000;
+            font-size: 26pt;
+            padding-bottom: 3pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #receitas-container .subtitle {
+            padding-top: 0pt;
+            color: #666666;
+            font-size: 15pt;
+            padding-bottom: 16pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #receitas-container li {
+            color: #000000;
+            font-size: 11pt;
+            font-family: "Arial"
+        }
+
+        #receitas-container p {
+            margin: 0;
+            color: #000000;
+            font-size: 11pt;
+            font-family: "Arial"
+        }
+
+        #receitas-container h1 {
+            padding-top: 20pt;
+            color: #000000;
+            font-size: 20pt;
+            padding-bottom: 6pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #receitas-container h2 {
+            padding-top: 18pt;
+            color: #000000;
+            font-size: 16pt;
+            padding-bottom: 6pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #receitas-container h3 {
+            padding-top: 16pt;
+            color: #434343;
+            font-size: 14pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #receitas-container h4 {
+            padding-top: 14pt;
+            color: #666666;
+            font-size: 12pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #receitas-container h5 {
+            padding-top: 12pt;
+            color: #666666;
+            font-size: 11pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #receitas-container h6 {
+            padding-top: 12pt;
+            color: #666666;
+            font-size: 11pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            font-style: italic;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+    </style>
+    <div class="container" id="receitas-container"
+        style="page-break-after: always; justify-content: center; align-items: center; margin-left: 10%; margin-top: 45%;">
+        <div style="justify-content: center; align-items: center;">
+            <p class="c3"><span class="c1"></span></p><a id="t.88b644373d0d811eea3e15778e61bdf9717f629a"></a><a
+                id="t.1"></a>
+            <table class="c18">
+                <tr class="c22">
+                    <td class="c9" colspan="1" rowspan="1">
+                        <p class="c5"><span
+                                style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 478.49px; height: 56.69px;">
+                                <img src="{% static 'img/logoHu.png' %}" alt="Logo do HUPAA"
+                                    style="width: 521.83px; height: 147.40px; margin-left: 0.00px; margin-top: -27.91px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                                    title=""></span></p>
+
+                        <p class="c15"><span class="c19 c24"></span></p>
+                        <p class="c3"><span class="c1"></span></p>
+                        <p class="c10"><span class="c26">RECEITU&Aacute;RIO:</span></p>
+                        <p class="c11"><span class="c25">PARA:</span><span class="c4">&nbsp;{{agendamento.nome}}</span>
+                        </p>
+                        <p class="c8"><span class="c1"></span></p>
+                        <p class="c14"><span class="c7">USO OCULAR:</span></p>
+                        <p class="c11"><span class="c20">1. Maxiflox &reg;
+                                col&iacute;rio-------------------------------------------------
+                                01FR</span></p>
+                        <p class="c11"><span class="c4">USO: Pingar 1 gota, no olho operado, 6/6h durante 7 dias.</span>
+                        </p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c11 c21" style="margin-left: 45px;"><span class="c1">Macei&oacute;,AL
+                                {{agendamento.data_agendada}}</span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2 c23"><span class="c1"></span></p>
+                        <p class="c16"><span class="c0">{{usuario}}</span></p>
+                        <p class="c16"><span class="c0">M&eacute;dico</span></p>
+                        <p class="c16"><span class="c12">CRM-AL {{medico.crm}}</span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c17" style="margin-top: 10%;"><span class="c19">Hospital Universit&aacute;rio
+                                Professor Alberto Antunes -
+                                HUPAA/UFAL, Tel: 3322-2344/ 3202-3800<br>Av. Lourival Melo Mota, S/N - Tabuleiro do
+                                Martins,
+                                Cep: 57072-900. Macei&oacute;-AL</span></p>
+                    </td>
+                    <td class="c13" colspan="1" rowspan="1">
+                        <p class="c5">
+                            <span
+                                style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 478.49px; height: 56.69px;">
+                                <img src="{% static 'img/logoHu.png' %}" alt="Logo do HUPAA"
+                                    style="width: 521.83px; height: 147.40px; margin-left: 0.00px; margin-top: -27.91px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                                    title=""></span>
+                        </p>
+
+                        <p class="c15"><span class="c19 c24"></span></p>
+                        <p class="c3"><span class="c1"></span></p>
+                        <p class="c10"><span class="c26">RECEITU&Aacute;RIO:</span></p>
+                        <p class="c11"><span class="c25">PARA:</span><span class="c4">&nbsp;{{agendamento.nome}}</span>
+                        </p>
+                        <p class="c8"><span class="c1"></span></p>
+                        <p class="c14"><span class="c7">USO OCULAR:</span></p>
+                        <p class="c11"><span class="c20">1. Maxiflox &reg;
+                                col&iacute;rio-------------------------------------------------
+                                01FR</span></p>
+                        <p class="c11"><span class="c4">USO: Pingar 1 gota, no olho operado, 6/6h durante 7 dias.</span>
+                        </p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c11 c21" style="margin-left: 45px;"><span class="c1">Macei&oacute;,AL {{agendamento.data_agendada}}</span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2 c23"><span class="c1"></span></p>
+                        <p class="c16"><span class="c0">{{usuario}}</span></p>
+                        <p class="c16"><span class="c0">M&eacute;dico</span></p>
+                        <p class="c16"><span class="c0">CRM-AL {{medico.crm}}</span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c2"><span class="c1"></span></p>
+                        <p class="c17" style="margin-top: 10%;"><span class="c19">Hospital Universit&aacute;rio
+                                Professor Alberto Antunes -
+                                HUPAA/UFAL, Tel: 3322-2344/ 3202-3800<br>Av. Lourival Melo Mota, S/N - Tabuleiro do
+                                Martins,
+                                Cep: 57072-900. Macei&oacute;-AL</span></p>
+                    </td>
+                </tr>
+            </table>
+            <p class="c3"><span class="c1"></span></p>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if relatorios %}
+    <style type="text/css">
+        @import url(https://themes.googleusercontent.com/fonts/css?kit=fpjTOVmNbO4Lz34iLyptLUXza5VhXqVC6o75Eld_V98);
+
+        @page {
+            size: portrait
+        }
+
+        #relatorios-container ol.lst-kix_list_1-3 {
+            list-style-type: none
+        }
+
+        #relatorios-container ol.lst-kix_list_1-4 {
+            list-style-type: none
+        }
+
+        #relatorios-container ol.lst-kix_list_1-5 {
+            list-style-type: none
+        }
+
+        #relatorios-container ol.lst-kix_list_1-6 {
+            list-style-type: none
+        }
+
+        #relatorios-container ol.lst-kix_list_1-0 {
+            list-style-type: none
+        }
+
+        #relatorios-container .lst-kix_list_1-4>li {
+            counter-increment: lst-ctn-kix_list_1-4
+        }
+
+        #relatorios-container ol.lst-kix_list_1-1 {
+            list-style-type: none
+        }
+
+        #relatorios-container ol.lst-kix_list_1-2 {
+            list-style-type: none
+        }
+
+        #relatorios-container ol.lst-kix_list_1-6.start {
+            counter-reset: lst-ctn-kix_list_1-6 0
+        }
+
+        #relatorios-container .lst-kix_list_1-1>li {
+            counter-increment: lst-ctn-kix_list_1-1
+        }
+
+        #relatorios-container ol.lst-kix_list_1-3.start {
+            counter-reset: lst-ctn-kix_list_1-3 0
+        }
+
+        #relatorios-container ol.lst-kix_list_1-2.start {
+            counter-reset: lst-ctn-kix_list_1-2 0
+        }
+
+        #relatorios-container ol.lst-kix_list_1-8.start {
+            counter-reset: lst-ctn-kix_list_1-8 0
+        }
+
+        #relatorios-container .lst-kix_list_1-0>li:before {
+            content: "" counter(lst-ctn-kix_list_1-0, decimal) "- "
+        }
+
+        #relatorios-container ol.lst-kix_list_1-5.start {
+            counter-reset: lst-ctn-kix_list_1-5 0
+        }
+
+        #relatorios-containerol.lst-kix_list_1-7 {
+            list-style-type: none
+        }
+
+        #relatorios-container .lst-kix_list_1-1>li:before {
+            content: "" counter(lst-ctn-kix_list_1-1, lower-latin) ". "
+        }
+
+        #relatorios-container .lst-kix_list_1-2>li:before {
+            content: "" counter(lst-ctn-kix_list_1-2, lower-roman) ". "
+        }
+
+        #relatorios-container .lst-kix_list_1-7>li {
+            counter-increment: lst-ctn-kix_list_1-7
+        }
+
+        #relatorios-container ol.lst-kix_list_1-8 {
+            list-style-type: none
+        }
+
+        #relatorios-container .lst-kix_list_1-3>li:before {
+            content: "" counter(lst-ctn-kix_list_1-3, decimal) ". "
+        }
+
+        #relatorios-container .lst-kix_list_1-4>li:before {
+            content: "" counter(lst-ctn-kix_list_1-4, lower-latin) ". "
+        }
+
+        #relatorios-container ol.lst-kix_list_1-0.start {
+            counter-reset: lst-ctn-kix_list_1-0 0
+        }
+
+        #relatorios-container .lst-kix_list_1-0>li {
+            counter-increment: lst-ctn-kix_list_1-0
+        }
+
+        #relatorios-container .lst-kix_list_1-6>li {
+            counter-increment: lst-ctn-kix_list_1-6
+        }
+
+        #relatorios-container .lst-kix_list_1-7>li:before {
+            content: "" counter(lst-ctn-kix_list_1-7, lower-latin) ". "
+        }
+
+        #relatorios-container .lst-kix_list_1-3>li {
+            counter-increment: lst-ctn-kix_list_1-3
+        }
+
+        #relatorios-container .lst-kix_list_1-5>li:before {
+            content: "" counter(lst-ctn-kix_list_1-5, lower-roman) ". "
+        }
+
+        #relatorios-container .lst-kix_list_1-6>li:before {
+            content: "" counter(lst-ctn-kix_list_1-6, decimal) ". "
+        }
+
+        #relatorios-container ol.lst-kix_list_1-7.start {
+            counter-reset: lst-ctn-kix_list_1-7 0
+        }
+
+        #relatorios-container .lst-kix_list_1-2>li {
+            counter-increment: lst-ctn-kix_list_1-2
+        }
+
+        #relatorios-container .lst-kix_list_1-5>li {
+            counter-increment: lst-ctn-kix_list_1-5
+        }
+
+        #relatorios-container.lst-kix_list_1-8>li {
+            counter-increment: lst-ctn-kix_list_1-8
+        }
+
+        #relatorios-container ol.lst-kix_list_1-4.start {
+            counter-reset: lst-ctn-kix_list_1-4 0
+        }
+
+        #relatorios-container .lst-kix_list_1-8>li:before {
+            content: "" counter(lst-ctn-kix_list_1-8, lower-roman) ". "
+        }
+
+        #relatorios-container ol.lst-kix_list_1-1.start {
+            counter-reset: lst-ctn-kix_list_1-1 0
+        }
+
+        #relatorios-container ol {
+            margin: 0;
+            padding: 0
+        }
+
+        #relatorios-container table td,
+        table th {
+            padding: 0
+        }
+
+        #relatorios-container .c37 {
+            border-right-style: solid;
+            padding: 0pt 5.8pt 0pt 5.8pt;
+            border-bottom-color: #000000;
+            border-top-width: 0pt;
+            border-right-width: 0pt;
+            border-left-color: #000000;
+            vertical-align: top;
+            border-right-color: #000000;
+            border-left-width: 0pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 0pt;
+            width: 396.8pt;
+            border-top-color: #000000;
+            border-bottom-style: solid
+        }
+
+        #relatorios-container .c32 {
+            border-right-style: solid;
+            padding: 0pt 5.4pt 0pt 5.4pt;
+            border-bottom-color: #000000;
+            border-top-width: 1.5pt;
+            border-right-width: 1.5pt;
+            border-left-color: #000000;
+            vertical-align: top;
+            border-right-color: #000000;
+            border-left-width: 1.5pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 1.5pt;
+            width: 433.6pt;
+            border-top-color: #000000;
+            border-bottom-style: solid
+        }
+
+        #relatorios-container .c4 {
+            border-right-style: solid;
+            padding: 0pt 5.4pt 0pt 5.4pt;
+            border-bottom-color: #000000;
+            border-top-width: 1.5pt;
+            border-right-width: 1.5pt;
+            border-left-color: #000000;
+            vertical-align: top;
+            border-right-color: #000000;
+            border-left-width: 1.5pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 1.5pt;
+            width: 432.9pt;
+            border-top-color: #000000;
+            border-bottom-style: solid
+        }
+
+        #relatorios-container .c33 {
+            border-right-style: solid;
+            padding: 0pt 5.4pt 0pt 5.4pt;
+            border-bottom-color: #000000;
+            border-top-width: 1.5pt;
+            border-right-width: 1.5pt;
+            border-left-color: #000000;
+            vertical-align: top;
+            border-right-color: #000000;
+            border-left-width: 1.5pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 1.5pt;
+            width: 429.9pt;
+            border-top-color: #000000;
+            border-bottom-style: solid
+        }
+
+        #relatorios-container .c17 {
+            border-right-style: solid;
+            padding: 0pt 5.4pt 0pt 5.4pt;
+            border-bottom-color: #000000;
+            border-top-width: 1.5pt;
+            border-right-width: 1.5pt;
+            border-left-color: #000000;
+            vertical-align: top;
+            border-right-color: #000000;
+            border-left-width: 1.5pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 1.5pt;
+            width: 432.1pt;
+            border-top-color: #000000;
+            border-bottom-style: solid
+        }
+
+        #relatorios-container .c36 {
+            border-right-style: solid;
+            padding: 0pt 5.8pt 0pt 5.8pt;
+            border-bottom-color: #000000;
+            border-top-width: 0pt;
+            border-right-width: 0pt;
+            border-left-color: #000000;
+            vertical-align: top;
+            border-right-color: #000000;
+            border-left-width: 0pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 0pt;
+            width: 359.1pt;
+            border-top-color: #000000;
+            border-bottom-style: solid
+        }
+
+        #relatorios-container .c13 {
+            border-right-style: solid;
+            padding: 0pt 5.4pt 0pt 5.4pt;
+            border-bottom-color: #000000;
+            border-top-width: 1.5pt;
+            border-right-width: 1.5pt;
+            border-left-color: #000000;
+            vertical-align: top;
+            border-right-color: #000000;
+            border-left-width: 1.5pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 1.5pt;
+            width: 431.6pt;
+            border-top-color: #000000;
+            border-bottom-style: solid
+        }
+
+        #relatorios-container .c23 {
+            border-right-style: solid;
+            padding: 0pt 5.4pt 0pt 5.4pt;
+            border-bottom-color: #000000;
+            border-top-width: 1.5pt;
+            border-right-width: 1.5pt;
+            border-left-color: #000000;
+            vertical-align: top;
+            border-right-color: #000000;
+            border-left-width: 1.5pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 1.5pt;
+            width: 430.9pt;
+            border-top-color: #000000;
+            border-bottom-style: solid
+        }
+
+        #relatorios-container .c22 {
+            color: #000000;
+            font-weight: 700;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 11pt;
+            font-family: "Calibri";
+            font-style: normal
+        }
+
+        #relatorios-container .c2 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 11pt;
+            font-family: "Calibri";
+            font-style: normal
+        }
+
+        #relatorios-container .c1 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 12pt;
+            font-family: "Calibri";
+            font-style: normal
+        }
+
+        #relatorios-container .c12 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 9pt;
+            font-family: "Calibri";
+            font-style: normal
+        }
+
+        #relatorios-container .c8 {
+            color: #000000;
+            font-weight: 700;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 18pt;
+            font-family: "Calibri";
+            font-style: normal
+        }
+
+        #relatorios-container.c21 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 8pt;
+            font-family: "Arial";
+            font-style: normal
+        }
+
+        #relatorios-container .c7 {
+            margin-left: 7.1pt;
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: center
+        }
+
+        #relatorios-container .c24 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: center
+        }
+
+        #relatorios-container .c3 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            margin-bottom: 3px;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #relatorios-container .c15 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: right
+        }
+
+        #relatorios-container c31 {
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin-right: auto
+        }
+
+        #relatorios-container .c6 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            text-align: left
+        }
+
+        #relatorios-container .c27 {
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 10pt;
+            font-style: normal
+        }
+
+        #relatorios-container .c0 {
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+
+        #relatorios-container .c38 {
+            background-color: #ffffff;
+            max-width: 425.2pt;
+            padding: 111.7pt 85pt 70.9pt 85pt
+        }
+
+        #relatorios-container .c25 {
+            font-family: "Calibri";
+            color: #000000;
+            font-weight: 400
+        }
+
+        #relatorios-container .c16 {
+            text-decoration-skip-ink: none;
+            -webkit-text-decoration-skip: none;
+            text-decoration: underline
+        }
+
+        #relatorios-container .c35 {
+            font-weight: 400;
+            font-family: "Calibri"
+        }
+
+        #relatorios-container .c26 {
+            height: 0pt
+        }
+
+        #relatorios-container .c29 {
+            height: 14.2pt
+        }
+
+        #relatorios-container .c30 {
+            font-weight: 700
+        }
+
+        #relatorios-container .c5 {
+            height: 11pt
+        }
+
+        #relatorios-container .c34 {
+            height: 13.9pt
+        }
+
+        #relatorios-container .c14 {
+            height: 15.6pt
+        }
+
+        #relatorios-container .c18 {
+            height: 25.6pt
+        }
+
+        #relatorios-container .c20 {
+            height: 20.1pt
+        }
+
+        #relatorios-container .c19 {
+            height: 5.5pt
+        }
+
+        #relatorios-container .c9 {
+            font-size: 12pt
+        }
+
+        #relatorios-container .c10 {
+            height: 30.6pt
+        }
+
+        #relatorios-container .c11 {
+            height: 12.5pt
+        }
+
+        #relatorios-container .c28 {
+            margin-right: -87.3pt
+        }
+
+        #relatorios-container .title {
+            padding-top: 24pt;
+            color: #000000;
+            font-weight: 700;
+            font-size: 36pt;
+            padding-bottom: 6pt;
+            font-family: "Calibri";
+            line-height: 1.0791666666666666;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #relatorios-container .subtitle {
+            padding-top: 18pt;
+            color: #666666;
+            font-size: 24pt;
+            padding-bottom: 4pt;
+            font-family: "Georgia";
+            line-height: 1.0791666666666666;
+            page-break-after: avoid;
+            font-style: italic;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #relatorios-container li {
+            color: #000000;
+            font-size: 11pt;
+            font-family: "Calibri"
+        }
+
+        #relatorios-container p {
+            margin: 0;
+            color: #000000;
+            font-size: 11pt;
+            font-family: "Calibri"
+        }
+
+        #relatorios-container h1 {
+            padding-top: 24pt;
+            color: #000000;
+            font-weight: 700;
+            font-size: 24pt;
+            padding-bottom: 6pt;
+            font-family: "Calibri";
+            line-height: 1.0791666666666666;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #relatorios-container h2 {
+            padding-top: 18pt;
+            color: #000000;
+            font-weight: 700;
+            font-size: 18pt;
+            padding-bottom: 4pt;
+            font-family: "Calibri";
+            line-height: 1.0791666666666666;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #relatorios-container h3 {
+            padding-top: 14pt;
+            color: #000000;
+            font-weight: 700;
+            font-size: 14pt;
+            padding-bottom: 4pt;
+            font-family: "Calibri";
+            line-height: 1.0791666666666666;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #relatorios-container h4 {
+            padding-top: 12pt;
+            color: #000000;
+            font-weight: 700;
+            font-size: 12pt;
+            padding-bottom: 2pt;
+            font-family: "Calibri";
+            line-height: 1.0791666666666666;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #relatorios-container h5 {
+            padding-top: 11pt;
+            color: #000000;
+            font-weight: 700;
+            font-size: 11pt;
+            padding-bottom: 2pt;
+            font-family: "Calibri";
+            line-height: 1.0791666666666666;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #relatorios-container h6 {
+            padding-top: 10pt;
+            color: #000000;
+            font-weight: 700;
+            font-size: 10pt;
+            padding-bottom: 2pt;
+            font-family: "Calibri";
+            line-height: 1.0791666666666666;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+    </style>
+    <div class="container" id="relatorios-container"
+        style="page-break-before: always; page-break-after: always; display: flex; flex-direction: column; justify-content: center; margin-left: 10%; margin-right: 10%;">
+        <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+            <p class="c2"><span
+                    style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 239.00px; height: 123.40px;">
+                    <img src="{% static 'img/imagehu.jpg' %}" alt="Logo do HUPAA"
+                        style="width: 239.00px; height: 123.40px; margin-left: 0.00px; margin-top: 0.00px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                        title=""></span>
+
+            </p>
+            <p class="c15"><span class="c8">&nbsp;RELAT&Oacute;RIO DE
+                    OPERA&Ccedil;&Atilde;O</span></p>
+        </div>
+        <p class="c15"><span class="c1">Data: {{agendamento.data_agendada}} </span></p>
+        <p class="c3"><span class="c9">Depto.:___________________________________________ Hor&aacute;rio
+                In&iacute;cio:_</span><span class="c16 c9">13:00H &nbsp;</span><span class="c1">__</span></p>
+        <p class="c3"><span class="c9">Disciplina: </span><span class="c9 c30">OFTALMOLOGIA &nbsp; &nbsp; &nbsp;
+                &nbsp;
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                &nbsp;
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="c1">Hor&aacute;rio
+                T&eacute;rmino:
+                __________</span></p>
+        <p class="c3 c5"><span class="c1"></span></p><a id="t.f71a198124abaec2338e134126c655dc0a79d011"></a><a
+            id="t.0"></a>
+        <table class="c0">
+            <tr class="c10">
+                <td class="c33" colspan="1" rowspan="1">
+                    <p class="c3"><span>Nome do Paciente:</span><span class="c1">&nbsp;{{agendamento.nome}}</span>
+                    </p>
+                    <p class="c3"><span>Orientador: </span><span class="c16">Dr. Raphael Teixeira
+                            &nbsp;__________________________________</span><span class="c2">&nbsp;CRM:
+                            __________</span>
+                    </p>
+                    <p class="c3"><span class="c2">Cirurgi&atilde;o (nome
+                            completo)_______________________________________CRM: __________</span></p>
+                    <p class="c3"><span>1&ordm; Assistente: &nbsp;</span><span class="c16">_____________
+                        </span><span class="c2">___________________________________ CRM: __________</span></p>
+                    <p class="c3"><span>2&ordm; Assistente: </span><span class="c16">________________</span><span
+                            class="c2">_________________________________ CRM: __________</span></p>
+                    <p class="c3"><span class="c2">3&ordm; Assistente:
+                            _________________________________________________
+                            CRM: __________</span></p>
+                    <p class="c3"><span class="c2">Anestesista:___________________________________________________
+                            CRM:
+                            __________</span></p>
+                </td>
+            </tr>
+        </table>
+        <p class="c3 c5"><span class="c12"></span></p><a id="t.b3fe23b9da6364fa0f20e7fd0646dec059347de9"></a><a
+            id="t.1"></a>
+        <table class="c0">
+            <tr class="c20">
+                <td class="c23" colspan="1" rowspan="1">
+                    <p class="c3"><span>Diagn&oacute;stico Pr&eacute; Operacional: </span><span class="c35">EM</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p class="c3 c5"><span class="c12"></span></p><a id="t.ff0ecaaf7acaea930cd55934b28ba5e50aa2e605"></a><a
+            id="t.2"></a>
+        <table class="c0">
+            <tr class="c29">
+                <td class="c17" colspan="1" rowspan="1">
+                    <p class="c5 c6"><span class="c12"></span></p><a
+                        id="t.e103b308ecd1a5fd10ec4258d5f5254959438a4a"></a><a id="t.3"></a>
+                    <table class="c31">
+                        <tr class="c19">
+                            <td class="c37" colspan="1" rowspan="1">
+                                <p class="c3 c28"><span class="c1">Opera&ccedil;&atilde;o Proposta: </span><span
+                                        class="c27 c25">&nbsp;</span><span class="c22">INJE&Ccedil;&Atilde;O
+                                    </span><span class="c30">INTRAV&Iacute;TREA</span><span class="c22">&nbsp;DE
+                                        AVASTIN
+                                    </span><span class="c30">EM {{agendamento.olho_agendado}}</span></p>
+                            </td>
+                        </tr>
+                    </table>
+                    <p class="c3 c5"><span class="c2"></span></p>
+                </td>
+            </tr>
+        </table>
+        <p class="c3 c5"><span class="c12"></span></p><a id="t.52e8550230da046a1e8bc5176ba6977f4c4832a1"></a><a
+            id="t.4"></a>
+        <table class="c0">
+            <tr class="c14">
+                <td class="c17" colspan="1" rowspan="1">
+                    <p class="c3"><span>Opera&ccedil;&atilde;o Realizada: </span><span class="c30">A MESMA</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p class="c3 c5"><span class="c12"></span></p><a id="t.0a387d0490ee84996298c877cd9acf7ba6b8249c"></a><a
+            id="t.5"></a>
+        <table class="c0">
+            <tr class="c11">
+                <td class="c4" colspan="1" rowspan="1">
+                    <p class="c3"><span>Diagn&oacute;stico P&oacute;s Operat&oacute;rio: </span><span class="c22">O
+                            MESMO</span></p>
+                </td>
+            </tr>
+        </table>
+        <p class="c3 c5"><span class="c12"></span></p><a id="t.156cb3dd560859cf3b6da15d79e364b1f4c61892"></a><a
+            id="t.6"></a>
+        <table class="c0">
+            <tr class="c11">
+                <td class="c4" colspan="1" rowspan="1">
+                    <p class="c3"><span class="c2">Relat&oacute;rio Imediato do Patologista:
+                            ________________________________________________</span></p>
+                    <p class="c3"><span
+                            class="c2">____________________________________________________________________________</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p class="c3 c5"><span class="c12"></span></p><a id="t.24270742b75029c9f0420e1d751cf7045a05cfa5"></a><a
+            id="t.7"></a>
+        <table class="c0">
+            <tr class="c11">
+                <td class="c13" colspan="1" rowspan="1">
+                    <p class="c3"><span class="c2">Destino dado &agrave; pe&ccedil;a:
+                            ___________________________________________________________</span></p>
+                </td>
+            </tr>
+        </table>
+        <p class="c3 c5"><span class="c12"></span></p><a id="t.acf2dd736b14da8f3b7ca7c505cd10875190a404"></a><a
+            id="t.8"></a>
+        <table class="c0">
+            <tr class="c26">
+                <td class="c13" colspan="1" rowspan="1">
+                    <p class="c3"><span class="c2">Acidentes durante a opera&ccedil;&atilde;o:
+                            ___________________________________________________</span></p>
+                    <p class="c3"><span
+                            class="c2">&nbsp;____________________________________________________________________________</span>
+                    </p>
+                    <p class="c3"><span
+                            class="c2">&nbsp;____________________________________________________________________________</span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p class="c3 c5"><span class="c12"></span></p><a id="t.353db58f47d083eccb20458eba5463a081ac0517"></a><a
+            id="t.9"></a>
+        <table class="c0">
+            <tr class="c34">
+                <td class="c32" colspan="1" rowspan="1">
+                    <p class="c24"><span class="c2">DESCRI&Ccedil;&Atilde;O DA CIRURGIA </span></p>
+                    <p class="c3"><span class="c2">Nome: ________________________________________________________
+                            CRM:
+                            _________</span></p><a id="t.e7674b3b8dda595d4400278b11ec8a2a92b10582"></a><a id="t.10"></a>
+                    <table class="c31">
+                        <tr class="c18">
+                            <td class="c36" colspan="1" rowspan="1">
+                                <p class="c3 c5"><span class="c1"></span></p>
+                                <p class="c3"><span class="c2">1- Assepsia + antissepsia </span></p>
+                                <p class="c3"><span class="c2">2- Coloca&ccedil;&atilde;o de campos + blefarostato
+                                    </span>
+                                </p>
+                                <p class="c3"><span class="c2">3- Anestesia subconjuntival com lidoca&iacute;na +
+                                        vaso
+                                        em
+                                        regi&atilde;o temporal superior </span></p>
+                                <p class="c3"><span class="c25">4- Inje&ccedil;&atilde;o
+                                    </span><span>intrav&iacute;trea</span><span class="c2">&nbsp;de AVASTIN a 0,4mm
+                                        do
+                                        limbo
+                                    </span></p>
+                            </td>
+                        </tr>
+                    </table>
+                    <p class="c3 c5"><span class="c2"></span></p>
+                </td>
+            </tr>
+        </table>
+        <p class="c3 c5"><span class="c12"></span></p>
+        <p class="c3 c5"><span class="c12"></span></p>
+        <p class="c3 c5"><span class="c12"></span></p>
+        <p class="c3 c5"><span class="c12"></span></p>
+        <p class="c3 c5"><span class="c12"></span></p>
+        <p class="c7"><span class="c21">{{usuario}}</span></p>
+        <p class="c7"><span class="c21">M&eacute;dico</span></p>
+        <p class="c7"><span class="c21">CRM-AL {{medico.crm}}</span></p>
+        <p class="c5 c7"><span class="c21"></span></p>
+    </div>
+    {% endif %}
 
     {% if agendamento.oct %}
-    imprimir OCT
+    <style type="text/css">
+        @import url(https://themes.googleusercontent.com/fonts/css?kit=tId4hC7h3QXnitVZUf8ul4ssHdQx5k1g1XcmPEeZqqYvothSo-82XNN5GC3c1mey);
+
+        @page {
+            size: A4
+        }
+
+        #oct-container {
+            transform: rotate(-90deg);
+            margin-top: 45%;
+        }
+
+        #oct-container ul.lst-kix_wvcdeslqpnyc-8 {
+            list-style-type: none
+        }
+
+        #oct-container ul.lst-kix_wvcdeslqpnyc-6 {
+            list-style-type: none
+        }
+
+        #oct-container ul.lst-kix_wvcdeslqpnyc-7 {
+            list-style-type: none
+        }
+
+        #oct-container li.li-bullet-0:before {
+            margin-left: -18pt;
+            white-space: nowrap;
+            display: inline-block;
+            min-width: 18pt
+        }
+
+        #oct-container .lst-kix_wvcdeslqpnyc-5>li:before {
+            content: "\0025a0   "
+        }
+
+        #oct-container .lst-kix_wvcdeslqpnyc-4>li:before {
+            content: "\0025cb   "
+        }
+
+        #oct-container .lst-kix_wvcdeslqpnyc-6>li:before {
+            content: "\0025cf   "
+        }
+
+        #oct-container .lst-kix_wvcdeslqpnyc-3>li:before {
+            content: "\0025cf   "
+        }
+
+        #oct-container .lst-kix_wvcdeslqpnyc-7>li:before {
+            content: "\0025cb   "
+        }
+
+        #oct-container ul.lst-kix_wvcdeslqpnyc-0 {
+            list-style-type: none
+        }
+
+        #oct-container .lst-kix_wvcdeslqpnyc-1>li:before {
+            content: "\0025cb   "
+        }
+
+        #oct-container ul.lst-kix_wvcdeslqpnyc-1 {
+            list-style-type: none
+        }
+
+        #oct-container .lst-kix_wvcdeslqpnyc-0>li:before {
+            content: "\0025cf   "
+        }
+
+        #oct-container .lst-kix_wvcdeslqpnyc-2>li:before {
+            content: "\0025a0   "
+        }
+
+        #oct-container .lst-kix_wvcdeslqpnyc-8>li:before {
+            content: "\0025a0   "
+        }
+
+        #oct-container ul.lst-kix_wvcdeslqpnyc-4 {
+            list-style-type: none
+        }
+
+        #oct-container ul.lst-kix_wvcdeslqpnyc-5 {
+            list-style-type: none
+        }
+
+        #oct-container ul.lst-kix_wvcdeslqpnyc-2 {
+            list-style-type: none
+        }
+
+        #oct-container ul.lst-kix_wvcdeslqpnyc-3 {
+            list-style-type: none
+        }
+
+        #oct-container ol {
+            margin: 0;
+            padding: 0
+        }
+
+        #oct-container table td,
+        table th {
+            padding: 0
+        }
+
+        #oct-container .c11 {
+            border-right-style: solid;
+            padding: 5pt 5pt 5pt 5pt;
+            border-bottom-color: #ffffff;
+            border-top-width: 0pt;
+            border-right-width: 0pt;
+            border-left-color: #ffffff;
+            vertical-align: top;
+            border-right-color: #ffffff;
+            border-left-width: 0pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 0pt;
+            width: 390.8pt;
+            border-top-color: #ffffff;
+            border-bottom-style: solid
+        }
+
+        #oct-container .c13 {
+            border-right-style: solid;
+            padding: 5pt 5pt 5pt 5pt;
+            border-bottom-color: #ffffff;
+            border-top-width: 0pt;
+            border-right-width: 0pt;
+            border-left-color: #ffffff;
+            vertical-align: top;
+            border-right-color: #ffffff;
+            border-left-width: 0pt;
+            border-top-style: solid;
+            border-left-style: solid;
+            border-bottom-width: 0pt;
+            width: 384pt;
+            border-top-color: #ffffff;
+            border-bottom-style: solid
+        }
+
+        #oct-container .c1 {
+            -webkit-text-decoration-skip: none;
+            color: #000000;
+            font-weight: 700;
+            text-decoration: underline;
+            vertical-align: baseline;
+            text-decoration-skip-ink: none;
+            font-size: 12pt;
+            font-family: "Arial Black";
+            font-style: normal
+        }
+
+        #oct-container .c16 {
+            -webkit-text-decoration-skip: none;
+            color: #000000;
+            font-weight: 700;
+            text-decoration: underline;
+            vertical-align: baseline;
+            text-decoration-skip-ink: none;
+            font-family: "Calibri";
+            font-style: italic
+        }
+
+        #oct-container .c22 {
+            margin-left: -11.7pt;
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.0791666666666666;
+            orphans: 2;
+            widows: 2;
+            text-align: center;
+            margin-right: 28.6pt
+        }
+
+        #oct-container .c0 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left;
+            height: 11pt
+        }
+
+        #oct-container .c14 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 8pt;
+            font-family: "Arial";
+            font-style: normal
+        }
+
+        #oct-container .c9 {
+            margin-left: 184.3pt;
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: center
+        }
+
+        #oct-container .c12 {
+            color: #000000;
+            font-weight: 700;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 12pt;
+            font-family: "Calibri";
+            font-style: italic
+        }
+
+        #oct-container .c6 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 11pt;
+            font-family: "Arial";
+            font-style: normal
+        }
+
+        #oct-container .c8 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: left;
+            height: 11pt
+        }
+
+        #oct-container .c23 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.5;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #oct-container .c26 {
+            color: #000000;
+            font-weight: 400;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-family: "Arial";
+            font-style: normal
+        }
+
+        #oct-container .c4 {
+            padding-top: 0pt;
+            padding-bottom: 0pt;
+            line-height: 1.0;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #oct-container .c3 {
+            padding-top: 0pt;
+            padding-bottom: 10pt;
+            line-height: 1.1500000000000001;
+            orphans: 2;
+            widows: 2;
+            text-align: center
+        }
+
+        #oct-container .c17 {
+            padding-top: 12pt;
+            padding-bottom: 0pt;
+            line-height: 1.15;
+            orphans: 2;
+            widows: 2;
+            text-align: center
+        }
+
+        #oct-container .c10 {
+            color: #000000;
+            text-decoration: none;
+            vertical-align: baseline;
+            font-size: 12pt;
+            font-style: normal
+        }
+
+        #oct-container .c21 {
+            margin-left: -42.8pt;
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin-right: auto
+        }
+
+        #oct-container .c25 {
+            background-color: #ffffff;
+            max-width: 451.4pt;
+            padding: 72pt 72pt 72pt 72pt
+        }
+
+        #oct-container .c20 {
+            padding: 0;
+            margin: 0
+        }
+
+        #oct-container .c7 {
+            margin-left: 36pt;
+            padding-left: 0pt
+        }
+
+        #oct-container .c5 {
+            font-weight: 400;
+            font-family: "Calibri"
+        }
+
+        #oct-container .c19 {
+            font-size: 9pt
+        }
+
+        #oct-container .c24 {
+            margin-left: 184.3pt
+        }
+
+        #oct-container .c2 {
+            height: 0pt
+        }
+
+        #oct-container .c18 {
+            font-size: 8pt
+        }
+
+        #oct-container .c15 {
+            font-size: 12pt
+        }
+
+        #oct-container .title {
+            padding-top: 0pt;
+            color: #000000;
+            font-size: 26pt;
+            padding-bottom: 3pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #oct-container .subtitle {
+            padding-top: 0pt;
+            color: #666666;
+            font-size: 15pt;
+            padding-bottom: 16pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #oct-container li {
+            color: #000000;
+            font-size: 11pt;
+            font-family: "Arial"
+        }
+
+        #oct-container p {
+            margin: 0;
+            color: #000000;
+            font-size: 11pt;
+            font-family: "Arial"
+        }
+
+
+        #oct-container h1 {
+            padding-top: 20pt;
+            color: #000000;
+            font-size: 20pt;
+            padding-bottom: 6pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #oct-container h2 {
+            padding-top: 18pt;
+            color: #000000;
+            font-size: 16pt;
+            padding-bottom: 6pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #oct-container h3 {
+            padding-top: 16pt;
+            color: #434343;
+            font-size: 14pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #oct-container h4 {
+            padding-top: 14pt;
+            color: #666666;
+            font-size: 12pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #oct-container h5 {
+            padding-top: 12pt;
+            color: #666666;
+            font-size: 11pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+
+        #oct-container h6 {
+            padding-top: 12pt;
+            color: #666666;
+            font-size: 11pt;
+            padding-bottom: 4pt;
+            font-family: "Arial";
+            line-height: 1.15;
+            page-break-after: avoid;
+            font-style: italic;
+            orphans: 2;
+            widows: 2;
+            text-align: left
+        }
+    </style>
+    <div class="container" id="oct-container" style="page-break-after: always;">
+        <div>
+            <p class="c8"><span class="c6"></span></p><a id="t.f727949b760321cc972232d42b2d9fa1f8785d82"></a><a
+                id="t.1"></a>
+            <table class="c21">
+                <tr class="c2">
+                    <td class="c11" colspan="1" rowspan="1">
+                        <p class="c22"><span
+                                style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 478.49px; height: 56.69px;"><img
+                                    alt="" src="images/image1.png"
+                                    style="width: 521.83px; height: 147.40px; margin-left: 0.00px; margin-top: -27.91px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                                    title=""></span></p>
+                    </td>
+                    <td class="c13" colspan="1" rowspan="1">
+                        <p class="c22"><span
+                                style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 478.49px; height: 56.69px;"><img
+                                    alt="" src="images/image1.png"
+                                    style="width: 521.83px; height: 147.40px; margin-left: 0.00px; margin-top: -27.91px; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px);"
+                                    title=""></span></p>
+                    </td>
+                </tr>
+            </table>
+            <p class="c8"><span class="c6"></span></p>
+        </div>
+        <p class="c3"><span class="c1">RECEITU&Aacute;RIO:</span></p>
+        <p class="c4"><span class="c5">PARA:</span><span class="c5 c15">&nbsp;{{agendamento.nome}}</span></p>
+        <p class="c0"><span class="c6"></span></p>
+        <p class="c4"><span class="c16 c15">SOLICITO:</span></p>
+        <p class="c0"><span class="c15 c16"></span></p>
+        <p class="c4"><span class="c5 c10">TOMOGRAFIA DE COER&Ecirc;NCIA &Oacute;PTICA &ndash; OCT</span></p>
+        <p class="c0"><span class="c10 c5"></span></p>
+        <p class="c4"><span class="c5 c15">Justificativa: controle ap&oacute;s aplica&ccedil;&atilde;o de Avastin em
+                {{agendamento.olho_agendado}}</span></p>
+        <p class="c0"><span class="c10 c5"></span></p>
+        <p class="c23"><span class="c10 c5">AGENDADO PARA &nbsp;_____/_____/2024 &Agrave;S 07:00 <br>COM DR(a)
+                RAPHAEL</span></p>
+        <p class="c0"><span class="c6"></span></p>
+        <p class="c4"><span class="c6">*Trazer c&oacute;pias dos documentos:</span></p>
+        <ul class="c20 lst-kix_wvcdeslqpnyc-0 start">
+            <li class="c4 c7 li-bullet-0"><span class="c6">RG</span></li>
+            <li class="c4 c7 li-bullet-0"><span class="c6">CPF</span></li>
+            <li class="c4 c7 li-bullet-0"><span class="c6">Comprovante de resid&ecirc;ncia</span></li>
+            <li class="c4 c7 li-bullet-0"><span class="c6">Cart&atilde;o SUS</span></li>
+        </ul>
+        <p class="c0"><span class="c6"></span></p>
+        <p class="c4"><span class="c6">Macei&oacute;,AL {{agendamento.data_agendada}}</span></p>
+        <p class="c0 c24"><span class="c6"></span></p>
+        <p class="c9"><span class="c14">{{usuario}}</span></p>
+        <p class="c9"><span class="c14">M&eacute;dico</span></p>
+        <p class="c9"><span class="c18">CRM-AL {{medico.crm}}</span>
+            <hr style="page-break-before:always;display:none;">
+        </p>
+        <p class="c0"><span class="c6"></span></p>
+        <div>
+            <p class="c8"><span class="c6"></span></p><a id="t.88b644373d0d811eea3e15778e61bdf9717f629a"></a><a
+                id="t.0"></a>
+            <table class="c21">
+                <tr class="c2">
+                    <td class="c11" colspan="1" rowspan="1">
+                        <p class="c17"><span class="c19">Hospital Universit&aacute;rio Professor Alberto Antunes -
+                                HUPAA/UFAL, Tel: 3322-2344/ 3202-3800<br>Av. Lourival Melo Mota, S/N - Tabuleiro do
+                                Martins,
+                                Cep: 57072-900. Macei&oacute;-AL</span></p>
+                    </td>
+                    <td class="c13" colspan="1" rowspan="1">
+                        <p class="c17"><span class="c19">Hospital Universit&aacute;rio Professor Alberto Antunes -
+                                HUPAA/UFAL, Tel: 3322-2344/ 3202-3800<br>Av. Lourival Melo Mota, S/N - Tabuleiro do
+                                Martins,
+                                Cep: 57072-900. Macei&oacute;-AL</span></p>
+                    </td>
+                </tr>
+            </table>
+            <p class="c8"><span class="c6"></span></p>
+        </div>
+    </div>
     {% endif %}
 
     {% endfor %}
-
     <script type="text/javascript">
         window.onload = function () {
             window.print();
         }
     </script>
-
 </body>
 
 </html>

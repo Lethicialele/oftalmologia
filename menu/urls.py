@@ -1,6 +1,7 @@
 from django.urls import path
 from django.shortcuts import redirect
 from menu import views
+from . import views
 
 urlpatterns = [
     path('home', views.home, name='home'),
@@ -11,5 +12,6 @@ urlpatterns = [
     path('consultarAgendaDia/', lambda request: redirect('consultarAgendaDia', permanent=True)),
     path('gerarAgenda/', lambda request: redirect('gerarAgenda', permanent=True)),
     path('atualizarCadastrorMedicos/', lambda request: redirect('atualizarCadastrorMedicos', permanent=True)),
+    path('sair/', lambda request: redirect('sair', permanent=True)),
     path('consultarFilaEsperaPacientes/', lambda request: redirect('consultarFilaEsperaPacientes', permanent=True)),
 ]

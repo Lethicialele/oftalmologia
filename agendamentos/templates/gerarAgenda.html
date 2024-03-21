@@ -52,7 +52,7 @@
               <li><a class="nav-link dropdown-item btn-info btn-sm text-white"
                   href="{% url 'listarPacientesFinalizados' %}">Finalizados </a></li>
               <li><a class="nav-link dropdown-item btn-info btn-sm text-white"
-                  href="{% url 'listarPacientesDesinteressados' %}">Desinteressados</a></li>
+                  href="{% url 'listarPacientesDesinteressados' %}">Inativos</a></li>
             </ul>
           </li>
           <!--<li class="nav-item">
@@ -122,7 +122,7 @@
 
   <div class="container" style="margin-top: 25pt;">
     <h2 class="text-center my-4 text-info">Pacientes na Fila de Espera</h2>
-    <div class="input-group mb-3">
+    <div class="mb-3" style="display: flex; flex-direction: row;">
       <select class="btn btn-info btn-md text-white" style="border: #0dcaf0; text-align: left;" type="button"
         id="searchType" onchange="filtrarPacientes()">
         <ul class="dropdown-menu bg-info" style="border: #0dcaf0;">
@@ -184,7 +184,7 @@
               <div class="align-middle text-center form-check-lg">
                 <form id="form-mover-paciente-desinteressado-{{ paciente.id }}" action="{% url 'moverParaDesinteressados' %}" method="POST">{% csrf_token %}
                   <input type="hidden" name="paciente_id" value="{{ paciente.id }}">
-                  <button type="button" class="btn btn-sm text-white" href="#" title="Paciente Desinteressado"
+                  <button type="button" class="btn btn-sm text-white" href="#" title="Paciente Inativo"
                     onclick="confirmarExclusao('{{ paciente.id }}')">
                     <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-person-exclamation text-info" viewBox="0 0 16 16">
                       <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m.256 7a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
@@ -249,7 +249,7 @@
   </div>
   <script>
     function confirmarExclusao(pacienteId) {
-      var confirmacao = confirm("Tem certeza que deseja mover este paciente para a lista de desinteressados?");
+      var confirmacao = confirm("Tem certeza que deseja mover este paciente para a lista de inativos?");
       if (confirmacao) {
         // Se confirmado, altere o tipo do botão para "submit"
         document.getElementById('form-mover-paciente-desinteressado-' + pacienteId).submit();
